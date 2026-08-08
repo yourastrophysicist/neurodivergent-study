@@ -1,5 +1,5 @@
 /* ==========================================================================
-   NEURODIV STUDY - GAMIFIED MASTER PEDAGOGY INTERACTIVE PLATFORM
+   NEURODIV STUDY - CONCEPT C SINGLE COLUMN COZY STORY JOURNAL PLATFORM
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
       playTypewriterDialogue(
         `Great job. You earned plus ${totalAdded} XP for ${reason}.`,
         currentPokepi.name,
-        currentPokepi.avatar
+        currentPokepi.avatarIcon
       );
     }
   }
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   playTypewriterDialogue(
-    "Welcome to Doko Demo Issyo Master Pedagogy World. I am Toro Inoue. Let us learn science with first principles so I can become human.",
+    "Welcome to Doko Demo Issyo Story Journal. I am Toro Inoue. Teach me science concepts and complete quests together so I can become human.",
     "Toro Inoue",
     "fa-cat"
   );
@@ -624,7 +624,7 @@ document.addEventListener('DOMContentLoaded', () => {
       else b.classList.remove('active');
     });
 
-    if (target.tab && target.tab !== 'world') {
+    if (target.tab) {
       openPanel(target.tab);
     }
   }
@@ -636,28 +636,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Action Button Click Handler (Fly to Island)
-  function handleFlyToIslandAction(e) {
-    if (e) e.stopPropagation();
-    const currentKey = state.currentIsland || 'roma';
-    const target = ISLAND_POSITIONS[currentKey] || ISLAND_POSITIONS.roma;
-    
-    if (target.tab && target.tab !== 'world') {
-      openPanel(target.tab);
-    } else {
-      openPanel('nookmiles');
-    }
-
-    flyToIsland(currentKey);
-  }
-
-  ['acPromptBtn', 'acNextActionBtn'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener('click', handleFlyToIslandAction);
-    }
-  });
-
   window.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') mouseX = Math.max(-1, mouseX - 0.2);
     if (e.key === 'ArrowRight') mouseX = Math.min(1, mouseX + 0.2);
@@ -667,14 +645,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   init3DScene();
 
+  // Navigation Panel Switcher within Single Column Story Journal
   const navBtns = document.querySelectorAll('.nav-btn');
-  const overlayPanels = document.querySelectorAll('.overlay-panel');
+  const overlayPanels = document.querySelectorAll('.journal-active-tool .overlay-panel');
 
   function openPanel(tabId) {
     overlayPanels.forEach(panel => panel.classList.add('hidden'));
     navBtns.forEach(b => b.classList.remove('active'));
-
-    if (tabId === 'world') return;
 
     const targetPanel = document.getElementById(`tab-${tabId}`);
     if (targetPanel) {
@@ -688,13 +665,6 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const targetTab = btn.getAttribute('data-tab');
       openPanel(targetTab);
-    });
-  });
-
-  document.querySelectorAll('.btn-close-panel').forEach(btn => {
-    btn.addEventListener('click', () => {
-      overlayPanels.forEach(panel => panel.classList.add('hidden'));
-      openPanel('world');
     });
   });
 
