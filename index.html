@@ -3,389 +3,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>neurodiv study</title>
+  <title>tomodoro web</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
-  <!-- Three.js CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script>
-    if (typeof THREE === 'undefined') {
-      document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"><\/script>');
-    }
-  </script>
 </head>
-<body class="dokodemo-theme pokepi-toro fullscreen-app">
+<body class="tui-theme theme-matrix fullscreen-app">
 
-  <!-- 3D SKY CANVAS VIEWPORT -->
-  <div class="fullscreen-canvas-container" id="canvas3dContainer">
-    <canvas id="bg3dCanvas"></canvas>
+  <!-- ANIMATED TUI BACKGROUND CANVAS -->
+  <div class="tui-canvas-container" id="tuiCanvasContainer">
+    <canvas id="tomodoroCanvas"></canvas>
   </div>
 
-  <!-- FLOATING ANIMAL CROSSING NAVBAR HEADER -->
-  <header class="floating-header">
-    <div class="header-inner">
-      <div class="logo-pill">
-        <span class="ac-leaf-icon"><i class="fa-solid fa-leaf"></i></span>
-        <span class="logo-text">neurodiv study</span>
+  <!-- FLOATING TERMINAL HEADER BAR -->
+  <header class="tui-header">
+    <div class="tui-header-inner">
+      <div class="tui-logo">
+        <span class="tui-tag">tomodoro v1.0</span>
       </div>
 
-      <!-- GAMIFIED PROGRESS BAR & XP STATS -->
-      <div class="gamified-stats-pill">
-        <span class="stat-badge level-badge" id="userLevelBadge">Level 4 Master</span>
-        <div class="xp-progress-bar">
-          <div class="xp-fill" id="xpFillBar" style="width: 68%;"></div>
-        </div>
-        <span class="stat-badge xp-badge" id="userXpText">420 XP</span>
-        <span class="stat-badge combo-badge" id="comboMultiplierText">Combo 1.5x</span>
-        <span class="stat-badge streak-badge" id="userStreakText">5 Day Streak</span>
+      <div class="tui-status-bar">
+        <span class="tui-chip phase-chip" id="tuiPhaseChip">FOCUS</span>
+        <span class="tui-chip profile-chip" id="tuiProfileChip">Standard Profile</span>
+        <span class="tui-chip theme-chip" id="tuiThemeChip">Theme Matrix Rain</span>
+        <span class="tui-chip render-chip" id="tuiRenderChip">Mode Braille</span>
       </div>
 
-      <nav class="floating-nav">
-        <button class="nav-btn active" data-tab="nookmiles" id="navQuestsBtn"><i class="fa-solid fa-star"></i> Story Quests</button>
-        <button class="nav-btn" data-tab="hyperfocus" id="navHyperfocusBtn"><i class="fa-solid fa-bolt"></i> HyperFocus</button>
-        <button class="nav-btn" data-tab="neurodock" id="navNeurodockBtn"><i class="fa-solid fa-scissors"></i> Task Slicer</button>
-        <button class="nav-btn" data-tab="skilltree" id="navSkillTreeBtn"><i class="fa-solid fa-sitemap"></i> Skill Tree</button>
-        <button class="nav-btn" data-tab="flashcards" id="navCardsBtn"><i class="fa-solid fa-layer-group"></i> Cards</button>
-        <button class="nav-btn" data-tab="grammar" id="navMatrixBtn"><i class="fa-solid fa-atom"></i> Matrix</button>
-        <button class="nav-btn" data-tab="studio" id="navStudioBtn"><i class="fa-solid fa-sliders"></i> Studio</button>
-      </nav>
-
-      <div class="floating-actions">
-        <!-- Pokepi Companion Selector -->
-        <div class="pokepi-selector">
-          <select id="pokepiSelect" class="form-select-pill">
-            <option value="toro">Toro Inoue White Cat</option>
-            <option value="kuro">Kuro Black Cat</option>
-            <option value="jun">Jun Pink Rabbit</option>
-            <option value="pierre">Pierre Dog</option>
-            <option value="ricky">Ricky Frog</option>
-            <option value="maruta">Maruta Robot</option>
-          </select>
-        </div>
-
-        <!-- Master Pedagogy Narrative Quest Theme Selector -->
-        <div class="quest-theme-selector">
-          <select id="questThemeSelect" class="form-select-pill">
-            <option value="deepspace">Deep Space Astronomy Quest</option>
-            <option value="quantum">Quantum Nanotech Expedition</option>
-            <option value="cyberpunk">Cyberpunk Math Heist</option>
-          </select>
-        </div>
-
-        <!-- Spoon Energy Level Selector -->
-        <div class="spoon-selector">
-          <select id="spoonSelect" class="form-select-pill">
-            <option value="5">5 Spoons Full Energy</option>
-            <option value="3" selected>3 Spoons Moderate Energy</option>
-            <option value="1">1 Spoon Low Energy Dose</option>
-          </select>
-        </div>
-
-        <button class="btn-pill" id="exportObsidianBtn"><i class="fa-solid fa-note-sticky"></i> Exporter</button>
-        <button class="btn-pill" id="quickAudioTest"><i class="fa-solid fa-volume-high"></i> Audio</button>
+      <div class="tui-header-actions">
+        <button class="tui-btn" id="btnToggleHelp" title="Help Keybinds"><i class="fa-solid fa-keyboard"></i> Help</button>
+        <button class="tui-btn" id="btnToggleEndless" title="Endless Ambient Display"><i class="fa-solid fa-tv"></i> Endless</button>
+        <button class="tui-btn" id="btnToggleHistory" title="Session History"><i class="fa-solid fa-list-check"></i> History</button>
       </div>
     </div>
   </header>
 
-  <!-- UNIFIED SINGLE COLUMN COZY STORY JOURNAL FEED -->
-  <main class="story-journal-viewport">
-    <div class="story-journal-card">
-
-      <!-- TOP DOKO DEMO ISSYO STORY DIALOGUE SECTION -->
-      <section class="journal-story-header">
-        <div class="ac-nameplate-wrapper">
-          <div class="ac-avatar-circle" id="acAvatarCircle">
-            <i class="fa-solid fa-cat" id="acAvatarIcon"></i>
-          </div>
-          <div class="ac-nameplate" id="acNameplate">
-            <span class="nameplate-title" id="acSpeaker">Toro Inoue</span>
-          </div>
-        </div>
-
-        <div class="journal-speech-box">
-          <p class="typewriter-text" id="acTypewriterText">Welcome to Doko Demo Issyo Story Journal. I am Toro Inoue. Teach me science concepts and complete quests together so I can become human.</p>
-        </div>
-
-        <!-- TEACH TORO A WORD INTERACTIVE INPUT -->
-        <div class="teach-word-container margin-top-sm" id="teachWordBox">
-          <input type="text" id="teachWordInput" placeholder="Teach Toro a new word or concept" class="form-control-light-sm">
-          <button class="btn btn-primary-sm" id="teachWordSubmitBtn"><i class="fa-solid fa-graduation-cap"></i> Teach Word</button>
-        </div>
-      </section>
-
-      <div class="animal-divider">
-        <span class="divider-line"></span>
+  <!-- MAIN TOMODORO TERMINAL VIEWPORT -->
+  <main class="tui-viewport" id="tuiViewport">
+    
+    <!-- MAIN TIMER CARD -->
+    <div class="tui-card timer-card" id="timerCard">
+      <div class="tui-card-header">
+        <span class="card-title" id="tuiTaskTitle">Focus Session 1 of 4</span>
       </div>
 
-      <!-- ACTIVE STUDY TOOL SECTION BELOW DIALOGUE -->
-      <section class="journal-active-tool">
+      <!-- BIG DIGIT TIMER DISPLAY -->
+      <div class="timer-display-box">
+        <span class="big-timer-digits" id="timerDigits">25:00</span>
+        <div class="timer-progress-track">
+          <div class="timer-progress-fill" id="timerProgressFill" style="width: 100%;"></div>
+        </div>
+      </div>
 
-        <!-- MODULE 1: STORY QUEST STAMPS (DEFAULT VISIBLE) -->
-        <div id="tab-nookmiles" class="overlay-panel">
-          <div class="panel-header">
-            <h2><i class="fa-solid fa-star text-sun"></i> Pokepi Story Quests and Stamps</h2>
-          </div>
-          <p class="panel-desc">Teach Toro Inoue new words and concepts to earn Pokepi friendship stamps and Nook Miles XP.</p>
-          <div class="nook-miles-grid margin-top-md">
-            <div class="nook-stamp-card completed" id="questCard1">
-              <div class="stamp-info">
-                <strong>Toro's First Word</strong>
-                <p>Teach Toro 1 new science or exam concept.</p>
-              </div>
-              <button class="miles-reward-btn">+100 XP</button>
-            </div>
-            <div class="nook-stamp-card completed" id="questCard2">
-              <div class="stamp-info">
-                <strong>Task Sliced with Kuro</strong>
-                <p>Break 1 intimidating task into 2 minute steps.</p>
-              </div>
-              <button class="miles-reward-btn">+200 XP</button>
-            </div>
-            <div class="nook-stamp-card" id="questCard3">
-              <div class="stamp-info">
-                <strong>HyperFocus Sprint</strong>
-                <p>Run 1 15 minute hyperfocus focus sprint.</p>
-              </div>
-              <button class="miles-reward-btn">+300 XP</button>
-            </div>
-          </div>
+      <!-- TIMER CONTROLS -->
+      <div class="timer-controls-row">
+        <button class="tui-btn-action btn-start" id="btnStartPause"><i class="fa-solid fa-play"></i> Start Session</button>
+        <button class="tui-btn-action btn-skip" id="btnSkipPhase"><i class="fa-solid fa-forward-step"></i> Skip Phase</button>
+        <button class="tui-btn-action btn-reset" id="btnResetTimer"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+      </div>
+
+      <!-- QUICK PROFILE PICKER & TASK INPUT -->
+      <div class="profile-task-controls">
+        <div class="input-group">
+          <label for="profileSelect">Profile</label>
+          <select id="profileSelect" class="tui-select">
+            <option value="standard" selected>Standard 25m Focus 5m Break</option>
+            <option value="deep">Deep Work 50m Focus 10m Break</option>
+            <option value="quick">Quick Sprint 15m Focus 3m Break</option>
+            <option value="custom">Custom Duration</option>
+          </select>
         </div>
 
-        <!-- MODULE 2: HYPERFOCUS PORTAL -->
-        <div id="tab-hyperfocus" class="overlay-panel hidden">
-          <div class="panel-header">
-            <h2><i class="fa-solid fa-bolt text-sun"></i> HyperFocus Zone Portal</h2>
-          </div>
-          <div class="flex-center">
-            <p class="panel-desc">Immersion zone built to eliminate executive starting friction and keep your brain in the flow state.</p>
-            <div class="hyperfocus-timer-ring margin-top-md">
-              <span id="hfTimerTime">15:00</span>
-              <small id="hfTimerStatus">Zone Ready</small>
-            </div>
-            <div class="timer-controls margin-top-md">
-              <button class="btn btn-primary" id="hfStartBtn"><i class="fa-solid fa-play"></i> Enter HyperFocus</button>
-              <button class="btn btn-outline" id="hfPauseBtn"><i class="fa-solid fa-pause"></i> Pause</button>
-              <button class="btn btn-ghost" id="hfResetBtn"><i class="fa-solid fa-rotate-right"></i> Reset</button>
-            </div>
-            <div class="ambient-sound-box margin-top-md">
-              <span>Focus Audio Generator</span>
-              <select id="hfAmbientSelect" class="form-select-pill">
-                <option value="none">Silence</option>
-                <option value="alpha">Alpha Waves 10Hz Deep Flow</option>
-                <option value="rain">Rain Noise Generator</option>
-                <option value="brown">Brown Noise Focus Shield</option>
-              </select>
-            </div>
-          </div>
+        <div class="input-group">
+          <label for="taskLabelInput">Task Label</label>
+          <input type="text" id="taskLabelInput" placeholder="Enter current study goal" class="tui-input">
         </div>
-
-        <!-- MODULE 3: NEURODOCK TASK SLICER -->
-        <div id="tab-neurodock" class="overlay-panel hidden">
-          <div class="panel-header">
-            <h2><i class="fa-solid fa-scissors text-sky"></i> NeuroDock Executive Task Slicer</h2>
-          </div>
-          <p class="panel-desc">Slice intimidating goals into 3 gentle 2 minute micro actions to bypass executive blockages.</p>
-          <form id="taskSlicerForm" class="margin-top-md">
-            <div class="form-group-flex">
-              <input type="text" id="intimidatingTaskInput" placeholder="Enter intimidating goal such as Study 3 Physics Chapters" class="form-control-light" required>
-              <button type="submit" class="btn btn-primary"><i class="fa-solid fa-wand-magic-sparkles"></i> Slice Task</button>
-            </div>
-          </form>
-          <div class="sliced-actions-list margin-top-md" id="slicedActionsList">
-            <div class="sliced-item">
-              <input type="checkbox" class="step-checkbox">
-              <span class="step-badge">Step 1 (2m)</span>
-              <span>Open notes to page 1 and read just 3 lines</span>
-            </div>
-            <div class="sliced-item">
-              <input type="checkbox" class="step-checkbox">
-              <span class="step-badge">Step 2 (2m)</span>
-              <span>Jot down 1 key formula on flashcard</span>
-            </div>
-            <div class="sliced-item">
-              <input type="checkbox" class="step-checkbox">
-              <span class="step-badge">Step 3 (2m)</span>
-              <span>Take a 30 second deep breath and celebrate starting</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- MODULE 4: MASTER PEDAGOGY SKILL TREE -->
-        <div id="tab-skilltree" class="overlay-panel hidden">
-          <div class="panel-header">
-            <h2><i class="fa-solid fa-sitemap text-leaf"></i> Master Pedagogy Skill Tree Progression</h2>
-          </div>
-          <p class="panel-desc">First-principles learning map. Unlock prerequisite nodes to master advanced science topics.</p>
-          <div class="skill-tree-grid margin-top-md">
-            <div class="skill-node unlocked" id="node1">
-              <div class="node-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-              <div class="node-info">
-                <strong>Prerequisite Audit</strong>
-                <small>Foundation Check</small>
-              </div>
-              <span class="node-status">Unlocked</span>
-            </div>
-            <div class="skill-node unlocked" id="node2">
-              <div class="node-icon"><i class="fa-solid fa-orbit"></i></div>
-              <div class="node-info">
-                <strong>Keplerian Mechanics</strong>
-                <small>Orbital Dynamics</small>
-              </div>
-              <span class="node-status">Mastered</span>
-            </div>
-            <div class="skill-node locked" id="node3">
-              <div class="node-icon"><i class="fa-solid fa-atom"></i></div>
-              <div class="node-info">
-                <strong>Quantum Superposition</strong>
-                <small>Density States</small>
-              </div>
-              <button class="node-unlock-btn" onclick="window.unlockSkillNode('node3', 500)">Unlock (500 XP)</button>
-            </div>
-            <div class="skill-node locked" id="node4">
-              <div class="node-icon"><i class="fa-solid fa-lightbulb"></i></div>
-              <div class="node-info">
-                <strong>Special Relativity</strong>
-                <small>Spacetime Physics</small>
-              </div>
-              <button class="node-unlock-btn" onclick="window.unlockSkillNode('node4', 800)">Unlock (800 XP)</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- MODULE 5: ACTIVE RECALL & SOCRATIC MODE -->
-        <div id="tab-flashcards" class="overlay-panel hidden">
-          <div class="panel-header">
-            <h2><i class="fa-solid fa-layer-group text-mint"></i> Active Recall & Socratic Mode</h2>
-          </div>
-          <div class="flex-center">
-            <div class="subject-selector-box margin-bottom-md">
-              <select id="deckFilter" class="form-select-pill">
-                <option value="science">Astrophysics and Physics Concepts</option>
-                <option value="general">Universal Exam Key Terms</option>
-              </select>
-            </div>
-
-            <div class="flashcard" id="mainFlashcard">
-              <div class="flashcard-inner">
-                <div class="flashcard-front">
-                  <span class="card-tag">Science Concept</span>
-                  <div class="card-word" id="cardItalian">Keplerian Motion</div>
-                  <p class="card-phonetic" id="cardPhonetic">[Elliptical Planetary Orbits]</p>
-                  <button class="btn-audio" id="cardSpeakBtn"><i class="fa-solid fa-volume-high"></i> Audio Speech</button>
-                </div>
-                <div class="flashcard-back">
-                  <div class="card-meaning" id="cardEnglish">Planetary Elliptical Orbit Law</div>
-                  <p class="card-ex" id="cardExampleIt">"Planets move in ellipses with the Sun at one focus."</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="socratic-box margin-top-md" id="socraticBox">
-              <button class="btn btn-outline-sm" id="socraticWhyBtn"><i class="fa-solid fa-circle-question"></i> Socratic Show Me The Why</button>
-              <p class="socratic-text hidden" id="socraticWhyText">Gravity drops off with the square of distance, creating stable elliptical orbits where total angular momentum is conserved.</p>
-            </div>
-
-            <div class="srs-actions margin-top-md">
-              <button class="btn-srs srs-again" id="srsAgain">Again</button>
-              <button class="btn-srs srs-hard" id="srsHard">Hard</button>
-              <button class="btn-srs srs-good" id="srsGood">Good</button>
-              <button class="btn-srs srs-easy" id="srsEasy">Easy</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- MODULE 6: FORMULA MATRIX -->
-        <div id="tab-grammar" class="overlay-panel hidden">
-          <div class="panel-header">
-            <h2><i class="fa-solid fa-atom text-rose"></i> Logical Formula and Concept Matrix</h2>
-          </div>
-          <div class="matrix-table">
-            <div class="matrix-row header-row">
-              <span>Subject Domain</span>
-              <span>Core Concept</span>
-              <span>Rule Formula</span>
-              <span>OCPD Readiness Cap</span>
-            </div>
-            <div class="matrix-row">
-              <strong>Astrophysics</strong>
-              <span class="badge badge-sky">Kepler's 3rd Law</span>
-              <span>T squared proportional to a cubed</span>
-              <span class="badge badge-leaf">80% Ready</span>
-            </div>
-            <div class="matrix-row">
-              <strong>Quantum Physics</strong>
-              <span class="badge badge-sun">Superposition</span>
-              <span>Particles exist in probability density states</span>
-              <span class="badge badge-leaf">80% Ready</span>
-            </div>
-            <div class="matrix-row">
-              <strong>Universal Study</strong>
-              <span class="badge badge-berry">SRS Active Recall</span>
-              <span>Intervals 1d 3d 7d 14d</span>
-              <span class="badge badge-leaf">80% Ready</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- MODULE 7: ACCOMMODATION STUDIO -->
-        <div id="tab-studio" class="overlay-panel hidden">
-          <div class="panel-header">
-            <h2><i class="fa-solid fa-sliders text-berry"></i> Universal Accommodation Studio</h2>
-          </div>
-          <div class="grid-2">
-            <div class="studio-opt">
-              <span class="icon-badge bg-sun"><i class="fa-solid fa-bolt"></i></span>
-              <h3>ADHD Executive Function and Sprints</h3>
-              <p>Chunked 15 minute timers, immediate dopamine XP, task breaking.</p>
-            </div>
-            <div class="studio-opt">
-              <span class="icon-badge bg-sky"><i class="fa-solid fa-wave-square"></i></span>
-              <h3>Bipolar and Mood Waves Flexible Pace</h3>
-              <p>High energy hyperfocus deep dives or low energy 2 minute maintenance dose.</p>
-            </div>
-            <div class="studio-opt">
-              <span class="icon-badge bg-leaf"><i class="fa-solid fa-shield-halved"></i></span>
-              <h3>OCPD and Anxiety Perfectionism Breaker</h3>
-              <p>80 percent is Exam Ready limits to prevent over studying and analysis paralysis.</p>
-            </div>
-            <div class="studio-opt">
-              <span class="icon-badge bg-rose"><i class="fa-solid fa-heart"></i></span>
-              <h3>Autism and BPD Sensory and Safe Space</h3>
-              <p>Cozy warm light theme and neutral error framing that mistakes are data.</p>
-            </div>
-          </div>
-        </div>
-
-      </section>
-
+      </div>
     </div>
+
   </main>
 
-  <!-- FLOATING HUD ISLAND QUICK CONTROLS AT BOTTOM -->
-  <div class="bottom-hud-controls">
-    <button class="hud-chip active" data-island="roma"><i class="fa-solid fa-sun"></i> Toro's House</button>
-    <button class="hud-chip" data-island="firenze"><i class="fa-solid fa-bolt"></i> HyperFocus Portal</button>
-    <button class="hud-chip" data-island="venezia"><i class="fa-solid fa-scissors"></i> NeuroDock Slicer</button>
-    <button class="hud-chip" data-island="milano"><i class="fa-solid fa-sliders"></i> Studio Island</button>
-    <button class="hud-chip" data-island="costiera"><i class="fa-solid fa-heart"></i> Pokepi Square</button>
+  <!-- BOTTOM STATUS FOOTER & KEYBOARD SHORTCUT BAR -->
+  <footer class="tui-footer">
+    <div class="tui-footer-inner">
+      <span class="key-hint">Space Start Pause</span>
+      <span class="key-hint">N Skip Phase</span>
+      <span class="key-hint">R Reset</span>
+      <span class="key-hint">H L Theme</span>
+      <span class="key-hint">K J Render</span>
+      <span class="key-hint">? Help</span>
+    </div>
+  </footer>
+
+  <!-- MODAL 1: HELP KEYBINDS OVERLAY -->
+  <div class="tui-modal-overlay hidden" id="helpModal">
+    <div class="tui-modal-card">
+      <div class="modal-header">
+        <h3>Tomodoro Keyboard Shortcuts</h3>
+        <button class="tui-modal-close" id="btnCloseHelp"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="keybind-grid">
+          <div class="keybind-row"><span class="key-cap">Space</span><span>Start or Pause Timer</span></div>
+          <div class="keybind-row"><span class="key-cap">N</span><span>Skip to Next Phase</span></div>
+          <div class="keybind-row"><span class="key-cap">R</span><span>Reset Current Phase</span></div>
+          <div class="keybind-row"><span class="key-cap">P</span><span>Select Timer Profile</span></div>
+          <div class="keybind-row"><span class="key-cap">T</span><span>Edit Task Label</span></div>
+          <div class="keybind-row"><span class="key-cap">H / L</span><span>Cycle Background Animation Themes</span></div>
+          <div class="keybind-row"><span class="key-cap">K / J</span><span>Cycle Render Resolution Modes</span></div>
+          <div class="keybind-row"><span class="key-cap">E</span><span>Toggle Endless Ambient Display</span></div>
+          <div class="keybind-row"><span class="key-cap">?</span><span>Toggle Help Overlay</span></div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- MODAL FOR OBSIDIAN EXPORT -->
-  <div class="modal-overlay hidden" id="obsidianModal">
-    <div class="modal-card island-card">
-      <div class="panel-header">
-        <h3><i class="fa-solid fa-note-sticky text-berry"></i> Obsidian Markdown Exporter</h3>
-        <button class="btn-close-panel" id="closeObsidianModalBtn"><i class="fa-solid fa-xmark"></i></button>
+  <!-- MODAL 2: SESSION HISTORY OVERLAY -->
+  <div class="tui-modal-overlay hidden" id="historyModal">
+    <div class="tui-modal-card">
+      <div class="modal-header">
+        <h3>Session History and Statistics</h3>
+        <button class="tui-modal-close" id="btnCloseHistory"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <textarea id="obsidianTextarea" rows="8" class="form-control-light" readonly></textarea>
-      <div class="modal-actions margin-top-md">
-        <button class="btn btn-ghost" id="copyObsidianBtn"><i class="fa-solid fa-copy"></i> Copy Markdown</button>
-        <button class="btn btn-primary" id="downloadObsidianBtn"><i class="fa-solid fa-download"></i> Download File</button>
+      <div class="modal-body">
+        <div class="history-stats-summary margin-bottom-md">
+          <div class="stat-box">
+            <strong id="totalSessionsCount">0</strong>
+            <small>Completed Focus Sessions</small>
+          </div>
+          <div class="stat-box">
+            <strong id="totalFocusMinutes">0m</strong>
+            <small>Total Focus Time</small>
+          </div>
+        </div>
+
+        <div class="history-table-container">
+          <table class="tui-table">
+            <thead>
+              <tr>
+                <th>Phase</th>
+                <th>Task Label</th>
+                <th>Duration</th>
+                <th>Time Completed</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody">
+              <tr>
+                <td colspan="4" class="empty-cell">No focus sessions recorded yet</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

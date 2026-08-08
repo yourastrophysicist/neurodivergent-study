@@ -1,30 +1,32 @@
-# neurodiv study
+# tomodoro web
 
-A 3D study world built for neurodivergent learners focused on science and language learning
+A terminal inspired animated Pomodoro timer built for web browsers based on linuskelsey/tomodoro
 
 ## Features
 
-- 3D flight map scene with steerable monoplane across study stations
-- HyperFocus Zone Portal with 15 minute flow state immersion timer and ambient sounds
-- NeuroDock Task Slicer that breaks intimidating goals into 3 gentle 2 minute micro steps
-- AuDHD Spoon Theory Selector that scales study load based on daily cognitive energy
-- Pokepi character companion selector including Toro Inoue, Kuro, Jun, Pierre, Ricky, and Maruta
-- Active recall flashcard deck with 3D card flips
-- Formula and concept matrix for astrophysics, quantum mechanics, and study strategies
-- Rejection free peer safe space
-- One click Obsidian markdown exporter for study notes
+1 **Animated Background Themes**
+  Matrix Rain, Cosmic Stars, Snowfall, Amber Fire particles, and Cyberpunk Grid.
 
-## Design System
+2 **Timer Profiles**
+  Standard 25m Focus 5m Break, Deep Work 50m Focus 10m Break, Quick Sprint 15m Focus 3m Break, and Custom profiles.
 
-- Warm light parchment background
-- Low contrast earth brown typography designed to reduce sensory fatigue
-- Animal Island UI component rules with pill buttons and soft rounded card containers
+3 **Endless Ambient Display Mode**
+  Fullscreen background animation display without timers or progress bars.
 
-## Live Deployment
+4 **Session History and Statistics**
+  Records completed focus sessions, total minutes focused, and historical logs.
 
-- GitHub Pages https://yourastrophysicist.github.io/neurodivergent-study/
-- Vercel Deployment https://vercel.com/new/clone?repository-url=https://github.com/yourastrophysicist/neurodivergent-study
+5 **Full Keyboard Control**
+  - Space to Start or Pause
+  - N to Skip Phase
+  - R to Reset Phase
+  - H and L to Cycle Themes
+  - K and J to Cycle Render Resolution Modes
+  - E to Toggle Endless Mode
+  - Question mark for Keyboard Shortcuts Help
 
-## Local Setup
+## Live Web Deployments
 
-Open index.html in any modern browser
+- GitHub Pages Live Site https://yourastrophysicist.github.io/neurodivergent-study/
+- Vercel Deployment Link https://vercel.com/new/clone?repository-url=https://github.com/yourastrophysicist/neurodivergent-study
+- GitHub Code Repository https://github.com/yourastrophysicist/neurodivergent-study
