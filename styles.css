@@ -1,6 +1,7 @@
 /* ==========================================================================
-   NEURODIV-STUDY - MIX AND JAM ANIMAL CROSSING DIALOGUE SYSTEM (AC-DIALOGUE)
-   Inspired by https://github.com/mixandjam/AC-Dialogue
+   NEURODIV-STUDY - HYPERFOCUS PORTAL, NEURODOCK SLICER & AUDHD EXECUTIVE FUNCTION
+   Inspired by https://github.com/welshDog/HyperFocus-Zone-Portal,
+   https://github.com/tlennon-ie/neurodock, and https://github.com/assafkip/audhd-executive-function
    ========================================================================== */
 
 :root {
@@ -102,8 +103,8 @@ body.fullscreen-app {
   left: 50%;
   transform: translateX(-50%);
   z-index: 50;
-  width: 94%;
-  max-width: 1180px;
+  width: 95%;
+  max-width: 1220px;
 }
 
 .header-inner {
@@ -140,7 +141,7 @@ body.fullscreen-app {
   color: var(--text-muted);
   padding: 8px 14px;
   border-radius: var(--border-radius-pill);
-  font-size: 0.86rem;
+  font-size: 0.84rem;
   font-weight: 800;
   cursor: pointer;
   transition: var(--transition);
@@ -213,7 +214,6 @@ body.fullscreen-app {
   100% { transform: scale(1) translateY(0); opacity: 1; }
 }
 
-/* Nameplate Badge */
 .ac-nameplate {
   position: absolute;
   top: -18px;
@@ -232,14 +232,6 @@ body.fullscreen-app {
   letter-spacing: 0.02em;
 }
 
-.nameplate-avatar { font-size: 1.1rem; }
-
-/* Speech Content */
-.ac-speech-content {
-  margin-top: 4px;
-  min-height: 48px;
-}
-
 .typewriter-text {
   font-size: 1.05rem;
   font-weight: 700;
@@ -247,7 +239,6 @@ body.fullscreen-app {
   line-height: 1.55;
 }
 
-/* Action Prompt Arrow */
 .ac-dialogue-prompt {
   display: flex;
   justify-content: flex-end;
@@ -275,8 +266,65 @@ body.fullscreen-app {
   50% { transform: translateY(-3px); }
 }
 
-.btn-ac-next:hover {
-  filter: brightness(1.08);
+/* HYPERFOCUS ZONE PORTAL STYLES (welshDog/HyperFocus-Zone-Portal) */
+.hyperfocus-timer-ring {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 4px solid var(--accent-sun);
+  box-shadow: 0 0 20px rgba(214, 158, 46, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-sun);
+}
+
+.hyperfocus-timer-ring span {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--text-main);
+}
+
+.hyperfocus-timer-ring small {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--accent-sun);
+  text-transform: uppercase;
+}
+
+/* NEURODOCK TASK SLICER STYLES (tlennon-ie/neurodock) */
+.form-group-flex {
+  display: flex;
+  gap: 8px;
+}
+
+.sliced-actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sliced-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f7fafc;
+  border: 2px solid #edf2f7;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.step-badge {
+  background: var(--bg-sky);
+  color: var(--accent-sky);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 99px;
+  white-space: nowrap;
 }
 
 /* BOTTOM HUD QUICK ISLAND CONTROLS */
@@ -351,13 +399,10 @@ body.fullscreen-app {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
-.panel-header h2 {
-  font-size: 1.25rem;
-  font-weight: 900;
-}
+.panel-header h2 { font-size: 1.25rem; font-weight: 900; }
 
 .btn-close-panel {
   background: #f7fafc;
@@ -371,6 +416,8 @@ body.fullscreen-app {
   align-items: center;
   justify-content: center;
 }
+
+.panel-desc { font-size: 0.88rem; color: var(--text-muted); }
 
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
@@ -475,6 +522,7 @@ body.fullscreen-app {
 
 .btn { padding: 8px 18px; border-radius: var(--border-radius-pill); font-weight: 800; border: none; cursor: pointer; }
 .btn-primary { background: var(--accent-leaf); color: #fff; }
+.btn-outline { background: transparent; border: 1px solid #e2e8f0; color: var(--text-main); }
 .btn-ghost { background: transparent; color: var(--text-muted); }
 .margin-top-md { margin-top: 16px; }
 .margin-bottom-md { margin-bottom: 16px; }

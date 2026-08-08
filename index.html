@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>neurodiv-study 🍃 - Cozy Animal Crossing Typewriter Dialogue & 3D World</title>
+  <title>neurodiv-study 🍃 - HyperFocus Zone Portal & NeuroDock Executive Function World</title>
   <!-- Google Fonts: Nunito, Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,15 +31,24 @@
 
       <nav class="floating-nav">
         <button class="nav-btn active" data-tab="world" title="3D Flight World"><i class="fa-solid fa-plane-up text-leaf"></i> 3D World</button>
-        <button class="nav-btn" data-tab="studio" title="Accommodation Studio"><i class="fa-solid fa-sliders text-sun"></i> Studio</button>
-        <button class="nav-btn" data-tab="flashcards" title="Smart Flashcards"><i class="fa-solid fa-layer-group text-sky"></i> Cards</button>
-        <button class="nav-btn" data-tab="grammar" title="Formula Matrix"><i class="fa-solid fa-atom text-berry"></i> Matrix</button>
+        <button class="nav-btn" data-tab="hyperfocus" title="HyperFocus Zone Portal"><i class="fa-solid fa-bolt text-sun"></i> HyperFocus</button>
+        <button class="nav-btn" data-tab="neurodock" title="NeuroDock Task Slicer"><i class="fa-solid fa-scissors text-sky"></i> Task Slicer</button>
+        <button class="nav-btn" data-tab="studio" title="Accommodation Studio"><i class="fa-solid fa-sliders text-berry"></i> Studio</button>
+        <button class="nav-btn" data-tab="flashcards" title="Smart Flashcards"><i class="fa-solid fa-layer-group text-mint"></i> Cards</button>
+        <button class="nav-btn" data-tab="grammar" title="Formula Matrix"><i class="fa-solid fa-atom text-rose"></i> Matrix</button>
         <button class="nav-btn" data-tab="community" title="Peer Safe Space"><i class="fa-solid fa-heart text-rose"></i> Safe Space</button>
-        <button class="nav-btn" data-tab="strategy" title="Strategy Guide"><i class="fa-solid fa-compass text-mint"></i> Strategy</button>
       </nav>
 
       <div class="floating-actions">
-        <!-- Animal Crossing Palette Selector -->
+        <!-- Spoon / Energy Level Selector (AuDHD Executive Function) -->
+        <div class="spoon-selector" title="Spoon Theory / Cognitive Energy Level">
+          <select id="spoonSelect" class="form-select-pill">
+            <option value="5">🥄 5 Spoons (Full Focus)</option>
+            <option value="3" selected>🥄 3 Spoons (Moderate)</option>
+            <option value="1">🥄 1 Spoon (Low Energy Dose)</option>
+          </select>
+        </div>
+
         <div class="palette-selector">
           <select id="acThemeSelect" class="form-select-pill">
             <option value="isabelle">🔔 Isabelle (Yellow & Mint)</option>
@@ -51,14 +60,6 @@
 
         <button class="btn-pill" id="exportObsidianBtn" title="Export to Obsidian Markdown"><i class="fa-solid fa-note-sticky text-berry"></i> Exporter</button>
         <button class="btn-pill" id="quickAudioTest" title="Audio Speech Toggle"><i class="fa-solid fa-volume-high"></i></button>
-        
-        <div class="energy-pill">
-          <select id="energyStateSelect" class="form-select-pill">
-            <option value="balanced">🌱 Balanced Energy</option>
-            <option value="high">⚡ High Energy Sprint</option>
-            <option value="low">🛋️ 2-Min Low Dose</option>
-          </select>
-        </div>
       </div>
     </div>
   </header>
@@ -74,12 +75,12 @@
 
       <!-- Typewriter Speech Content -->
       <div class="ac-speech-content">
-        <p class="typewriter-text" id="acTypewriterText">Welcome to Animal Crossing Study! Drag your mouse or use arrow keys to fly your airplane between warm study sanctuaries!</p>
+        <p class="typewriter-text" id="acTypewriterText">Welcome to Animal Crossing Study! Integrated with HyperFocus Portal, NeuroDock Task Slicer, and AuDHD Executive Functioning.</p>
       </div>
 
       <!-- Dialogue Action Prompt Arrow -->
       <div class="ac-dialogue-prompt" id="acPromptBtn">
-        <button class="btn-ac-next"><i class="fa-solid fa-circle-chevron-down"></i> Land on Island</button>
+        <button class="btn-ac-next"><i class="fa-solid fa-circle-chevron-down"></i> Explore Island</button>
       </div>
     </div>
   </div>
@@ -87,20 +88,90 @@
   <!-- FLOATING HUD ISLAND QUICK CONTROLS -->
   <div class="bottom-hud-controls">
     <button class="hud-chip active" data-island="roma"><i class="fa-solid fa-sun"></i> 🏡 Sunny Sanctuary</button>
-    <button class="hud-chip" data-island="firenze"><i class="fa-solid fa-sliders"></i> 🎛️ Studio Island</button>
-    <button class="hud-chip" data-island="venezia"><i class="fa-solid fa-layer-group"></i> 🃏 Smart Cards</button>
-    <button class="hud-chip" data-island="milano"><i class="fa-solid fa-atom"></i> ⚛️ Formula Matrix</button>
+    <button class="hud-chip" data-island="firenze"><i class="fa-solid fa-bolt"></i> ⚡ HyperFocus Portal</button>
+    <button class="hud-chip" data-island="venezia"><i class="fa-solid fa-scissors"></i> ✂️ NeuroDock Slicer</button>
+    <button class="hud-chip" data-island="milano"><i class="fa-solid fa-sliders"></i> 🎛️ Studio Island</button>
     <button class="hud-chip" data-island="costiera"><i class="fa-solid fa-heart"></i> 🌸 Peer Safe Space</button>
   </div>
 
   <!-- LIGHT GLASS OVERLAY CONTENT PANELS -->
   <main class="content-overlay-container">
 
-    <!-- TAB 1: DIAGNOSIS ACCOMMODATION STUDIO -->
+    <!-- TAB 1: HYPERFOCUS ZONE PORTAL (welshDog/HyperFocus-Zone-Portal) -->
+    <section id="tab-hyperfocus" class="overlay-panel hidden">
+      <div class="overlay-card island-card modal-sm">
+        <div class="panel-header">
+          <h2><i class="fa-solid fa-bolt text-sun"></i> HyperFocus Zone Portal</h2>
+          <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="panel-body flex-center">
+          <p class="panel-desc">Immersion zone built to eliminate executive starting friction and keep your brain in the flow state.</p>
+          
+          <div class="hyperfocus-timer-ring margin-top-md">
+            <span id="hfTimerTime">15:00</span>
+            <small id="hfTimerStatus">Zone Ready</small>
+          </div>
+
+          <div class="timer-controls margin-top-md">
+            <button class="btn btn-primary" id="hfStartBtn"><i class="fa-solid fa-play"></i> Enter HyperFocus</button>
+            <button class="btn btn-outline" id="hfPauseBtn"><i class="fa-solid fa-pause"></i> Pause</button>
+            <button class="btn btn-ghost" id="hfResetBtn"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+          </div>
+
+          <div class="ambient-sound-box margin-top-md">
+            <span><i class="fa-solid fa-headphones"></i> Focus Audio:</span>
+            <select id="hfAmbientSelect" class="form-select-pill">
+              <option value="alpha">Alpha Waves (Deep Flow)</option>
+              <option value="rain">Florence Rain Drops</option>
+              <option value="brown">Tuscan Café Brown Noise</option>
+              <option value="none">Silence</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: NEURODOCK TASK SLICER (tlennon-ie/neurodock) -->
+    <section id="tab-neurodock" class="overlay-panel hidden">
+      <div class="overlay-card island-card">
+        <div class="panel-header">
+          <h2><i class="fa-solid fa-scissors text-sky"></i> NeuroDock Executive Task Slicer</h2>
+          <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="panel-body">
+          <p class="panel-desc">Have a big, scary, overwhelming task? Slice it into 3 gentle 2-minute micro-actions to bypass prefrontal blockages!</p>
+
+          <form id="taskSlicerForm" class="margin-top-md">
+            <div class="form-group-flex">
+              <input type="text" id="intimidatingTaskInput" placeholder="Enter intimidating goal (e.g., Study 3 Physics Chapters)..." class="form-control-light" required>
+              <button type="submit" class="btn btn-primary"><i class="fa-solid fa-wand-magic-sparkles"></i> Slice Task</button>
+            </div>
+          </form>
+
+          <div class="sliced-actions-list margin-top-md" id="slicedActionsList">
+            <!-- Dynamically generated micro-actions -->
+            <div class="sliced-item">
+              <span class="step-badge">Step 1 (2m)</span>
+              <span>Open notes to page 1 & read just 3 lines</span>
+            </div>
+            <div class="sliced-item">
+              <span class="step-badge">Step 2 (2m)</span>
+              <span>Jot down 1 key formula on flashcard</span>
+            </div>
+            <div class="sliced-item">
+              <span class="step-badge">Step 3 (2m)</span>
+              <span>Take a 30-second deep breath & celebrate starting!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: DIAGNOSIS ACCOMMODATION STUDIO -->
     <section id="tab-studio" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-sliders text-sun"></i> Universal Neurodivergent Accommodation Studio</h2>
+          <h2><i class="fa-solid fa-sliders text-berry"></i> Universal Accommodation Studio</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body grid-2">
@@ -128,11 +199,11 @@
       </div>
     </section>
 
-    <!-- TAB 2: SMART FLASHCARDS -->
+    <!-- TAB 4: SMART FLASHCARDS -->
     <section id="tab-flashcards" class="overlay-panel hidden">
       <div class="overlay-card island-card modal-sm">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-layer-group text-sky"></i> Active Recall Flashcards</h2>
+          <h2><i class="fa-solid fa-layer-group text-mint"></i> Active Recall Flashcards</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body flex-center">
@@ -167,11 +238,11 @@
       </div>
     </section>
 
-    <!-- TAB 3: FORMULA & CONCEPT MATRIX -->
+    <!-- TAB 5: FORMULA & CONCEPT MATRIX -->
     <section id="tab-grammar" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-atom text-berry"></i> Logical Formula & Concept Matrix</h2>
+          <h2><i class="fa-solid fa-atom text-rose"></i> Logical Formula & Concept Matrix</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body">
@@ -205,7 +276,7 @@
       </div>
     </section>
 
-    <!-- TAB 4: PEER SAFE SPACE -->
+    <!-- TAB 6: PEER SAFE SPACE -->
     <section id="tab-community" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
@@ -217,43 +288,15 @@
             <div class="comm-item">
               <span class="avatar">🌸</span>
               <div>
-                <strong>Astro_Learner:</strong> "Viewing physics laws as visual stories reduced my executive dysfunction immensely!"
+                <strong>Astro_Learner:</strong> "Slicing intimidating tasks into 2-minute steps reduced my executive dysfunction immensely!"
               </div>
             </div>
             <div class="comm-item">
               <span class="avatar">🌱</span>
               <div>
-                <strong>Cozy_Student:</strong> "ADHD tip: The 15-minute micro-sprint timer works like magic when starting feels hard."
+                <strong>Cozy_Student:</strong> "HyperFocus Portal + Alpha binaural sound gets me into flow state within minutes."
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 5: STRATEGY GUIDE -->
-    <section id="tab-strategy" class="overlay-panel hidden">
-      <div class="overlay-card island-card">
-        <div class="panel-header">
-          <h2><i class="fa-solid fa-compass text-mint"></i> Universal Neurodivergent Study Strategy</h2>
-          <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="panel-body grid-2">
-          <div class="strategy-box">
-            <h3>1. The 15-Minute Micro-Sprint</h3>
-            <p>Tell yourself you will only study for 15 minutes. Starting is 90% of executive friction!</p>
-          </div>
-          <div class="strategy-box">
-            <h3>2. Energy Wave Match</h3>
-            <p>High energy = deep dives. Low energy = 2-minute maintenance dose without guilt.</p>
-          </div>
-          <div class="strategy-box">
-            <h3>3. "80% is Exam-Ready" Rule</h3>
-            <p>Exams never require 100% perfection. Stop when daily micro-goals are complete!</p>
-          </div>
-          <div class="strategy-box">
-            <h3>4. Teach a Peer (Protégé Effect)</h3>
-            <p>Explaining a concept to others cements it into your own long-term memory.</p>
           </div>
         </div>
       </div>

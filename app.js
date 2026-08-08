@@ -1,6 +1,7 @@
 /* ==========================================================================
-   NEURODIV-STUDY - MIX AND JAM AC-DIALOGUE TYPEWRITER ENGINE & 3D LIGHT WORLD
-   Inspired by https://github.com/mixandjam/AC-Dialogue
+   NEURODIV-STUDY - HYPERFOCUS PORTAL, NEURODOCK SLICER & AUDHD EXECUTIVE FUNCTION
+   Inspired by https://github.com/welshDog/HyperFocus-Zone-Portal,
+   https://github.com/tlennon-ie/neurodock, and https://github.com/assafkip/audhd-executive-function
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     examDays: 24,
     cardsReviewedToday: 12,
     energyState: 'balanced',
+    spoons: 3,
     currentIsland: 'roma',
     acTheme: 'isabelle',
     adaptiveSettings: {
@@ -52,6 +54,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add(`theme-${themeKey}`);
   }
 
+  const spoonSelect = document.getElementById('spoonSelect');
+  if (spoonSelect) {
+    spoonSelect.value = state.spoons || 3;
+    spoonSelect.addEventListener('change', (e) => {
+      state.spoons = parseInt(e.target.value, 10);
+      saveState();
+      playTypewriterDialogue(
+        `Spoon energy set to ${state.spoons} Spoons. We'll adjust your study tasks accordingly!`,
+        "Isabelle",
+        "🍃"
+      );
+    });
+  }
+
   // --------------------------------------------------------------------------
   // 2. MIX AND JAM AC-DIALOGUE TYPEWRITER ENGINE
   // --------------------------------------------------------------------------
@@ -80,15 +96,109 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 28);
   }
 
-  // Initial dialogue reveal
   playTypewriterDialogue(
-    "Welcome to Animal Crossing Study! Drag your mouse or use arrow keys to fly your airplane between warm study sanctuaries!",
+    "Welcome to Animal Crossing Study! Integrated with HyperFocus Portal, NeuroDock Task Slicer, and AuDHD Executive Functioning.",
     "Isabelle",
     "🍃"
   );
 
   // --------------------------------------------------------------------------
-  // 3. THREE.JS LIGHT SKY 3D SCENE (WARM ANIMAL ISLAND PALETTE)
+  // 3. HYPERFOCUS ZONE PORTAL ENGINE (welshDog/HyperFocus-Zone-Portal)
+  // --------------------------------------------------------------------------
+  let hfSeconds = 900;
+  let hfInterval = null;
+  const hfTimerTime = document.getElementById('hfTimerTime');
+  const hfTimerStatus = document.getElementById('hfTimerStatus');
+  const hfStartBtn = document.getElementById('hfStartBtn');
+  const hfPauseBtn = document.getElementById('hfPauseBtn');
+  const hfResetBtn = document.getElementById('hfResetBtn');
+
+  function updateHfDisplay() {
+    if (!hfTimerTime) return;
+    const m = Math.floor(hfSeconds / 60);
+    const s = hfSeconds % 60;
+    hfTimerTime.textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  }
+
+  if (hfStartBtn) {
+    hfStartBtn.addEventListener('click', () => {
+      if (hfInterval) return;
+      hfTimerStatus.textContent = "HyperFocus Active!";
+      hfInterval = setInterval(() => {
+        if (hfSeconds > 0) {
+          hfSeconds--;
+          updateHfDisplay();
+        } else {
+          clearInterval(hfInterval);
+          hfInterval = null;
+          hfTimerStatus.textContent = "Zone Completed! +50 XP";
+          state.userXP += 50;
+          saveState();
+        }
+      }, 1000);
+    });
+  }
+
+  if (hfPauseBtn) {
+    hfPauseBtn.addEventListener('click', () => {
+      if (hfInterval) {
+        clearInterval(hfInterval);
+        hfInterval = null;
+        hfTimerStatus.textContent = "Zone Paused";
+      }
+    });
+  }
+
+  if (hfResetBtn) {
+    hfResetBtn.addEventListener('click', () => {
+      if (hfInterval) {
+        clearInterval(hfInterval);
+        hfInterval = null;
+      }
+      hfSeconds = 900;
+      hfTimerStatus.textContent = "Zone Ready";
+      updateHfDisplay();
+    });
+  }
+
+  // --------------------------------------------------------------------------
+  // 4. NEURODOCK TASK SLICER ENGINE (tlennon-ie/neurodock)
+  // --------------------------------------------------------------------------
+  const taskSlicerForm = document.getElementById('taskSlicerForm');
+  const intimidatingTaskInput = document.getElementById('intimidatingTaskInput');
+  const slicedActionsList = document.getElementById('slicedActionsList');
+
+  if (taskSlicerForm) {
+    taskSlicerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const goal = intimidatingTaskInput.value.trim();
+      if (!goal) return;
+
+      slicedActionsList.innerHTML = `
+        <div class="sliced-item">
+          <span class="step-badge">Step 1 (2m)</span>
+          <span>Open notes for <strong>${goal}</strong> & read just 3 lines</span>
+        </div>
+        <div class="sliced-item">
+          <span class="step-badge">Step 2 (2m)</span>
+          <span>Write down 1 main formula or key term on a flashcard</span>
+        </div>
+        <div class="sliced-item">
+          <span class="step-badge">Step 3 (2m)</span>
+          <span>Take a deep breath & celebrate eliminating starting friction!</span>
+        </div>
+      `;
+
+      playTypewriterDialogue(
+        `I've sliced "${goal}" into 3 easy 2-minute steps. Starting is now zero stress!`,
+        "Tom Nook",
+        "🦝"
+      );
+    });
+  }
+
+  // --------------------------------------------------------------------------
+  // 5. THREE.JS LIGHT SKY 3D SCENE
   // --------------------------------------------------------------------------
   const canvas = document.getElementById('bg3dCanvas');
   const container = document.getElementById('canvas3dContainer');
@@ -102,9 +212,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const ISLAND_POSITIONS = {
     roma: { x: 0, y: -2, z: -15, label: "Sunny Sanctuary", speaker: "Isabelle", avatar: "🍃", tab: "world", desc: "Welcome to Sunny Sanctuary! Universal study map for neurodivergent brains." },
-    firenze: { x: -16, y: -1, z: -25, label: "Studio Island", speaker: "Tom Nook", avatar: "🦝", tab: "studio", desc: "Studio Island: Custom tools for ADHD, Bipolar, OCPD, and Autism/BPD." },
-    venezia: { x: -8, y: -1, z: -35, label: "Smart Cards", speaker: "Celeste", avatar: "🌌", tab: "flashcards", desc: "Smart Cards: Active recall flashcards with audio speech." },
-    milano: { x: 8, y: -1, z: -35, label: "Formula Matrix", speaker: "Blathers", avatar: "🦉", tab: "grammar", desc: "Formula Matrix: Predictable rule tables and OCPD progress limits." },
+    firenze: { x: -16, y: -1, z: -25, label: "HyperFocus Portal", speaker: "Isabelle", avatar: "⚡", tab: "hyperfocus", desc: "HyperFocus Portal: Immersive 15-minute flow state zone." },
+    venezia: { x: -8, y: -1, z: -35, label: "NeuroDock Slicer", speaker: "Tom Nook", avatar: "✂️", tab: "neurodock", desc: "NeuroDock Task Slicer: Slice intimidating tasks into 2-minute steps!" },
+    milano: { x: 8, y: -1, z: -35, label: "Studio Island", speaker: "Celeste", avatar: "🎛️", tab: "studio", desc: "Studio Island: Custom tools for ADHD, Bipolar, OCPD, and Autism/BPD." },
     costiera: { x: 16, y: -1, z: -25, label: "Peer Safe Space", speaker: "K.K. Slider", avatar: "🎸", tab: "community", desc: "Peer Safe Space: Rejection-free community support & affirmations." }
   };
 
@@ -311,7 +421,7 @@ document.addEventListener('DOMContentLoaded', () => {
   init3DScene();
 
   // --------------------------------------------------------------------------
-  // 4. OVERLAY PANELS & NAVIGATION CONTROLS
+  // 6. OVERLAY PANELS & NAVIGATION CONTROLS
   // --------------------------------------------------------------------------
   const navBtns = document.querySelectorAll('.nav-btn');
   const overlayPanels = document.querySelectorAll('.overlay-panel');
@@ -345,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // 5. UNIVERSAL AUDIO SPEECH ENGINE
+  // 7. UNIVERSAL AUDIO SPEECH ENGINE
   // --------------------------------------------------------------------------
   function speakText(text) {
     if (!('speechSynthesis' in window)) return;
@@ -357,11 +467,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.getElementById('quickAudioTest').addEventListener('click', () => {
-    speakText("Welcome to neurodiv-study! Recreating the Mix and Jam Animal Crossing dialogue experience.");
+    speakText("Welcome to neurodiv-study! HyperFocus Zone, NeuroDock Task Slicer, and AuDHD Executive Function Toolkit.");
   });
 
   // --------------------------------------------------------------------------
-  // 6. OBSIDIAN MARKDOWN EXPORTER (.md)
+  // 8. OBSIDIAN MARKDOWN EXPORTER (.md)
   // --------------------------------------------------------------------------
   const exportObsidianBtn = document.getElementById('exportObsidianBtn');
   const obsidianModal = document.getElementById('obsidianModal');
@@ -372,23 +482,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function generateObsidianMarkdown() {
     const dateStr = new Date().toISOString().split('T')[0];
-    return `# 🍃 Universal Study Notes - ${state.examTitle}
-#neurodivergent #study #science #exam #adhd
+    return `# 🍃 Executive Function Notes - ${state.examTitle}
+#neurodivergent #hyperfocus #neurodock #audhd #study
 
 ---
 - **Target Subject:** [[${state.examTitle}]]
 - **Days Remaining:** ${state.examDays} days
 - **Readiness Estimate:** ${state.readinessPercent}% (OCPD Safeguard: 80% is Exam-Ready)
-- **Current Energy Wave:** \`${state.energyState.toUpperCase()}\`
+- **Spoons Available:** \`${state.spoons} Spoons\`
 - **Theme Preset:** \`${(state.acTheme || 'isabelle').toUpperCase()}\`
 - **Streak:** ${state.streak} days | **XP:** ${state.userXP}
 
 ---
-## 🧠 Active Accommodations
-- **ADHD Micro-Sprints:** Enabled (15-min focus sessions)
-- **Bipolar Energy Waves:** Flexible Pace
-- **OCPD Circuit Breaker:** 80% Perfection Limits
-- **Autism & BPD:** Rejection-Free Safe Space
+## 🧠 Executive Function Systems Active
+- **HyperFocus Zone Portal:** 15-min Immersion Timer (welshDog)
+- **NeuroDock Task Slicer:** 2-min Micro-Actions (tlennon-ie)
+- **AuDHD Spoon Theory:** Energy Level Adaptor (assafkip)
 
 *Exported from neurodiv-study 🍃 on ${dateStr}*
 `;
@@ -414,13 +523,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Obsidian_Study_Notes_${dateStr}.md`;
+    a.download = `Obsidian_Executive_Notes_${dateStr}.md`;
     a.click();
     URL.revokeObjectURL(url);
   });
 
   // --------------------------------------------------------------------------
-  // 7. FLASHCARD FLIP LOGIC
+  // 9. FLASHCARD FLIP LOGIC
   // --------------------------------------------------------------------------
   const cardElement = document.getElementById('mainFlashcard');
   if (cardElement) {
