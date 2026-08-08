@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         clearInterval(typewriterTimer);
       }
-    }, 28);
+    }, 24);
   }
 
   playTypewriterDialogue(
@@ -189,14 +189,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       slicedActionsList.innerHTML = `
         <div class="sliced-item">
+          <input type="checkbox" class="step-checkbox">
           <span class="step-badge">Step 1 (2m)</span>
           <span>Open notes for <strong>${goal}</strong> & read just 3 lines</span>
         </div>
         <div class="sliced-item">
+          <input type="checkbox" class="step-checkbox">
           <span class="step-badge">Step 2 (2m)</span>
           <span>Write down 1 main formula or key term on a flashcard</span>
         </div>
         <div class="sliced-item">
+          <input type="checkbox" class="step-checkbox">
           <span class="step-badge">Step 3 (2m)</span>
           <span>Take a deep breath & celebrate eliminating starting friction!</span>
         </div>
@@ -211,13 +214,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 5. THREE.JS LIGHT SKY 3D SCENE
+  // 5. THREE.JS LIGHT SKY 3D SCENE & RAYCASTER INTERACTIVITY
   // --------------------------------------------------------------------------
   const canvas = document.getElementById('bg3dCanvas');
   const container = document.getElementById('canvas3dContainer');
   let scene, camera, renderer, planeGroup, propellerMesh;
   let islands = {};
+  let islandMeshes = [];
   let clouds = [];
+  let raycaster, mousePointer;
 
   let mouseX = 0, mouseY = 0;
   let targetPlaneX = 0, targetPlaneY = 0;
@@ -247,6 +252,9 @@ document.addEventListener('DOMContentLoaded', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+    raycaster = new THREE.Raycaster();
+    mousePointer = new THREE.Vector2();
+
     const ambientLight = new THREE.AmbientLight(0xfffaed, 1.1);
     scene.add(ambientLight);
 
@@ -260,6 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('resize', onWindowResize);
     window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('pointerdown', onCanvasClick);
 
     animate3D();
   }
@@ -306,7 +315,9 @@ document.addEventListener('DOMContentLoaded', () => {
         flatShading: true 
       });
       const terrainMesh = new THREE.Mesh(terrainGeo, terrainMat);
+      terrainMesh.userData = { islandKey: key };
       islandGroup.add(terrainMesh);
+      islandMeshes.push(terrainMesh);
 
       const ringGeo = new THREE.TorusGeometry(3.8, 0.08, 8, 24);
       const ringMat = new THREE.MeshBasicMaterial({ color: 0xf6e05e, wireframe: true });
@@ -348,6 +359,22 @@ document.addEventListener('DOMContentLoaded', () => {
   function onMouseMove(e) {
     mouseX = (e.clientX / window.innerWidth) * 2 - 1;
     mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+  }
+
+  function onCanvasClick(e) {
+    if (e.target.tagName !== 'CANVAS') return;
+    mousePointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mousePointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mousePointer, camera);
+    const intersects = raycaster.intersectObjects(islandMeshes);
+
+    if (intersects.length > 0) {
+      const hitMesh = intersects[0].object;
+      if (hitMesh.userData && hitMesh.userData.islandKey) {
+        flyToIsland(hitMesh.userData.islandKey);
+      }
+    }
   }
 
   function onWindowResize() {
@@ -468,7 +495,67 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // 7. UNIVERSAL AUDIO SPEECH ENGINE
+  // 7. FLASHCARD DECK REVIEWS & SRS INTERACTIVITY
+  // --------------------------------------------------------------------------
+  const FLASHCARD_DECK = [
+    { word: "Keplerian Motion", phonetic: "[Elliptical Planetary Orbits]", meaning: "Planetary Elliptical Orbit Law", ex: "Planets move in ellipses with the Sun at one focus.", tag: "Astrophysics" },
+    { word: "Superposition", phonetic: "[Quantum Density States]", meaning: "Quantum State Coexistence", ex: "A system remains in all possible states until observed.", tag: "Quantum Physics" },
+    { word: "Special Relativity", phonetic: "[E = mc²]", meaning: "Mass-Energy Equivalence", ex: "Energy equals mass times the speed of light squared.", tag: "Physics" },
+    { word: "Entropy (S)", phonetic: "[Measure of Disorder]", meaning: "Second Law of Thermodynamics", ex: "Total entropy of an isolated system always increases.", tag: "Thermodynamics" }
+  ];
+
+  let cardIdx = 0;
+  const mainFlashcard = document.getElementById('mainFlashcard');
+  const cardItalian = document.getElementById('cardItalian');
+  const cardPhonetic = document.getElementById('cardPhonetic');
+  const cardEnglish = document.getElementById('cardEnglish');
+  const cardExampleIt = document.getElementById('cardExampleIt');
+
+  function renderCard(idx) {
+    if (!mainFlashcard) return;
+    const item = FLASHCARD_DECK[idx % FLASHCARD_DECK.length];
+    mainFlashcard.classList.remove('flipped');
+    cardItalian.textContent = item.word;
+    cardPhonetic.textContent = item.phonetic;
+    cardEnglish.textContent = item.meaning;
+    cardExampleIt.textContent = `"${item.ex}"`;
+  }
+
+  if (mainFlashcard) {
+    mainFlashcard.addEventListener('click', () => {
+      mainFlashcard.classList.toggle('flipped');
+    });
+  }
+
+  ['srsAgain', 'srsHard', 'srsGood', 'srsEasy'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) {
+      btn.addEventListener('click', () => {
+        cardIdx++;
+        renderCard(cardIdx);
+        state.userXP += 10;
+        saveState();
+      });
+    }
+  });
+
+  // --------------------------------------------------------------------------
+  // 8. NOOK / POKEPI QUEST STAMP INTERACTIVITY
+  // --------------------------------------------------------------------------
+  document.querySelectorAll('.nook-stamp-card').forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('completed');
+      if (card.classList.contains('completed')) {
+        state.userXP += 100;
+      } else {
+        state.userXP = Math.max(0, state.userXP - 100);
+      }
+      saveState();
+    });
+  });
+
+  // --------------------------------------------------------------------------
+  // 9. UNIVERSAL AUDIO SPEECH ENGINE
   // --------------------------------------------------------------------------
   function speakText(text) {
     if (!('speechSynthesis' in window)) return;
@@ -484,7 +571,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // 8. OBSIDIAN MARKDOWN EXPORTER (.md)
+  // 10. OBSIDIAN MARKDOWN EXPORTER (.md)
   // --------------------------------------------------------------------------
   const exportObsidianBtn = document.getElementById('exportObsidianBtn');
   const obsidianModal = document.getElementById('obsidianModal');
@@ -542,13 +629,4 @@ document.addEventListener('DOMContentLoaded', () => {
     URL.revokeObjectURL(url);
   });
 
-  // --------------------------------------------------------------------------
-  // 9. FLASHCARD FLIP LOGIC
-  // --------------------------------------------------------------------------
-  const cardElement = document.getElementById('mainFlashcard');
-  if (cardElement) {
-    cardElement.addEventListener('click', () => {
-      cardElement.classList.toggle('flipped');
-    });
-  }
 });
