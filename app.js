@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     kuro: { name: "Kuro", avatar: "", phrase: "Kuro here. Let us slice some tasks and play games.", themeClass: "pokepi-kuro" },
     jun: { name: "Jun", avatar: "", phrase: "Jun is here to make studying simple and easy.", themeClass: "pokepi-jun" },
     pierre: { name: "Pierre", avatar: "", phrase: "Pierre will help you fly smoothly into flow state.", themeClass: "pokepi-pierre" },
-    ricky: { name: "Ricky", avatar: " ", phrase: "Ricky says 15 minute hyperfocus punch. Let us go.", themeClass: "pokepi-ricky" },
+    ricky: { name: "Ricky", avatar: "", phrase: "Ricky says 15 minute hyperfocus punch. Let us go.", themeClass: "pokepi-ricky" },
     maruta: { name: "Maruta", avatar: "", phrase: "Science formula matrix loaded and ready.", themeClass: "pokepi-maruta" }
   };
 
@@ -200,6 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --------------------------------------------------------------------------
+  // 5. THREE.JS 3D SCENE & RAYCASTER INTERACTIVITY
+  // --------------------------------------------------------------------------
   const canvas = document.getElementById('bg3dCanvas');
   const container = document.getElementById('canvas3dContainer');
   let scene, camera, renderer, planeGroup, propellerMesh;
@@ -210,15 +213,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let mouseX = 0, mouseY = 0;
   let targetPlaneX = 0, targetPlaneY = 0;
-  let targetCamX = 0, targetCamZ = -15;
+  let targetCamX = 0, targetCamZ = -10;
   let initRetries = 0;
 
   const ISLAND_POSITIONS = {
-    roma: { x: 0, y: -2, z: -15, label: "Toro's House", speaker: "Toro Inoue", avatar: "", tab: "world", desc: "Welcome to Toro's House. Universal study map for neurodivergent minds." },
-    firenze: { x: -16, y: -1, z: -25, label: "HyperFocus Portal", speaker: "Ricky", avatar: "", tab: "hyperfocus", desc: "HyperFocus Portal. Immersive 15 minute flow state zone." },
-    venezia: { x: -8, y: -1, z: -35, label: "NeuroDock Slicer", speaker: "Kuro", avatar: "", tab: "neurodock", desc: "NeuroDock Task Slicer. Slice intimidating tasks into 2 minute steps." },
-    milano: { x: 8, y: -1, z: -35, label: "Studio Island", speaker: "Jun", avatar: "", tab: "studio", desc: "Studio Island. Custom tools for ADHD, Bipolar, OCPD, and Autism or BPD." },
-    costiera: { x: 16, y: -1, z: -25, label: "Pokepi Square", speaker: "Pierre", avatar: "", tab: "community", desc: "Pokepi Square. Rejection free community support and word exchanges." }
+    roma: { x: 0, y: -1.5, z: -10, label: "Toro's House", speaker: "Toro Inoue", avatar: "", tab: "world", desc: "Welcome to Toro's House. Universal study map for neurodivergent minds." },
+    firenze: { x: -12, y: -0.5, z: -18, label: "HyperFocus Portal", speaker: "Ricky", avatar: "", tab: "hyperfocus", desc: "HyperFocus Portal. Immersive 15 minute flow state zone." },
+    venezia: { x: -6, y: -0.5, z: -24, label: "NeuroDock Slicer", speaker: "Kuro", avatar: "", tab: "neurodock", desc: "NeuroDock Task Slicer. Slice intimidating tasks into 2 minute steps." },
+    milano: { x: 6, y: -0.5, z: -24, label: "Studio Island", speaker: "Jun", avatar: "", tab: "studio", desc: "Studio Island. Custom tools for ADHD, Bipolar, OCPD, and Autism or BPD." },
+    costiera: { x: 12, y: -0.5, z: -18, label: "Pokepi Square", speaker: "Pierre", avatar: "", tab: "community", desc: "Pokepi Square. Rejection free community support and word exchanges." }
   };
 
   function init3DScene() {
@@ -232,13 +235,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xfcfbf7);
-      scene.fog = new THREE.FogExp2(0xfcfbf7, 0.012);
 
       const aspect = window.innerWidth / window.innerHeight;
       camera = new THREE.PerspectiveCamera(55, aspect, 0.1, 1000);
-      camera.position.set(0, 4, 10);
-      camera.lookAt(0, 0, -15);
+      camera.position.set(0, 3, 8);
+      camera.lookAt(0, 0, -10);
 
       renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -247,10 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
       raycaster = new THREE.Raycaster();
       mousePointer = new THREE.Vector2();
 
-      const ambientLight = new THREE.AmbientLight(0xfffaed, 1.1);
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
       scene.add(ambientLight);
 
-      const sunLight = new THREE.DirectionalLight(0xfef3c7, 1.3);
+      const sunLight = new THREE.DirectionalLight(0xfff5ea, 1.5);
       sunLight.position.set(10, 25, 10);
       scene.add(sunLight);
 
@@ -272,31 +273,31 @@ document.addEventListener('DOMContentLoaded', () => {
   function create3DAirplane() {
     planeGroup = new THREE.Group();
 
-    const bodyGeo = new THREE.ConeGeometry(0.8, 3.5, 8);
+    const bodyGeo = new THREE.ConeGeometry(1.0, 4.2, 8);
     bodyGeo.rotateX(Math.PI / 2);
-    const bodyMat = new THREE.MeshPhongMaterial({ color: 0xe6a23c, flatShading: true });
+    const bodyMat = new THREE.MeshLambertMaterial({ color: 0xf59e0b });
     const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat);
     planeGroup.add(bodyMesh);
 
-    const wingGeo = new THREE.BoxGeometry(4.5, 0.1, 0.8);
-    const wingMat = new THREE.MeshPhongMaterial({ color: 0x42b883, flatShading: true });
+    const wingGeo = new THREE.BoxGeometry(5.5, 0.15, 1.0);
+    const wingMat = new THREE.MeshLambertMaterial({ color: 0x10b981 });
     const wingMesh = new THREE.Mesh(wingGeo, wingMat);
     wingMesh.position.set(0, 0.1, 0.2);
     planeGroup.add(wingMesh);
 
-    const tailGeo = new THREE.BoxGeometry(0.1, 0.9, 0.6);
-    const tailMat = new THREE.MeshPhongMaterial({ color: 0xf56c6c, flatShading: true });
+    const tailGeo = new THREE.BoxGeometry(0.12, 1.1, 0.7);
+    const tailMat = new THREE.MeshLambertMaterial({ color: 0xef4444 });
     const tailMesh = new THREE.Mesh(tailGeo, tailMat);
-    tailMesh.position.set(0, 0.5, 1.4);
+    tailMesh.position.set(0, 0.6, 1.6);
     planeGroup.add(tailMesh);
 
-    const propGeo = new THREE.BoxGeometry(1.4, 0.15, 0.05);
-    const propMat = new THREE.MeshPhongMaterial({ color: 0xffffff });
+    const propGeo = new THREE.BoxGeometry(1.6, 0.2, 0.06);
+    const propMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
     propellerMesh = new THREE.Mesh(propGeo, propMat);
-    propellerMesh.position.set(0, 0, -1.8);
+    propellerMesh.position.set(0, 0, -2.1);
     planeGroup.add(propellerMesh);
 
-    planeGroup.position.set(0, 1, -5);
+    planeGroup.position.set(0, 0.5, -4);
     scene.add(planeGroup);
   }
 
@@ -305,28 +306,27 @@ document.addEventListener('DOMContentLoaded', () => {
       const info = ISLAND_POSITIONS[key];
       const islandGroup = new THREE.Group();
 
-      const terrainGeo = new THREE.CylinderGeometry(3.5, 1.5, 1.8, 7);
-      const terrainMat = new THREE.MeshPhongMaterial({ 
-        color: key === 'roma' ? 0x68d391 : key === 'firenze' ? 0x63b3ed : 0xb794f4, 
-        flatShading: true 
+      const terrainGeo = new THREE.CylinderGeometry(4.2, 2.0, 2.2, 8);
+      const terrainMat = new THREE.MeshLambertMaterial({ 
+        color: key === 'roma' ? 0x10b981 : key === 'firenze' ? 0x0ea5e9 : key === 'venezia' ? 0x8b5cf6 : key === 'milano' ? 0xec4899 : 0xf59e0b
       });
       const terrainMesh = new THREE.Mesh(terrainGeo, terrainMat);
       terrainMesh.userData = { islandKey: key };
       islandGroup.add(terrainMesh);
       islandMeshes.push(terrainMesh);
 
-      const ringGeo = new THREE.TorusGeometry(3.8, 0.08, 8, 24);
-      const ringMat = new THREE.MeshBasicMaterial({ color: 0xf6e05e, wireframe: true });
+      const ringGeo = new THREE.TorusGeometry(4.5, 0.12, 8, 24);
+      const ringMat = new THREE.MeshBasicMaterial({ color: 0xfacc15 });
       const ringMesh = new THREE.Mesh(ringGeo, ringMat);
       ringMesh.rotation.x = Math.PI / 2;
-      ringMesh.position.y = 0.9;
+      ringMesh.position.y = 1.1;
       islandGroup.add(ringMesh);
 
-      for (let i = 0; i < 3; i++) {
-        const treeGeo = new THREE.ConeGeometry(0.5, 1.2, 5);
-        const treeMat = new THREE.MeshPhongMaterial({ color: 0x2f855a, flatShading: true });
+      for (let i = 0; i < 4; i++) {
+        const treeGeo = new THREE.ConeGeometry(0.7, 1.6, 6);
+        const treeMat = new THREE.MeshLambertMaterial({ color: 0x047857 });
         const treeMesh = new THREE.Mesh(treeGeo, treeMat);
-        treeMesh.position.set((Math.random() - 0.5) * 3, 1.2, (Math.random() - 0.5) * 3);
+        treeMesh.position.set((Math.random() - 0.5) * 3.5, 1.5, (Math.random() - 0.5) * 3.5);
         islandGroup.add(treeMesh);
       }
 
@@ -337,15 +337,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function create3DClouds() {
-    for (let i = 0; i < 20; i++) {
-      const cloudGeo = new THREE.DodecahedronGeometry(1.4 + Math.random() * 0.8, 1);
-      const cloudMat = new THREE.MeshPhongMaterial({ color: 0xffffff, transparent: true, opacity: 0.85, flatShading: true });
+    for (let i = 0; i < 22; i++) {
+      const cloudGeo = new THREE.DodecahedronGeometry(1.6 + Math.random() * 1.0, 1);
+      const cloudMat = new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 });
       const cloudMesh = new THREE.Mesh(cloudGeo, cloudMat);
 
       cloudMesh.position.set(
-        (Math.random() - 0.5) * 70,
-        Math.random() * 10 + 2,
-        (Math.random() - 0.5) * 60 - 10
+        (Math.random() - 0.5) * 80,
+        Math.random() * 12 + 2,
+        (Math.random() - 0.5) * 60 - 5
       );
       scene.add(cloudMesh);
       clouds.push(cloudMesh);
@@ -394,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (propellerMesh) propellerMesh.rotation.z += 0.4;
 
     targetPlaneX = mouseX * 6;
-    targetPlaneY = mouseY * 3 + 1;
+    targetPlaneY = mouseY * 3 + 0.5;
 
     if (planeGroup) {
       planeGroup.position.x += (targetPlaneX - planeGroup.position.x) * 0.05;
@@ -414,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     clouds.forEach(c => {
       c.position.x += 0.02;
-      if (c.position.x > 35) c.position.x = -35;
+      if (c.position.x > 40) c.position.x = -40;
     });
 
     if (camera) {
@@ -434,7 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
     state.currentIsland = islandKey;
 
     targetCamX = target.x;
-    targetCamZ = target.z + 12;
+    targetCamZ = target.z + 10;
 
     playTypewriterDialogue(target.desc, target.speaker, target.avatar);
     

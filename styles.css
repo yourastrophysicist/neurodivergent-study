@@ -1,6 +1,5 @@
 /* ==========================================================================
-   NEURODIV-STUDY - DOKO DEMO ISSYO & TORO INOUE UI SYSTEM
-   Inspired by https://github.com/pumpkinhasapatch/dokodemo-psp-english
+   NEURODIV STUDY - DOKO DEMO ISSYO & ANIMAL ISLAND UI DESIGN SYSTEM
    ========================================================================== */
 
 :root {
@@ -12,7 +11,7 @@
   --text-muted: #716052;
   --text-dim: #a09082;
 
-  /* Toro Inoue Preset (Default White Cat) */
+  /* Toro Inoue Preset */
   --accent-leaf: #42b883;
   --bg-leaf: #e6fffa;
   --accent-sun: #e6a23c;
@@ -33,7 +32,7 @@
   --box-shadow-cozy: 0 10px 25px rgba(56, 43, 34, 0.08);
 }
 
-/* Kuro Preset (Black Cat) */
+/* Kuro Preset */
 body.pokepi-kuro {
   --bg-parchment: #f4f2ed;
   --accent-leaf: #2d3748;
@@ -44,7 +43,7 @@ body.pokepi-kuro {
   --bg-sky: #ebf8ff;
 }
 
-/* Jun Preset (Pink Rabbit) */
+/* Jun Preset */
 body.pokepi-jun {
   --bg-parchment: #fff5f7;
   --accent-leaf: #ed64a6;
@@ -53,21 +52,21 @@ body.pokepi-jun {
   --bg-sun: #fefcbf;
 }
 
-/* Pierre Preset (Dog) */
+/* Pierre Preset */
 body.pokepi-pierre {
   --bg-parchment: #f0f9ff;
   --accent-leaf: #0284c7;
   --bg-leaf: #e0f2fe;
 }
 
-/* Ricky Preset (Frog) */
+/* Ricky Preset */
 body.pokepi-ricky {
   --bg-parchment: #f0fdf4;
   --accent-leaf: #16a34a;
   --bg-leaf: #dcfce7;
 }
 
-/* Maruta Preset (Robot) */
+/* Maruta Preset */
 body.pokepi-maruta {
   --bg-parchment: #f8fafc;
   --accent-leaf: #475569;
@@ -90,11 +89,12 @@ body.fullscreen-app {
   transition: background-color 0.4s ease;
 }
 
-/* 3D LIGHT SKY CANVAS VIEWPORT */
+/* 3D VIVID LIGHT SKY CANVAS VIEWPORT */
 .fullscreen-canvas-container {
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
   z-index: 1;
+  background: linear-gradient(180deg, #e0f2fe 0%, #fef3c7 45%, #fcfbf7 100%);
 }
 
 #bg3dCanvas {
@@ -103,7 +103,7 @@ body.fullscreen-app {
   display: block;
 }
 
-/* OFFICIAL ANIMAL-ISLAND-UI DIVIDER COMPONENT */
+/* ANIMAL ISLAND UI DIVIDER COMPONENT */
 .animal-divider {
   display: flex;
   align-items: center;
@@ -116,19 +116,6 @@ body.fullscreen-app {
   flex: 1;
   height: 0;
   border-bottom: 2px dashed rgba(113, 96, 82, 0.25);
-}
-
-.divider-icon {
-  font-size: 1rem;
-  background: var(--bg-leaf);
-  color: var(--accent-leaf);
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(66, 184, 131, 0.3);
 }
 
 /* POKEPI STAMP CARDS */
@@ -146,6 +133,7 @@ body.fullscreen-app {
   border: 2px solid #e8e2d5;
   padding: 14px 18px;
   border-radius: 18px;
+  cursor: pointer;
 }
 
 .nook-stamp-card.completed {
@@ -153,7 +141,6 @@ body.fullscreen-app {
   border-color: var(--accent-leaf);
 }
 
-.stamp-icon { font-size: 1.6rem; }
 .stamp-info strong { display: block; font-size: 0.95rem; }
 .stamp-info p { font-size: 0.82rem; color: var(--text-muted); }
 
@@ -179,7 +166,7 @@ body.fullscreen-app {
 }
 
 .header-inner {
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(16px);
   border: 3px solid #e8e2d5;
   padding: 8px 18px;
@@ -198,7 +185,6 @@ body.fullscreen-app {
   font-size: 1.1rem;
 }
 
-.logo-icon { font-size: 1.3rem; }
 .logo-text { color: var(--accent-leaf); }
 
 .floating-nav {
@@ -257,7 +243,7 @@ body.fullscreen-app {
   font-family: inherit;
 }
 
-/* DOKO DEMO ISSYO DIALOGUE SYSTEM */
+/* TYPEWRITER DIALOGUE BOX */
 .ac-dialogue-wrapper {
   position: fixed;
   top: 90px;
@@ -582,7 +568,6 @@ body.fullscreen-app {
 
 .community-mini-feed { display: flex; flex-direction: column; gap: 12px; }
 .comm-item { display: flex; align-items: center; gap: 12px; background: #fdfbf7; padding: 12px 16px; border-radius: 14px; border: 1px solid #e8e2d5; font-size: 0.9rem; }
-.avatar { font-size: 1.4rem; }
 
 .text-leaf { color: var(--accent-leaf); }
 .text-sun { color: var(--accent-sun); }
