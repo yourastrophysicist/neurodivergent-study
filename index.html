@@ -11,8 +11,13 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
-  <!-- Three.js Library for 3D Engine -->
+  <!-- Three.js Primary CDN & Fallback -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    if (typeof THREE === 'undefined') {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"><\/script>');
+    }
+  </script>
 </head>
 <body class="dokodemo-theme pokepi-toro fullscreen-app">
 
@@ -84,7 +89,7 @@
 
       <!-- Dialogue Action Prompt Arrow -->
       <div class="ac-dialogue-prompt" id="acPromptBtn">
-        <button class="btn-ac-next"><i class="fa-solid fa-circle-chevron-down"></i> Fly to Island</button>
+        <button class="btn-ac-next" id="acNextActionBtn"><i class="fa-solid fa-circle-chevron-down"></i> Fly to Island</button>
       </div>
     </div>
   </div>
@@ -172,14 +177,17 @@
 
           <div class="sliced-actions-list margin-top-md" id="slicedActionsList">
             <div class="sliced-item">
+              <input type="checkbox" class="step-checkbox">
               <span class="step-badge">Step 1 (2m)</span>
               <span>Open notes to page 1 & read just 3 lines</span>
             </div>
             <div class="sliced-item">
+              <input type="checkbox" class="step-checkbox">
               <span class="step-badge">Step 2 (2m)</span>
               <span>Jot down 1 key formula on flashcard</span>
             </div>
             <div class="sliced-item">
+              <input type="checkbox" class="step-checkbox">
               <span class="step-badge">Step 3 (2m)</span>
               <span>Take a 30-second deep breath & celebrate starting!</span>
             </div>

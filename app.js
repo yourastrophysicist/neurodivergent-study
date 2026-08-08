@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 5. THREE.JS LIGHT SKY 3D SCENE & RAYCASTER INTERACTIVITY
+  // 5. THREE.JS LIGHT SKY 3D SCENE & RAYCASTER INTERACTIVITY WITH RETRY ENGINE
   // --------------------------------------------------------------------------
   const canvas = document.getElementById('bg3dCanvas');
   const container = document.getElementById('canvas3dContainer');
@@ -227,6 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let mouseX = 0, mouseY = 0;
   let targetPlaneX = 0, targetPlaneY = 0;
   let targetCamX = 0, targetCamZ = -15;
+  let initRetries = 0;
 
   const ISLAND_POSITIONS = {
     roma: { x: 0, y: -2, z: -15, label: "Toro's House", speaker: "Toro Inoue", avatar: "🐱", tab: "world", desc: "Nya~! Welcome to Toro's House! Universal study map for neurodivergent minds." },
@@ -237,40 +238,51 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   function init3DScene() {
-    if (!THREE || !canvas || !container) return;
+    if (typeof THREE === 'undefined' || !canvas || !container) {
+      if (initRetries < 30) {
+        initRetries++;
+        setTimeout(init3DScene, 150);
+      }
+      return;
+    }
 
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xfcfbf7);
-    scene.fog = new THREE.FogExp2(0xfcfbf7, 0.012);
+    try {
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xfcfbf7);
+      scene.fog = new THREE.FogExp2(0xfcfbf7, 0.012);
 
-    const aspect = window.innerWidth / window.innerHeight;
-    camera = new THREE.PerspectiveCamera(55, aspect, 0.1, 1000);
-    camera.position.set(0, 4, 10);
-    camera.lookAt(0, 0, -15);
+      const aspect = window.innerWidth / window.innerHeight;
+      camera = new THREE.PerspectiveCamera(55, aspect, 0.1, 1000);
+      camera.position.set(0, 4, 10);
+      camera.lookAt(0, 0, -15);
 
-    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    raycaster = new THREE.Raycaster();
-    mousePointer = new THREE.Vector2();
+      raycaster = new THREE.Raycaster();
+      mousePointer = new THREE.Vector2();
 
-    const ambientLight = new THREE.AmbientLight(0xfffaed, 1.1);
-    scene.add(ambientLight);
+      const ambientLight = new THREE.AmbientLight(0xfffaed, 1.1);
+      scene.add(ambientLight);
 
-    const sunLight = new THREE.DirectionalLight(0xfef3c7, 1.3);
-    sunLight.position.set(10, 25, 10);
-    scene.add(sunLight);
+      const sunLight = new THREE.DirectionalLight(0xfef3c7, 1.3);
+      sunLight.position.set(10, 25, 10);
+      scene.add(sunLight);
 
-    create3DAirplane();
-    create3DIslands();
-    create3DClouds();
+      create3DAirplane();
+      create3DIslands();
+      create3DClouds();
 
-    window.addEventListener('resize', onWindowResize);
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('pointerdown', onCanvasClick);
+      window.addEventListener('resize', onWindowResize);
+      window.addEventListener('mousemove', onMouseMove);
+      window.addEventListener('touchmove', onTouchMove);
+      window.addEventListener('pointerdown', onCanvasClick);
 
-    animate3D();
+      animate3D();
+    } catch (e) {
+      console.warn("Three.js WebGL fallback mode:", e);
+    }
   }
 
   function create3DAirplane() {
@@ -361,11 +373,19 @@ document.addEventListener('DOMContentLoaded', () => {
     mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
   }
 
+  function onTouchMove(e) {
+    if (e.touches.length > 0) {
+      mouseX = (e.touches[0].clientX / window.innerWidth) * 2 - 1;
+      mouseY = -(e.touches[0].clientY / window.innerHeight) * 2 + 1;
+    }
+  }
+
   function onCanvasClick(e) {
     if (e.target.tagName !== 'CANVAS') return;
     mousePointer.x = (e.clientX / window.innerWidth) * 2 - 1;
     mousePointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
+    if (!raycaster || !camera) return;
     raycaster.setFromCamera(mousePointer, camera);
     const intersects = raycaster.intersectObjects(islandMeshes);
 
@@ -402,8 +422,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let time = Date.now() * 0.0015;
     Object.keys(islands).forEach((k, idx) => {
-      islands[k].position.y = ISLAND_POSITIONS[k].y + Math.sin(time + idx) * 0.3;
-      islands[k].rotation.y += 0.005;
+      if (islands[k]) {
+        islands[k].position.y = ISLAND_POSITIONS[k].y + Math.sin(time + idx) * 0.3;
+        islands[k].rotation.y += 0.005;
+      }
     });
 
     clouds.forEach(c => {
@@ -411,11 +433,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (c.position.x > 35) c.position.x = -35;
     });
 
-    camera.position.x += (targetCamX - camera.position.x) * 0.04;
-    camera.position.z += (targetCamZ - camera.position.z) * 0.04;
-    camera.lookAt(targetCamX, 0, targetCamZ - 10);
+    if (camera) {
+      camera.position.x += (targetCamX - camera.position.x) * 0.04;
+      camera.position.z += (targetCamZ - camera.position.z) * 0.04;
+      camera.lookAt(targetCamX, 0, targetCamZ - 10);
+    }
 
-    renderer.render(scene, camera);
+    if (renderer && scene && camera) {
+      renderer.render(scene, camera);
+    }
   }
 
   function flyToIsland(islandKey) {
@@ -432,6 +458,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (b.getAttribute('data-island') === islandKey) b.classList.add('active');
       else b.classList.remove('active');
     });
+
+    if (target.tab && target.tab !== 'world') {
+      openPanel(target.tab);
+    }
   }
 
   document.querySelectorAll('.hud-chip').forEach(btn => {
@@ -445,8 +475,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (acPromptBtn) {
     acPromptBtn.addEventListener('click', () => {
       const target = ISLAND_POSITIONS[state.currentIsland || 'roma'];
-      if (target && target.tab && target.tab !== 'world') {
-        openPanel(target.tab);
+      if (target && target.tab) {
+        if (target.tab === 'world') {
+          openPanel('hyperfocus');
+        } else {
+          openPanel(target.tab);
+        }
       }
     });
   }
