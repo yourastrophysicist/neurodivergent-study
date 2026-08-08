@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>neurodiv-study 🍃 - Official Animal-Island-UI & Nook Miles Study World</title>
+  <title>neurodiv-study 🐱 - Doko Demo Issyo & Toro Inoue UI World</title>
   <!-- Google Fonts: Nunito, Noto Sans SC -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,18 +14,18 @@
   <!-- Three.js Library for 3D Engine -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
-<body class="animal-island-theme theme-isabelle fullscreen-app">
+<body class="dokodemo-theme pokepi-toro fullscreen-app">
 
   <!-- 3D LIGHT SKY CANVAS ENVIRONMENT -->
   <div class="fullscreen-canvas-container" id="canvas3dContainer">
     <canvas id="bg3dCanvas"></canvas>
   </div>
 
-  <!-- FLOATING ANIMAL-ISLAND-UI LIGHT NAVBAR -->
+  <!-- FLOATING DOKO DEMO ISSYO LIGHT NAVBAR -->
   <header class="floating-header">
     <div class="header-inner">
       <div class="logo-pill">
-        <span class="logo-icon">🍃</span>
+        <span class="logo-icon">🐱</span>
         <span class="logo-text">neurodiv-study</span>
       </div>
 
@@ -33,7 +33,7 @@
         <button class="nav-btn active" data-tab="world" title="3D Flight World"><i class="fa-solid fa-plane-up text-leaf"></i> 3D World</button>
         <button class="nav-btn" data-tab="hyperfocus" title="HyperFocus Zone Portal"><i class="fa-solid fa-bolt text-sun"></i> HyperFocus</button>
         <button class="nav-btn" data-tab="neurodock" title="NeuroDock Task Slicer"><i class="fa-solid fa-scissors text-sky"></i> Task Slicer</button>
-        <button class="nav-btn" data-tab="nookmiles" title="Nook Miles Quests"><i class="fa-solid fa-stamp text-sun"></i> Nook Quests</button>
+        <button class="nav-btn" data-tab="nookmiles" title="Pokepi Quests"><i class="fa-solid fa-cat text-sun"></i> Pokepi Quests</button>
         <button class="nav-btn" data-tab="studio" title="Accommodation Studio"><i class="fa-solid fa-sliders text-berry"></i> Studio</button>
         <button class="nav-btn" data-tab="flashcards" title="Smart Flashcards"><i class="fa-solid fa-layer-group text-mint"></i> Cards</button>
         <button class="nav-btn" data-tab="grammar" title="Formula Matrix"><i class="fa-solid fa-atom text-rose"></i> Matrix</button>
@@ -41,21 +41,24 @@
       </nav>
 
       <div class="floating-actions">
-        <!-- Spoon Energy Level Selector -->
+        <!-- Doko Demo Issyo Pokepi Character Selector -->
+        <div class="pokepi-selector" title="Select Doko Demo Issyo Pokepi Companion">
+          <select id="pokepiSelect" class="form-select-pill">
+            <option value="toro">🐱 Toro Inoue (White Cat)</option>
+            <option value="kuro">🐈‍⬛ Kuro (Black Cat)</option>
+            <option value="jun">🐰 Jun (Pink Rabbit)</option>
+            <option value="pierre">🐶 Pierre (Dog)</option>
+            <option value="ricky">🐸 Ricky (Frog)</option>
+            <option value="maruta">🤖 Maruta (Robot)</option>
+          </select>
+        </div>
+
+        <!-- Spoon Energy Selector -->
         <div class="spoon-selector" title="AuDHD Spoon Theory Energy Level">
           <select id="spoonSelect" class="form-select-pill">
             <option value="5">🥄 5 Spoons</option>
             <option value="3" selected>🥄 3 Spoons</option>
             <option value="1">🥄 1 Spoon</option>
-          </select>
-        </div>
-
-        <div class="palette-selector">
-          <select id="acThemeSelect" class="form-select-pill">
-            <option value="isabelle">🔔 Isabelle (Yellow & Mint)</option>
-            <option value="celeste">🌌 Celeste (Berry & Gold)</option>
-            <option value="nook">🦝 Tom Nook (Teal & Leaf)</option>
-            <option value="kk">🎸 K.K. Slider (Warm Parchment)</option>
           </select>
         </div>
 
@@ -65,34 +68,34 @@
     </div>
   </header>
 
-  <!-- MIX AND JAM ANIMAL CROSSING TYPEWRITER DIALOGUE BOX (AC-DIALOGUE) -->
+  <!-- DOKO DEMO ISSYO TORO INOUE TYPEWRITER DIALOGUE BOX -->
   <div class="ac-dialogue-wrapper" id="acDialogueWrapper">
-    <div class="ac-dialogue-box">
+    <div class="ac-dialogue-box dokodemo-speech-box">
       <!-- Character Nameplate Badge -->
       <div class="ac-nameplate" id="acNameplate">
-        <span class="nameplate-avatar" id="acAvatar">🍃</span>
-        <span class="nameplate-title" id="acSpeaker">Isabelle</span>
+        <span class="nameplate-avatar" id="acAvatar">🐱</span>
+        <span class="nameplate-title" id="acSpeaker">Toro Inoue</span>
       </div>
 
       <!-- Typewriter Speech Content -->
       <div class="ac-speech-content">
-        <p class="typewriter-text" id="acTypewriterText">Welcome to Animal-Island-UI Study! Built with official Animal Crossing components, typewriter dialogues, and executive function systems.</p>
+        <p class="typewriter-text" id="acTypewriterText">Nya~! Welcome to Doko Demo Issyo Study World! I'm Toro Inoue! Let's learn science and study together so I can become human!</p>
       </div>
 
       <!-- Dialogue Action Prompt Arrow -->
       <div class="ac-dialogue-prompt" id="acPromptBtn">
-        <button class="btn-ac-next"><i class="fa-solid fa-circle-chevron-down"></i> Land on Island</button>
+        <button class="btn-ac-next"><i class="fa-solid fa-circle-chevron-down"></i> Fly to Island</button>
       </div>
     </div>
   </div>
 
   <!-- FLOATING HUD ISLAND QUICK CONTROLS -->
   <div class="bottom-hud-controls">
-    <button class="hud-chip active" data-island="roma"><i class="fa-solid fa-sun"></i> 🏡 Sunny Sanctuary</button>
+    <button class="hud-chip active" data-island="roma"><i class="fa-solid fa-sun"></i> 🏡 Toro's House</button>
     <button class="hud-chip" data-island="firenze"><i class="fa-solid fa-bolt"></i> ⚡ HyperFocus Portal</button>
     <button class="hud-chip" data-island="venezia"><i class="fa-solid fa-scissors"></i> ✂️ NeuroDock Slicer</button>
     <button class="hud-chip" data-island="milano"><i class="fa-solid fa-sliders"></i> 🎛️ Studio Island</button>
-    <button class="hud-chip" data-island="costiera"><i class="fa-solid fa-heart"></i> 🌸 Peer Safe Space</button>
+    <button class="hud-chip" data-island="costiera"><i class="fa-solid fa-heart"></i> 🌸 Pokepi Square</button>
   </div>
 
   <!-- LIGHT GLASS OVERLAY CONTENT PANELS -->
@@ -110,7 +113,7 @@
           
           <div class="animal-divider">
             <span class="divider-line"></span>
-            <span class="divider-icon">🍃</span>
+            <span class="divider-icon">🐱</span>
             <span class="divider-line"></span>
           </div>
 
@@ -185,46 +188,46 @@
       </div>
     </section>
 
-    <!-- TAB 3: NOOK MILES QUESTS -->
+    <!-- TAB 3: POKEPI QUESTS -->
     <section id="tab-nookmiles" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-stamp text-sun"></i> Nook Miles Micro-Quests</h2>
+          <h2><i class="fa-solid fa-cat text-sun"></i> Pokepi Word & Science Quests</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body">
-          <p class="panel-desc">Complete gentle micro-achievements for instant dopamine Miles badges!</p>
+          <p class="panel-desc">Teach Toro Inoue new words & concepts to earn Pokepi friendship stamps!</p>
           
           <div class="animal-divider">
             <span class="divider-line"></span>
-            <span class="divider-icon">🌟</span>
+            <span class="divider-icon">🐱</span>
             <span class="divider-line"></span>
           </div>
 
           <div class="nook-miles-grid margin-top-md">
             <div class="nook-stamp-card completed">
-              <div class="stamp-icon">🍃</div>
+              <div class="stamp-icon">🐱</div>
               <div class="stamp-info">
-                <strong>First Step Fly-In</strong>
-                <p>Open neurodiv-study & explore 1 island station.</p>
+                <strong>Toro's First Word</strong>
+                <p>Teach Toro 1 new science or exam concept.</p>
               </div>
-              <span class="miles-reward">+100 Miles</span>
+              <span class="miles-reward">+100 XP</span>
             </div>
             <div class="nook-stamp-card completed">
               <div class="stamp-icon">✂️</div>
               <div class="stamp-info">
-                <strong>Executive Task Sliced</strong>
+                <strong>Task Sliced with Kuro</strong>
                 <p>Break 1 intimidating task into 2-minute steps.</p>
               </div>
-              <span class="miles-reward">+200 Miles</span>
+              <span class="miles-reward">+200 XP</span>
             </div>
             <div class="nook-stamp-card">
               <div class="stamp-icon">⚡</div>
               <div class="stamp-info">
-                <strong>HyperFocus Immersion</strong>
+                <strong>HyperFocus Sprint</strong>
                 <p>Run 1 15-minute hyperfocus focus sprint.</p>
               </div>
-              <span class="miles-reward">+300 Miles</span>
+              <span class="miles-reward">+300 XP</span>
             </div>
           </div>
         </div>
@@ -350,9 +353,9 @@
         <div class="panel-body">
           <div class="community-mini-feed">
             <div class="comm-item">
-              <span class="avatar">🌸</span>
+              <span class="avatar">🐱</span>
               <div>
-                <strong>Astro_Learner:</strong> "Slicing intimidating tasks into 2-minute steps reduced my executive dysfunction immensely!"
+                <strong>Toro_Inoue:</strong> "Teaching concepts to others helps me understand them better Nya~!"
               </div>
             </div>
             <div class="comm-item">

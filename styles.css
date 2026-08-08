@@ -1,17 +1,18 @@
 /* ==========================================================================
-   NEURODIV-STUDY - NOOK MILES QUESTS & ANIMAL-ISLAND-UI SYSTEM
+   NEURODIV-STUDY - DOKO DEMO ISSYO & TORO INOUE UI SYSTEM
+   Inspired by https://github.com/pumpkinhasapatch/dokodemo-psp-english
    ========================================================================== */
 
 :root {
-  --bg-parchment: #fbf8ef;
+  --bg-parchment: #fcfbf7;
   --bg-card-light: #ffffff;
-  --bg-card-border: #e2e8f0;
+  --bg-card-border: #e8e2d5;
   
   --text-main: #382b22;
   --text-muted: #716052;
   --text-dim: #a09082;
 
-  /* Isabelle Preset (Default) */
+  /* Toro Inoue Preset (Default White Cat) */
   --accent-leaf: #42b883;
   --bg-leaf: #e6fffa;
   --accent-sun: #e6a23c;
@@ -32,37 +33,45 @@
   --box-shadow-cozy: 0 10px 25px rgba(56, 43, 34, 0.08);
 }
 
-/* Celeste Theme Preset */
-body.theme-celeste {
-  --bg-parchment: #faf5ff;
-  --accent-leaf: #805ad5;
-  --bg-leaf: #f3e8ff;
+/* Kuro Preset (Black Cat) */
+body.pokepi-kuro {
+  --bg-parchment: #f4f2ed;
+  --accent-leaf: #2d3748;
+  --bg-leaf: #e2e8f0;
   --accent-sun: #d69e2e;
   --bg-sun: #fefcbf;
   --accent-sky: #3182ce;
-  --bg-sky: #e0f2fe;
+  --bg-sky: #ebf8ff;
 }
 
-/* Tom Nook Theme Preset */
-body.theme-nook {
+/* Jun Preset (Pink Rabbit) */
+body.pokepi-jun {
+  --bg-parchment: #fff5f7;
+  --accent-leaf: #ed64a6;
+  --bg-leaf: #fed7e2;
+  --accent-sun: #ecc94b;
+  --bg-sun: #fefcbf;
+}
+
+/* Pierre Preset (Dog) */
+body.pokepi-pierre {
+  --bg-parchment: #f0f9ff;
+  --accent-leaf: #0284c7;
+  --bg-leaf: #e0f2fe;
+}
+
+/* Ricky Preset (Frog) */
+body.pokepi-ricky {
   --bg-parchment: #f0fdf4;
-  --accent-leaf: #2f855a;
+  --accent-leaf: #16a34a;
   --bg-leaf: #dcfce7;
-  --accent-sun: #319795;
-  --bg-sun: #ccfbf1;
-  --accent-sky: #0284c7;
-  --bg-sky: #e0f2fe;
 }
 
-/* K.K. Slider Theme Preset */
-body.theme-kk {
-  --bg-parchment: #fcfbf9;
-  --accent-leaf: #4a5568;
-  --bg-leaf: #edf2f7;
-  --accent-sun: #718096;
-  --bg-sun: #e2e8f0;
-  --accent-sky: #2d3748;
-  --bg-sky: #edf2f7;
+/* Maruta Preset (Robot) */
+body.pokepi-maruta {
+  --bg-parchment: #f8fafc;
+  --accent-leaf: #475569;
+  --bg-leaf: #e2e8f0;
 }
 
 * {
@@ -122,7 +131,7 @@ body.fullscreen-app {
   border: 1px solid rgba(66, 184, 131, 0.3);
 }
 
-/* NOOK MILES STAMP CARDS */
+/* POKEPI STAMP CARDS */
 .nook-miles-grid {
   display: flex;
   flex-direction: column;
@@ -166,7 +175,7 @@ body.fullscreen-app {
   transform: translateX(-50%);
   z-index: 50;
   width: 95%;
-  max-width: 1240px;
+  max-width: 1260px;
 }
 
 .header-inner {
@@ -248,7 +257,7 @@ body.fullscreen-app {
   font-family: inherit;
 }
 
-/* MIX AND JAM ANIMAL CROSSING DIALOGUE SYSTEM (AC-DIALOGUE) */
+/* DOKO DEMO ISSYO DIALOGUE SYSTEM */
 .ac-dialogue-wrapper {
   position: fixed;
   top: 90px;
@@ -260,7 +269,7 @@ body.fullscreen-app {
   pointer-events: auto;
 }
 
-.ac-dialogue-box {
+.ac-dialogue-box.dokodemo-speech-box {
   position: relative;
   background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(16px);
