@@ -279,6 +279,11 @@ body.fullscreen-app {
   font-size: 1.1rem;
 }
 
+.ac-leaf-icon {
+  color: var(--accent-leaf);
+  font-size: 1.2rem;
+}
+
 .logo-text { color: var(--accent-leaf); }
 
 /* GAMIFIED STATS & XP PROGRESS BAR */
@@ -375,7 +380,7 @@ body.fullscreen-app {
   font-family: inherit;
 }
 
-/* TYPEWRITER DIALOGUE BOX - TOP HIGH Z-INDEX */
+/* TYPEWRITER DIALOGUE BOX WITH ANIMAL CROSSING SPEECH TAIL */
 .ac-dialogue-wrapper {
   position: fixed;
   top: 90px;
@@ -389,14 +394,27 @@ body.fullscreen-app {
 
 .ac-dialogue-box.dokodemo-speech-box {
   position: relative;
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(16px);
   border: 4px solid #e8e2d5;
   border-radius: 28px;
   padding: 24px 28px 20px 28px;
-  box-shadow: 0 16px 40px rgba(56, 43, 34, 0.1);
+  box-shadow: 0 16px 40px rgba(56, 43, 34, 0.12);
   animation: acBoxPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   pointer-events: auto;
+}
+
+/* SPEECH BUBBLE TAIL ARROW */
+.ac-dialogue-box.dokodemo-speech-box::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 48px;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 16px solid #e8e2d5;
 }
 
 @keyframes acBoxPop {
@@ -404,10 +422,30 @@ body.fullscreen-app {
   100% { transform: scale(1) translateY(0); opacity: 1; }
 }
 
-.ac-nameplate {
+.ac-nameplate-wrapper {
   position: absolute;
-  top: -18px;
-  left: 24px;
+  top: -24px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ac-avatar-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-sun);
+  border: 3px solid #ffffff;
+  color: var(--accent-sun);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ac-nameplate {
   background: var(--accent-sun);
   color: #ffffff;
   padding: 4px 16px;

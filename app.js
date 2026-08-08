@@ -74,16 +74,18 @@ document.addEventListener('DOMContentLoaded', () => {
   updateGamifiedUI();
 
   const POKEPI_SPEAKER_DATA = {
-    toro: { name: "Toro Inoue", avatar: "", phrase: "Let me learn words and science concepts to become human.", themeClass: "pokepi-toro" },
-    kuro: { name: "Kuro", avatar: "", phrase: "Kuro here. Let us slice some tasks and play games.", themeClass: "pokepi-kuro" },
-    jun: { name: "Jun", avatar: "", phrase: "Jun is here to make studying simple and easy.", themeClass: "pokepi-jun" },
-    pierre: { name: "Pierre", avatar: "", phrase: "Pierre will help you fly smoothly into flow state.", themeClass: "pokepi-pierre" },
-    ricky: { name: "Ricky", avatar: "", phrase: "Ricky says 15 minute hyperfocus punch. Let us go.", themeClass: "pokepi-ricky" },
-    maruta: { name: "Maruta", avatar: "", phrase: "Science formula matrix loaded and ready.", themeClass: "pokepi-maruta" }
+    toro: { name: "Toro Inoue", avatarIcon: "fa-cat", phrase: "Let me learn words and science concepts to become human.", themeClass: "pokepi-toro" },
+    kuro: { name: "Kuro", avatarIcon: "fa-cat", phrase: "Kuro here. Let us slice some tasks and play games.", themeClass: "pokepi-kuro" },
+    jun: { name: "Jun", avatarIcon: "fa-otter", phrase: "Jun is here to make studying simple and easy.", themeClass: "pokepi-jun" },
+    pierre: { name: "Pierre", avatarIcon: "fa-dog", phrase: "Pierre will help you fly smoothly into flow state.", themeClass: "pokepi-pierre" },
+    ricky: { name: "Ricky", avatarIcon: "fa-frog", phrase: "Ricky says 15 minute hyperfocus punch. Let us go.", themeClass: "pokepi-ricky" },
+    maruta: { name: "Maruta", avatarIcon: "fa-robot", phrase: "Science formula matrix loaded and ready.", themeClass: "pokepi-maruta" }
   };
 
   // Pokepi Companion Selector
   const pokepiSelect = document.getElementById('pokepiSelect');
+  const acAvatarIcon = document.getElementById('acAvatarIcon');
+
   if (pokepiSelect) {
     pokepiSelect.value = state.pokepi || 'toro';
     applyPokepiCompanion(state.pokepi || 'toro');
@@ -100,7 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.remove('pokepi-toro', 'pokepi-kuro', 'pokepi-jun', 'pokepi-pierre', 'pokepi-ricky', 'pokepi-maruta');
     document.body.classList.add(data.themeClass);
 
-    playTypewriterDialogue(data.phrase, data.name, data.avatar);
+    if (acAvatarIcon) {
+      acAvatarIcon.className = `fa-solid ${data.avatarIcon}`;
+    }
+
+    playTypewriterDialogue(data.phrase, data.name, data.avatarIcon);
   }
 
   // Quest Theme Selector (Master Pedagogy)
@@ -114,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
       playTypewriterDialogue(
         `Master Pedagogy Quest set to ${e.target.options[e.target.selectedIndex].text}. Let us explore science.`,
         currentPokepi.name,
-        currentPokepi.avatar
+        currentPokepi.avatarIcon
       );
     });
   }
@@ -138,14 +144,14 @@ document.addEventListener('DOMContentLoaded', () => {
       playTypewriterDialogue(
         `Awesome. You unlocked a new Master Pedagogy Skill Node for ${costXP} XP.`,
         currentPokepi.name,
-        currentPokepi.avatar
+        currentPokepi.avatarIcon
       );
     } else {
       const currentPokepi = POKEPI_SPEAKER_DATA[state.pokepi || 'toro'];
       playTypewriterDialogue(
         `You need ${costXP} XP to unlock this skill node. Keep reviewing flashcards and complete tasks.`,
         currentPokepi.name,
-        currentPokepi.avatar
+        currentPokepi.avatarIcon
       );
     }
   };
@@ -161,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
       playTypewriterDialogue(
         `Spoon energy set to ${state.spoons} Spoons. We will adjust your study tasks accordingly.`,
         currentPokepi.name,
-        currentPokepi.avatar
+        currentPokepi.avatarIcon
       );
     });
   }
@@ -169,15 +175,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Typewriter Speech Engine
   const acTypewriterText = document.getElementById('acTypewriterText');
   const acSpeaker = document.getElementById('acSpeaker');
-  const acAvatar = document.getElementById('acAvatar');
   let typewriterTimer = null;
 
-  function playTypewriterDialogue(text, speaker = "Toro Inoue", avatar = "") {
+  function playTypewriterDialogue(text, speaker = "Toro Inoue", avatarIcon = "fa-cat") {
     if (!acTypewriterText) return;
     if (typewriterTimer) clearInterval(typewriterTimer);
 
     if (acSpeaker) acSpeaker.textContent = speaker;
-    if (acAvatar) acAvatar.textContent = avatar;
+    if (acAvatarIcon) acAvatarIcon.className = `fa-solid ${avatarIcon}`;
 
     acTypewriterText.textContent = "";
     let idx = 0;
@@ -195,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
   playTypewriterDialogue(
     "Welcome to Doko Demo Issyo Master Pedagogy World. I am Toro Inoue. Let us learn science with first principles so I can become human.",
     "Toro Inoue",
-    ""
+    "fa-cat"
   );
 
   // Teach Word Interactive Feature
@@ -211,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
       playTypewriterDialogue(
         `Thank you for teaching me ${newWord}. I learned something new today and feel closer to becoming human.`,
         currentPokepi.name,
-        currentPokepi.avatar
+        currentPokepi.avatarIcon
       );
 
       teachWordInput.value = "";
@@ -393,11 +398,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let initRetries = 0;
 
   const ISLAND_POSITIONS = {
-    roma: { x: 0, y: -1.5, z: -10, label: "Toro's House", speaker: "Toro Inoue", avatar: "", tab: "world", desc: "Welcome to Toro's House. Universal study map for neurodivergent minds." },
-    firenze: { x: -12, y: -0.5, z: -18, label: "HyperFocus Portal", speaker: "Ricky", avatar: "", tab: "hyperfocus", desc: "HyperFocus Portal. Immersive 15 minute flow state zone." },
-    venezia: { x: -6, y: -0.5, z: -24, label: "NeuroDock Slicer", speaker: "Kuro", avatar: "", tab: "neurodock", desc: "NeuroDock Task Slicer. Slice intimidating tasks into 2 minute steps." },
-    milano: { x: 6, y: -0.5, z: -24, label: "Studio Island", speaker: "Jun", avatar: "", tab: "studio", desc: "Studio Island. Custom tools for ADHD, Bipolar, OCPD, and Autism or BPD." },
-    costiera: { x: 12, y: -0.5, z: -18, label: "Pokepi Square", speaker: "Pierre", avatar: "", tab: "community", desc: "Pokepi Square. Rejection free community support and word exchanges." }
+    roma: { x: 0, y: -1.5, z: -10, label: "Toro's House", speaker: "Toro Inoue", avatarIcon: "fa-cat", tab: "nookmiles", desc: "Welcome to Toro's House. Universal study map for neurodivergent minds." },
+    firenze: { x: -12, y: -0.5, z: -18, label: "HyperFocus Portal", speaker: "Ricky", avatarIcon: "fa-frog", tab: "hyperfocus", desc: "HyperFocus Portal. Immersive 15 minute flow state zone." },
+    venezia: { x: -6, y: -0.5, z: -24, label: "NeuroDock Slicer", speaker: "Kuro", avatarIcon: "fa-cat", tab: "neurodock", desc: "NeuroDock Task Slicer. Slice intimidating tasks into 2 minute steps." },
+    milano: { x: 6, y: -0.5, z: -24, label: "Studio Island", speaker: "Jun", avatarIcon: "fa-otter", tab: "studio", desc: "Studio Island. Custom tools for ADHD, Bipolar, OCPD, and Autism or BPD." },
+    costiera: { x: 12, y: -0.5, z: -18, label: "Pokepi Square", speaker: "Pierre", avatarIcon: "fa-dog", tab: "flashcards", desc: "Pokepi Square. Rejection free community support and word exchanges." }
   };
 
   function init3DScene() {
@@ -612,7 +617,7 @@ document.addEventListener('DOMContentLoaded', () => {
     targetCamX = target.x;
     targetCamZ = target.z + 10;
 
-    playTypewriterDialogue(target.desc, target.speaker, target.avatar);
+    playTypewriterDialogue(target.desc, target.speaker, target.avatarIcon);
     
     document.querySelectorAll('.hud-chip').forEach(b => {
       if (b.getAttribute('data-island') === islandKey) b.classList.add('active');
@@ -640,7 +645,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (target.tab && target.tab !== 'world') {
       openPanel(target.tab);
     } else {
-      openPanel('hyperfocus');
+      openPanel('nookmiles');
     }
 
     flyToIsland(currentKey);
@@ -768,7 +773,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dateStr = new Date().toISOString().split('T')[0];
     const currentPokepi = POKEPI_SPEAKER_DATA[state.pokepi || 'toro'];
     return `# Doko Demo Issyo Study Notes ${state.examTitle}
-#dokodemo #toroinoue #hyperfocus #neurodock #audhd #study #masterpedagogy
+#dokodemo #toroinoue #hyperfocus #neurodock #audhd #study #masterpedagogy #animalcrossing
 
 - Companion Pokepi ${currentPokepi.name}
 - Master Pedagogy Quest ${state.questTheme}
@@ -781,7 +786,9 @@ document.addEventListener('DOMContentLoaded', () => {
 - Combo Multiplier ${state.combo || 1.5}x
 - XP ${state.userXP}
 
-## Master Pedagogy Systems Active
+## Master Pedagogy & Animal Crossing Systems Active
+- Doko Demo Issyo Toro Inoue Character Companion Dialogue Box
+- Animal Crossing Nook Miles Quest Stamp Cards
 - First-Principles Prerequisite Skill Tree
 - Socratic Show Me The Why Deep-Dives
 - HyperFocus Zone Portal 15 min Immersion Timer
