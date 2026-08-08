@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>neurodiv-study 🍃 - Cozy Animal Crossing Light Theme for Neurodivergent Learners</title>
+  <title>neurodiv-study 🍃 - Cozy Animal Crossing Typewriter Dialogue & 3D World</title>
   <!-- Google Fonts: Nunito, Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,14 +63,25 @@
     </div>
   </header>
 
-  <!-- ANIMAL CROSSING STYLE FLOATING HERO BANNER -->
-  <div class="island-hero-popup" id="islandHeroPopup">
-    <div class="popup-avatar">🍃</div>
-    <div class="popup-text">
-      <strong id="popupTitle">Welcome to Animal Crossing Study 🏝️</strong>
-      <p id="popupDesc">Drag mouse or use <strong>[←] [↑] [→] [↓] arrow keys</strong> to fly your plane between warm study sanctuaries!</p>
+  <!-- MIX AND JAM ANIMAL CROSSING TYPEWRITER DIALOGUE BOX (AC-DIALOGUE) -->
+  <div class="ac-dialogue-wrapper" id="acDialogueWrapper">
+    <div class="ac-dialogue-box">
+      <!-- Character Nameplate Badge -->
+      <div class="ac-nameplate" id="acNameplate">
+        <span class="nameplate-avatar" id="acAvatar">🍃</span>
+        <span class="nameplate-title" id="acSpeaker">Isabelle</span>
+      </div>
+
+      <!-- Typewriter Speech Content -->
+      <div class="ac-speech-content">
+        <p class="typewriter-text" id="acTypewriterText">Welcome to Animal Crossing Study! Drag your mouse or use arrow keys to fly your airplane between warm study sanctuaries!</p>
+      </div>
+
+      <!-- Dialogue Action Prompt Arrow -->
+      <div class="ac-dialogue-prompt" id="acPromptBtn">
+        <button class="btn-ac-next"><i class="fa-solid fa-circle-chevron-down"></i> Land on Island</button>
+      </div>
     </div>
-    <button class="btn-popup" id="popupActionBtn"><i class="fa-solid fa-plane-landing"></i> Land on Island</button>
   </div>
 
   <!-- FLOATING HUD ISLAND QUICK CONTROLS -->

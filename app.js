@@ -1,6 +1,6 @@
 /* ==========================================================================
-   NEURODIV-STUDY - ANIMAL CROSSING PRESET THEMES & 3D LIGHT ENGINE
-   Inspired by https://github.com/guokaigdg/animal-island-ui & https://github.com/sazardev/animal_crossing_ui
+   NEURODIV-STUDY - MIX AND JAM AC-DIALOGUE TYPEWRITER ENGINE & 3D LIGHT WORLD
+   Inspired by https://github.com/mixandjam/AC-Dialogue
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -53,11 +53,46 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 2. THREE.JS LIGHT SKY 3D SCENE (WARM ANIMAL ISLAND PALETTE)
+  // 2. MIX AND JAM AC-DIALOGUE TYPEWRITER ENGINE
+  // --------------------------------------------------------------------------
+  const acTypewriterText = document.getElementById('acTypewriterText');
+  const acSpeaker = document.getElementById('acSpeaker');
+  const acAvatar = document.getElementById('acAvatar');
+  let typewriterTimer = null;
+
+  function playTypewriterDialogue(text, speaker = "Isabelle", avatar = "🍃") {
+    if (!acTypewriterText) return;
+    if (typewriterTimer) clearInterval(typewriterTimer);
+
+    if (acSpeaker) acSpeaker.textContent = speaker;
+    if (acAvatar) acAvatar.textContent = avatar;
+
+    acTypewriterText.textContent = "";
+    let idx = 0;
+
+    typewriterTimer = setInterval(() => {
+      if (idx < text.length) {
+        acTypewriterText.textContent += text.charAt(idx);
+        idx++;
+      } else {
+        clearInterval(typewriterTimer);
+      }
+    }, 28);
+  }
+
+  // Initial dialogue reveal
+  playTypewriterDialogue(
+    "Welcome to Animal Crossing Study! Drag your mouse or use arrow keys to fly your airplane between warm study sanctuaries!",
+    "Isabelle",
+    "🍃"
+  );
+
+  // --------------------------------------------------------------------------
+  // 3. THREE.JS LIGHT SKY 3D SCENE (WARM ANIMAL ISLAND PALETTE)
   // --------------------------------------------------------------------------
   const canvas = document.getElementById('bg3dCanvas');
   const container = document.getElementById('canvas3dContainer');
-  let scene, camera, renderer, planeGroup, propellerMesh, cloudGroup;
+  let scene, camera, renderer, planeGroup, propellerMesh;
   let islands = {};
   let clouds = [];
 
@@ -66,18 +101,18 @@ document.addEventListener('DOMContentLoaded', () => {
   let targetCamX = 0, targetCamZ = -15;
 
   const ISLAND_POSITIONS = {
-    roma: { x: 0, y: -2, z: -15, label: "🏡 Sunny Sanctuary", tab: "world", desc: "Welcome to Sunny Sanctuary! Universal study map for neurodivergent brains." },
-    firenze: { x: -16, y: -1, z: -25, label: "🎛️ Studio Island", tab: "studio", desc: "Studio Island: Custom tools for ADHD, Bipolar, OCPD, and Autism/BPD." },
-    venezia: { x: -8, y: -1, z: -35, label: "🃏 Smart Cards", tab: "flashcards", desc: "Smart Cards: Active recall with audio speech." },
-    milano: { x: 8, y: -1, z: -35, label: "⚛️ Formula Matrix", tab: "grammar", desc: "Formula Matrix: Predictable rule tables and OCPD progress limits." },
-    costiera: { x: 16, y: -1, z: -25, label: "🌸 Peer Safe Space", tab: "community", desc: "Peer Safe Space: Rejection-free community support & affirmations." }
+    roma: { x: 0, y: -2, z: -15, label: "Sunny Sanctuary", speaker: "Isabelle", avatar: "🍃", tab: "world", desc: "Welcome to Sunny Sanctuary! Universal study map for neurodivergent brains." },
+    firenze: { x: -16, y: -1, z: -25, label: "Studio Island", speaker: "Tom Nook", avatar: "🦝", tab: "studio", desc: "Studio Island: Custom tools for ADHD, Bipolar, OCPD, and Autism/BPD." },
+    venezia: { x: -8, y: -1, z: -35, label: "Smart Cards", speaker: "Celeste", avatar: "🌌", tab: "flashcards", desc: "Smart Cards: Active recall flashcards with audio speech." },
+    milano: { x: 8, y: -1, z: -35, label: "Formula Matrix", speaker: "Blathers", avatar: "🦉", tab: "grammar", desc: "Formula Matrix: Predictable rule tables and OCPD progress limits." },
+    costiera: { x: 16, y: -1, z: -25, label: "Peer Safe Space", speaker: "K.K. Slider", avatar: "🎸", tab: "community", desc: "Peer Safe Space: Rejection-free community support & affirmations." }
   };
 
   function init3DScene() {
     if (!THREE || !canvas || !container) return;
 
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xfbf8ef); // Warm parchment light sky
+    scene.background = new THREE.Color(0xfbf8ef);
     scene.fog = new THREE.FogExp2(0xfbf8ef, 0.012);
 
     const aspect = window.innerWidth / window.innerHeight;
@@ -111,12 +146,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const bodyGeo = new THREE.ConeGeometry(0.8, 3.5, 8);
     bodyGeo.rotateX(Math.PI / 2);
-    const bodyMat = new THREE.MeshPhongMaterial({ color: 0xd69e2e, flatShading: true }); // Cozy Sun Yellow
+    const bodyMat = new THREE.MeshPhongMaterial({ color: 0xd69e2e, flatShading: true });
     const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat);
     planeGroup.add(bodyMesh);
 
     const wingGeo = new THREE.BoxGeometry(4.5, 0.1, 0.8);
-    const wingMat = new THREE.MeshPhongMaterial({ color: 0x38a169, flatShading: true }); // Cozy Leaf Green
+    const wingMat = new THREE.MeshPhongMaterial({ color: 0x38a169, flatShading: true });
     const wingMesh = new THREE.Mesh(wingGeo, wingMat);
     wingMesh.position.set(0, 0.1, 0.2);
     planeGroup.add(wingMesh);
@@ -241,8 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
     targetCamX = target.x;
     targetCamZ = target.z + 12;
 
-    document.getElementById('popupTitle').textContent = target.label;
-    document.getElementById('popupDesc').textContent = target.desc;
+    playTypewriterDialogue(target.desc, target.speaker, target.avatar);
     
     document.querySelectorAll('.hud-chip').forEach(b => {
       if (b.getAttribute('data-island') === islandKey) b.classList.add('active');
@@ -257,9 +291,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const popupActionBtn = document.getElementById('popupActionBtn');
-  if (popupActionBtn) {
-    popupActionBtn.addEventListener('click', () => {
+  const acPromptBtn = document.getElementById('acPromptBtn');
+  if (acPromptBtn) {
+    acPromptBtn.addEventListener('click', () => {
       const target = ISLAND_POSITIONS[state.currentIsland || 'roma'];
       if (target && target.tab && target.tab !== 'world') {
         openPanel(target.tab);
@@ -277,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
   init3DScene();
 
   // --------------------------------------------------------------------------
-  // 3. OVERLAY PANELS & NAVIGATION CONTROLS
+  // 4. OVERLAY PANELS & NAVIGATION CONTROLS
   // --------------------------------------------------------------------------
   const navBtns = document.querySelectorAll('.nav-btn');
   const overlayPanels = document.querySelectorAll('.overlay-panel');
@@ -311,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // 4. UNIVERSAL AUDIO SPEECH ENGINE
+  // 5. UNIVERSAL AUDIO SPEECH ENGINE
   // --------------------------------------------------------------------------
   function speakText(text) {
     if (!('speechSynthesis' in window)) return;
@@ -323,11 +357,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.getElementById('quickAudioTest').addEventListener('click', () => {
-    speakText("Welcome to neurodiv-study! A cozy Animal Crossing style study system for all neurodivergent minds.");
+    speakText("Welcome to neurodiv-study! Recreating the Mix and Jam Animal Crossing dialogue experience.");
   });
 
   // --------------------------------------------------------------------------
-  // 5. OBSIDIAN MARKDOWN EXPORTER (.md)
+  // 6. OBSIDIAN MARKDOWN EXPORTER (.md)
   // --------------------------------------------------------------------------
   const exportObsidianBtn = document.getElementById('exportObsidianBtn');
   const obsidianModal = document.getElementById('obsidianModal');
@@ -386,7 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // 6. FLASHCARD FLIP LOGIC
+  // 7. FLASHCARD FLIP LOGIC
   // --------------------------------------------------------------------------
   const cardElement = document.getElementById('mainFlashcard');
   if (cardElement) {
