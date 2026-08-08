@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>neurodiv study</title>
-  <!-- Google Fonts: Nunito, Noto Sans SC -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
-  <!-- Three.js Primary CDN & Fallback -->
+  <!-- Three.js CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
     if (typeof THREE === 'undefined') {
@@ -21,7 +21,7 @@
 </head>
 <body class="dokodemo-theme pokepi-toro fullscreen-app">
 
-  <!-- 3D LIGHT SKY CANVAS ENVIRONMENT -->
+  <!-- 3D SKY CANVAS VIEWPORT -->
   <div class="fullscreen-canvas-container" id="canvas3dContainer">
     <canvas id="bg3dCanvas"></canvas>
   </div>
@@ -34,18 +34,18 @@
       </div>
 
       <nav class="floating-nav">
-        <button class="nav-btn active" data-tab="world" title="3D Flight World"><i class="fa-solid fa-plane-up"></i> 3D World</button>
-        <button class="nav-btn" data-tab="hyperfocus" title="HyperFocus Zone Portal"><i class="fa-solid fa-bolt"></i> HyperFocus</button>
-        <button class="nav-btn" data-tab="neurodock" title="NeuroDock Task Slicer"><i class="fa-solid fa-scissors"></i> Task Slicer</button>
-        <button class="nav-btn" data-tab="nookmiles" title="Pokepi Quests"><i class="fa-solid fa-star"></i> Pokepi Quests</button>
-        <button class="nav-btn" data-tab="studio" title="Accommodation Studio"><i class="fa-solid fa-sliders"></i> Studio</button>
-        <button class="nav-btn" data-tab="flashcards" title="Smart Flashcards"><i class="fa-solid fa-layer-group"></i> Cards</button>
-        <button class="nav-btn" data-tab="grammar" title="Formula Matrix"><i class="fa-solid fa-atom"></i> Matrix</button>
-        <button class="nav-btn" data-tab="community" title="Peer Safe Space"><i class="fa-solid fa-heart"></i> Safe Space</button>
+        <button class="nav-btn active" data-tab="world" id="navWorldBtn"><i class="fa-solid fa-plane-up"></i> 3D World</button>
+        <button class="nav-btn" data-tab="hyperfocus" id="navHyperfocusBtn"><i class="fa-solid fa-bolt"></i> HyperFocus</button>
+        <button class="nav-btn" data-tab="neurodock" id="navNeurodockBtn"><i class="fa-solid fa-scissors"></i> Task Slicer</button>
+        <button class="nav-btn" data-tab="nookmiles" id="navQuestsBtn"><i class="fa-solid fa-star"></i> Pokepi Quests</button>
+        <button class="nav-btn" data-tab="studio" id="navStudioBtn"><i class="fa-solid fa-sliders"></i> Studio</button>
+        <button class="nav-btn" data-tab="flashcards" id="navCardsBtn"><i class="fa-solid fa-layer-group"></i> Cards</button>
+        <button class="nav-btn" data-tab="grammar" id="navMatrixBtn"><i class="fa-solid fa-atom"></i> Matrix</button>
+        <button class="nav-btn" data-tab="community" id="navSafeSpaceBtn"><i class="fa-solid fa-heart"></i> Safe Space</button>
       </nav>
 
       <div class="floating-actions">
-        <!-- Pokepi Character Selector -->
+        <!-- Pokepi Companion Selector -->
         <div class="pokepi-selector">
           <select id="pokepiSelect" class="form-select-pill">
             <option value="toro">Toro Inoue White Cat</option>
@@ -57,17 +57,17 @@
           </select>
         </div>
 
-        <!-- Spoon Energy Selector -->
+        <!-- Spoon Energy Level Selector -->
         <div class="spoon-selector">
           <select id="spoonSelect" class="form-select-pill">
-            <option value="5">5 Spoons</option>
-            <option value="3" selected>3 Spoons</option>
-            <option value="1">1 Spoon</option>
+            <option value="5">5 Spoons Full Energy</option>
+            <option value="3" selected>3 Spoons Moderate Energy</option>
+            <option value="1">1 Spoon Low Energy Dose</option>
           </select>
         </div>
 
-        <button class="btn-pill" id="exportObsidianBtn" title="Export to Obsidian Markdown"><i class="fa-solid fa-note-sticky"></i> Exporter</button>
-        <button class="btn-pill" id="quickAudioTest" title="Audio Speech Toggle"><i class="fa-solid fa-volume-high"></i></button>
+        <button class="btn-pill" id="exportObsidianBtn"><i class="fa-solid fa-note-sticky"></i> Exporter</button>
+        <button class="btn-pill" id="quickAudioTest"><i class="fa-solid fa-volume-high"></i> Audio</button>
       </div>
     </div>
   </header>
@@ -85,7 +85,7 @@
         <p class="typewriter-text" id="acTypewriterText">Welcome to Doko Demo Issyo Study World. I am Toro Inoue. Let us learn science and study together so I can become human.</p>
       </div>
 
-      <!-- Dialogue Action Prompt Arrow -->
+      <!-- Dialogue Action Prompt Button -->
       <div class="ac-dialogue-prompt" id="acPromptBtn">
         <button class="btn-ac-next" id="acNextActionBtn"><i class="fa-solid fa-circle-chevron-down"></i> Fly to Island</button>
       </div>
@@ -101,14 +101,14 @@
     <button class="hud-chip" data-island="costiera"><i class="fa-solid fa-heart"></i> Pokepi Square</button>
   </div>
 
-  <!-- LIGHT GLASS OVERLAY CONTENT PANELS -->
+  <!-- CONTENT PANELS OVERLAY -->
   <main class="content-overlay-container">
 
     <!-- TAB 1: HYPERFOCUS ZONE PORTAL -->
     <section id="tab-hyperfocus" class="overlay-panel hidden">
       <div class="overlay-card island-card modal-sm">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-bolt"></i> HyperFocus Zone Portal</h2>
+          <h2><i class="fa-solid fa-bolt text-sun"></i> HyperFocus Zone Portal</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body flex-center">
@@ -134,12 +134,12 @@
           </div>
 
           <div class="ambient-sound-box margin-top-md">
-            <span>Focus Audio</span>
+            <span>Focus Audio Generator</span>
             <select id="hfAmbientSelect" class="form-select-pill">
-              <option value="alpha">Alpha Waves Deep Flow</option>
-              <option value="rain">Florence Rain Drops</option>
-              <option value="brown">Tuscan Cafe Brown Noise</option>
               <option value="none">Silence</option>
+              <option value="alpha">Alpha Waves 10Hz Deep Flow</option>
+              <option value="rain">Rain Noise Generator</option>
+              <option value="brown">Brown Noise Focus Shield</option>
             </select>
           </div>
         </div>
@@ -150,7 +150,7 @@
     <section id="tab-neurodock" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-scissors"></i> NeuroDock Executive Task Slicer</h2>
+          <h2><i class="fa-solid fa-scissors text-sky"></i> NeuroDock Executive Task Slicer</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body">
@@ -192,7 +192,7 @@
     <section id="tab-nookmiles" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-star"></i> Pokepi Word and Science Quests</h2>
+          <h2><i class="fa-solid fa-star text-sun"></i> Pokepi Word and Science Quests</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body">
@@ -233,7 +233,7 @@
     <section id="tab-studio" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-sliders"></i> Universal Accommodation Studio</h2>
+          <h2><i class="fa-solid fa-sliders text-berry"></i> Universal Accommodation Studio</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body grid-2">
@@ -265,7 +265,7 @@
     <section id="tab-flashcards" class="overlay-panel hidden">
       <div class="overlay-card island-card modal-sm">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-layer-group"></i> Active Recall Flashcards</h2>
+          <h2><i class="fa-solid fa-layer-group text-mint"></i> Active Recall Flashcards</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body flex-center">
@@ -304,7 +304,7 @@
     <section id="tab-grammar" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-atom"></i> Logical Formula and Concept Matrix</h2>
+          <h2><i class="fa-solid fa-atom text-rose"></i> Logical Formula and Concept Matrix</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body">
@@ -342,7 +342,7 @@
     <section id="tab-community" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-heart"></i> Rejection Free Peer Safe Space</h2>
+          <h2><i class="fa-solid fa-heart text-rose"></i> Rejection Free Peer Safe Space</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body">
@@ -368,7 +368,7 @@
   <div class="modal-overlay hidden" id="obsidianModal">
     <div class="modal-card island-card">
       <div class="panel-header">
-        <h3><i class="fa-solid fa-note-sticky"></i> Obsidian Markdown Exporter</h3>
+        <h3><i class="fa-solid fa-note-sticky text-berry"></i> Obsidian Markdown Exporter</h3>
         <button class="btn-close-panel" id="closeObsidianModalBtn"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <textarea id="obsidianTextarea" rows="8" class="form-control-light" readonly></textarea>

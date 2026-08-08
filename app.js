@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     maruta: { name: "Maruta", avatar: "", phrase: "Science formula matrix loaded and ready.", themeClass: "pokepi-maruta" }
   };
 
+  // Pokepi Companion Selector
   const pokepiSelect = document.getElementById('pokepiSelect');
   if (pokepiSelect) {
     pokepiSelect.value = state.pokepi || 'toro';
@@ -62,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     playTypewriterDialogue(data.phrase, data.name, data.avatar);
   }
 
+  // Spoon Selector
   const spoonSelect = document.getElementById('spoonSelect');
   if (spoonSelect) {
     spoonSelect.value = state.spoons || 3;
@@ -77,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Typewriter Speech Engine
   const acTypewriterText = document.getElementById('acTypewriterText');
   const acSpeaker = document.getElementById('acSpeaker');
   const acAvatar = document.getElementById('acAvatar');
@@ -108,13 +111,18 @@ document.addEventListener('DOMContentLoaded', () => {
     ""
   );
 
+  // HyperFocus Timer & Web Audio Sound Generator
   let hfSeconds = 900;
   let hfInterval = null;
+  let audioCtx = null;
+  let currentNoiseNode = null;
+
   const hfTimerTime = document.getElementById('hfTimerTime');
   const hfTimerStatus = document.getElementById('hfTimerStatus');
   const hfStartBtn = document.getElementById('hfStartBtn');
   const hfPauseBtn = document.getElementById('hfPauseBtn');
   const hfResetBtn = document.getElementById('hfResetBtn');
+  const hfAmbientSelect = document.getElementById('hfAmbientSelect');
 
   function updateHfDisplay() {
     if (!hfTimerTime) return;
@@ -164,6 +172,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Web Audio Synthesizer for Focus Sound Generator
+  function playFocusAudio(type) {
+    if (currentNoiseNode) {
+      currentNoiseNode.stop();
+      currentNoiseNode = null;
+    }
+    if (type === 'none') return;
+
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    const bufferSize = audioCtx.sampleRate * 2;
+    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+
+    for (let i = 0; i < bufferSize; i++) {
+      if (type === 'brown') {
+        output[i] = (Math.random() * 2 - 1) * 0.15;
+      } else if (type === 'rain') {
+        output[i] = (Math.random() * 2 - 1) * 0.08;
+      } else {
+        // Alpha Waves 10Hz binaural simulation
+        output[i] = Math.sin(2 * Math.PI * 10 * (i / audioCtx.sampleRate)) * 0.1;
+      }
+    }
+
+    const whiteNoise = audioCtx.createBufferSource();
+    whiteNoise.buffer = noiseBuffer;
+    whiteNoise.loop = true;
+
+    const gainNode = audioCtx.createGain();
+    gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+
+    whiteNoise.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    whiteNoise.start();
+
+    currentNoiseNode = whiteNoise;
+  }
+
+  if (hfAmbientSelect) {
+    hfAmbientSelect.addEventListener('change', (e) => {
+      playFocusAudio(e.target.value);
+    });
+  }
+
+  // Task Slicer Form
   const taskSlicerForm = document.getElementById('taskSlicerForm');
   const intimidatingTaskInput = document.getElementById('intimidatingTaskInput');
   const slicedActionsList = document.getElementById('slicedActionsList');
@@ -200,9 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --------------------------------------------------------------------------
-  // 5. THREE.JS 3D SCENE & RAYCASTER INTERACTIVITY
-  // --------------------------------------------------------------------------
+  // Three.js 3D Sky Canvas Scene
   const canvas = document.getElementById('bg3dCanvas');
   const container = document.getElementById('canvas3dContainer');
   let scene, camera, renderer, planeGroup, propellerMesh;
