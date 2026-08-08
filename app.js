@@ -1,5 +1,5 @@
 /* ==========================================================================
-   NEURODIV-STUDY - UNIVERSAL 3D ENGINE & OBSIDIAN EXPORTER
+   NEURODIV-STUDY - UNIVERSAL STORYTELLING, SCIENCE & 3D ENGINE
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const ISLAND_POSITIONS = {
     roma: { x: 0, y: -2, z: -15, label: "Overview Island", tab: "dashboard" },
     firenze: { x: -16, y: -1, z: -25, label: "Adaptive Studio Island", tab: "studio" },
-    venezia: { x: -8, y: -1, z: -35, label: "Smart Cards Island", tab: "flashcards" },
+    venezia: { x: -8, y: -1, z: -35, label: "Science & Italian Cards Island", tab: "flashcards" },
     milano: { x: 8, y: -1, z: -35, label: "Formula Matrix Island", tab: "grammar" },
     costiera: { x: 16, y: -1, z: -25, label: "Community Island", tab: "community" }
   };
@@ -311,7 +311,38 @@ document.addEventListener('DOMContentLoaded', () => {
   init3DScene();
 
   // --------------------------------------------------------------------------
-  // 3. OBSIDIAN MARKDOWN EXPORTER (.md)
+  // 3. AUDIO SYNTHESIS ENGINE
+  // --------------------------------------------------------------------------
+  function speakItalian(text) {
+    if (!('speechSynthesis' in window)) {
+      alert("Audio synthesis is not supported on this browser.");
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'it-IT';
+    utterance.rate = 0.88;
+
+    const voices = window.speechSynthesis.getVoices();
+    const itVoice = voices.find(v => v.lang.includes('it'));
+    if (itVoice) utterance.voice = itVoice;
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  document.querySelectorAll('.speak-story-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = btn.getAttribute('data-text');
+      speakItalian(text);
+    });
+  });
+
+  document.getElementById('quickAudioTest').addEventListener('click', () => {
+    speakItalian("Welcome to neurodiv-study! Storytelling, Science and Language engineered for your brain.");
+  });
+
+  // --------------------------------------------------------------------------
+  // 4. OBSIDIAN MARKDOWN EXPORTER (.md)
   // --------------------------------------------------------------------------
   const exportObsidianBtn = document.getElementById('exportObsidianBtn');
   const obsidianModal = document.getElementById('obsidianModal');
@@ -322,17 +353,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function generateObsidianMarkdown() {
     const dateStr = new Date().toISOString().split('T')[0];
-    return `# 🚀 Study Notes - ${state.examTitle}
-#neurodiv #study #exam #astrophysics #italian
+    return `# 🚀 Science & Language Notes - ${state.examTitle}
+#neurodiv #storytelling #astrophysics #italian #exam
 
 ---
 
-## 📊 Overview Telemetry
-- **Target Exam:** [[${state.examTitle}]]
+## 🌌 Cosmic Telemetry & Storytelling
+- **Target Mission:** [[${state.examTitle}]]
 - **Days Remaining:** ${state.examDays} days
 - **Readiness Estimate:** ${state.readinessPercent}% (OCPD Safeguard: 80% is Exam-Ready)
 - **Current Energy Wave:** \`${state.energyState.toUpperCase()}\`
 - **Streak:** ${state.streak} days | **XP:** ${state.userXP}
+
+---
+
+## 📖 Key Story Vignettes & Notes
+### [[Story 1: The Orbital Transit of Verbs]]
+*Motion verbs take ESSERE because their energy state is in physical transit.*
+
+### [[Story 2: Quantum Uncertainty & Congiuntivo]]
+*Expressing doubt enters the Congiuntivo parallel universe.*
 
 ---
 
@@ -344,12 +384,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ---
 
-## 💡 Saved Study Notes & Mnemonics
+## 💡 Community & Science Exchange Notes
 ${state.posts.map(p => `### [[${p.title}]]
 *Author: ${p.author} | Category: #${p.type}*
 
 > ${p.content}
-${p.bestAnswer ? `\n> **Best Solution:**\n> ${p.bestAnswer.replace(/<[^>]*>/g, '')}` : ''}
 `).join('\n---\n')}
 
 ---
@@ -377,13 +416,13 @@ ${p.bestAnswer ? `\n> **Best Solution:**\n> ${p.bestAnswer.replace(/<[^>]*>/g, '
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Study_Notes_${state.examTitle.replace(/[^a-zA-Z0-9]/g, '_')}.md`;
+    a.download = `Obsidian_Science_Notes_${state.examTitle.replace(/[^a-zA-Z0-9]/g, '_')}.md`;
     a.click();
     URL.revokeObjectURL(url);
   });
 
   // --------------------------------------------------------------------------
-  // 4. SUBJECT & EXAM CUSTOMIZER MODAL
+  // 5. SUBJECT CUSTOMIZER MODAL
   // --------------------------------------------------------------------------
   const customizeSubjectBtn = document.getElementById('customizeSubjectBtn');
   const subjectModal = document.getElementById('subjectModal');
@@ -424,53 +463,104 @@ ${p.bestAnswer ? `\n> **Best Solution:**\n> ${p.bestAnswer.replace(/<[^>]*>/g, '
   });
 
   // --------------------------------------------------------------------------
-  // 5. AUDIO SYNTHESIS & ENERGY WAVES
+  // 6. FLASHCARDS, SRS & QUIZ ENGINE
   // --------------------------------------------------------------------------
-  function speakItalian(text) {
-    if (!('speechSynthesis' in window)) {
-      alert("Audio synthesis is not supported on this browser.");
-      return;
-    }
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'it-IT';
-    utterance.rate = 0.9;
+  const FLASHCARDS_DB = {
+    exam: [
+      {
+        it: "Tuttavia",
+        phonetic: "[toot-tah-VEE-ah]",
+        en: "However / Nevertheless",
+        exIt: "Sto studiando molto; tuttavia l'esame è impegnativo.",
+        exEn: "I am studying a lot; however, the exam is challenging.",
+        mnemonic: "Think of 'To the VIA (street)' - however, you turn onto a new path!"
+      },
+      {
+        it: "Affinché",
+        phonetic: "[ahf-feen-KEH]",
+        en: "So that / In order that (+ Subjunctive)",
+        exIt: "Ti spiego la regola affinché tu capisca bene.",
+        exEn: "I explain the rule to you so that you understand well.",
+        mnemonic: "Always triggers Congiuntivo! Imagine a fine key unlocking grammar."
+      }
+    ],
+    astrophysics: [
+      {
+        it: "Meccanica Quantistica",
+        phonetic: "[meh-KAH-nee-kah kwan-TEE-stee-kah]",
+        en: "Quantum Mechanics",
+        exIt: "La meccanica quantistica studia le particelle subatomiche.",
+        exEn: "Quantum mechanics studies subatomic particles.",
+        mnemonic: "Quantum energy leaps!"
+      },
+      {
+        it: "Orbita Kepleriana",
+        phonetic: "[OHR-bee-tah keh-pleh-ree-AH-nah]",
+        en: "Keplerian Orbit",
+        exIt: "L'orbita kepleriana descrive il moto dei pianeti.",
+        exEn: "The Keplerian orbit describes planetary motion.",
+        mnemonic: "Elliptical paths around a gravitational focus."
+      }
+    ]
+  };
 
-    const voices = window.speechSynthesis.getVoices();
-    const itVoice = voices.find(v => v.lang.includes('it'));
-    if (itVoice) utterance.voice = itVoice;
+  let currentDeck = FLASHCARDS_DB.exam;
+  let currentCardIndex = 0;
 
-    window.speechSynthesis.speak(utterance);
+  const cardElement = document.getElementById('mainFlashcard');
+  const cardItalian = document.getElementById('cardItalian');
+  const cardPhonetic = document.getElementById('cardPhonetic');
+  const cardEnglish = document.getElementById('cardEnglish');
+  const cardExampleIt = document.getElementById('cardExampleIt');
+  const cardExampleEn = document.getElementById('cardExampleEn');
+  const cardSpeakBtn = document.getElementById('cardSpeakBtn');
+
+  function renderCard() {
+    const card = currentDeck[currentCardIndex];
+    cardElement.classList.remove('flipped');
+    
+    setTimeout(() => {
+      cardItalian.textContent = card.it;
+      cardPhonetic.textContent = card.phonetic;
+      cardEnglish.textContent = card.en;
+      cardExampleIt.innerHTML = card.exIt;
+      cardExampleEn.textContent = card.exEn;
+    }, 200);
   }
 
-  document.getElementById('quickAudioTest').addEventListener('click', () => {
-    speakItalian("Welcome to neurodiv-study! Universal learning engineered for your brain.");
+  cardElement.addEventListener('click', (e) => {
+    if (e.target.closest('#cardSpeakBtn')) return;
+    cardElement.classList.toggle('flipped');
   });
 
-  const energyStateSelect = document.getElementById('energyStateSelect');
-  const energySubtitle = document.getElementById('energySubtitle');
-  energyStateSelect.value = state.energyState || 'balanced';
-
-  energyStateSelect.addEventListener('change', (e) => {
-    state.energyState = e.target.value;
-    saveState();
-    applyEnergyMode(state.energyState);
+  cardSpeakBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const word = currentDeck[currentCardIndex].it;
+    speakItalian(word);
   });
 
-  function applyEnergyMode(mode) {
-    if (mode === 'high') {
-      energySubtitle.textContent = "Current Pace: ⚡ High Energy (Sprint Mode). Ride the momentum safely without burning out!";
-    } else if (mode === 'low') {
-      energySubtitle.textContent = "Current Pace: 🛋️ Low Energy (2-Min Gentle Dose). Zero guilt, zero streak loss. Small steps count!";
-    } else {
-      energySubtitle.textContent = "Current Pace: 🌱 Balanced & Flexible. Universal for any exam or subject.";
-    }
-  }
+  const srsBtns = ['srsAgain', 'srsHard', 'srsGood', 'srsEasy'];
+  srsBtns.forEach(id => {
+    document.getElementById(id).addEventListener('click', () => {
+      state.cardsReviewedToday++;
+      state.userXP += 10;
+      saveState();
+      updateDashboardUI();
 
-  applyEnergyMode(state.energyState);
+      currentCardIndex = (currentCardIndex + 1) % currentDeck.length;
+      renderCard();
+    });
+  });
+
+  document.getElementById('deckFilter').addEventListener('change', (e) => {
+    const val = e.target.value;
+    currentDeck = FLASHCARDS_DB[val] || FLASHCARDS_DB.exam;
+    currentCardIndex = 0;
+    renderCard();
+  });
 
   // --------------------------------------------------------------------------
-  // 6. NAVIGATION & DASHBOARD UI REFRESH
+  // 7. NAVIGATION & DASHBOARD UI REFRESH
   // --------------------------------------------------------------------------
   const navBtns = document.querySelectorAll('.nav-btn');
   const tabPanes = document.querySelectorAll('.tab-pane');
