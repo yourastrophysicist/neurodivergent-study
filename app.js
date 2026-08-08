@@ -1,5 +1,6 @@
 /* ==========================================================================
-   NEURODIV-STUDY - 3D AIRPLANE ENGINE & SARTHAK PORTFOLIO BANNER LAYOUT
+   NEURODIV-STUDY - CLEAN 100VH 3D AIRPLANE ENGINE
+   Matching https://3d-airplane-portfolio.vercel.app/
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -24,36 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       dyslexiaMode: false,
       theme: 'dark',
       fontSize: 'normal'
-    },
-    goalsCompleted: { 1: true, 2: true, 3: true, 4: false },
-    posts: [
-      {
-        id: 1,
-        author: "Astrophysicist_Student",
-        avatar: "🌌",
-        type: "note",
-        level: "Astrophysics & Italian",
-        title: "🌌 Viewing Italian Verbs Like Orbital Formulas (Essere vs Avere)",
-        content: "As an astrophysicist, I think of verb auxiliaries like orbital states. Verbs of motion (andare, venire, uscire) are in a **Dynamic State of Transit**, so they take ESSERE. Stative or transitive actions use AVERE. Visualizing grammar as physical conservation laws makes it instant!",
-        upvotes: 24,
-        commentsCount: 6,
-        timeAgo: "1 hour ago",
-        hasUpvoted: true
-      },
-      {
-        id: 2,
-        author: "Giulia_Learn",
-        avatar: "G",
-        type: "note",
-        level: "B1 (Intermediate)",
-        title: "💡 ADHD & OCPD Memory Trick for 'Passato Prossimo' Auxiliaries",
-        content: "I kept mixing up which verbs take ESSERE vs AVERE in the past. Remember the mnemonic **'House of Essere'**! All movement verbs take ESSERE.",
-        upvotes: 19,
-        commentsCount: 5,
-        timeAgo: "2 hours ago",
-        hasUpvoted: false
-      }
-    ]
+    }
   };
 
   let state = JSON.parse(localStorage.getItem('prontoItaliaState')) || DEFAULT_STATE;
@@ -63,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 2. THREE.JS 3D SCENE & AIRPLANE (MATCHING SARTHAK 3D AIRPLANE PORTFOLIO)
+  // 2. THREE.JS 100VH FULL-SCREEN 3D AIRPLANE WORLD
   // --------------------------------------------------------------------------
   const canvas = document.getElementById('bg3dCanvas');
   const container = document.getElementById('canvas3dContainer');
@@ -76,29 +48,29 @@ document.addEventListener('DOMContentLoaded', () => {
   let targetCamX = 0, targetCamZ = -15;
 
   const ISLAND_POSITIONS = {
-    roma: { x: 0, y: -2, z: -15, label: "🏛️ Isola Roma (Overview)", tab: "dashboard" },
-    firenze: { x: -16, y: -1, z: -25, label: "🎛️ Isola Firenze (Adaptive Studio)", tab: "studio" },
-    venezia: { x: -8, y: -1, z: -35, label: "🎎 Isola Venezia (Smart Cards)", tab: "flashcards" },
-    milano: { x: 8, y: -1, z: -35, label: "📖 Isola Milano (Grammar Matrix)", tab: "grammar" },
-    costiera: { x: 16, y: -1, z: -25, label: "👥 Isola Costiera (Community)", tab: "community" }
+    roma: { x: 0, y: -2, z: -15, label: "🏛️ Isola Roma (Overview)", tab: "storytelling", desc: "Welcome to Isola Roma! Unlock Science & Italian Stories." },
+    firenze: { x: -16, y: -1, z: -25, label: "🎛️ Isola Firenze (Studio)", tab: "studio", desc: "Isola Firenze: Diagnosis Accommodation Studio." },
+    venezia: { x: -8, y: -1, z: -35, label: "🎎 Isola Venezia (Cards)", tab: "flashcards", desc: "Isola Venezia: SRS Active Recall Flashcards." },
+    milano: { x: 8, y: -1, z: -35, label: "📖 Isola Milano (Grammar)", tab: "grammar", desc: "Isola Milano: Logical Grammar & Science Matrix." },
+    costiera: { x: 16, y: -1, z: -25, label: "👥 Isola Costiera (Community)", tab: "community", desc: "Isola Costiera: Rejection-Free Peer Safe Space." }
   };
 
   function init3DScene() {
     if (!THREE || !canvas || !container) return;
 
     scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x0b0f19, 0.012);
+    scene.fog = new THREE.FogExp2(0x060913, 0.012);
 
-    const aspect = container.clientWidth / container.clientHeight;
+    const aspect = window.innerWidth / window.innerHeight;
     camera = new THREE.PerspectiveCamera(55, aspect, 0.1, 1000);
     camera.position.set(0, 4, 10);
     camera.lookAt(0, 0, -15);
 
     renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
     scene.add(ambientLight);
 
     const sunLight = new THREE.DirectionalLight(0x10b981, 1.2);
@@ -115,28 +87,28 @@ document.addEventListener('DOMContentLoaded', () => {
     create3DClouds();
 
     window.addEventListener('resize', onWindowResize);
-    container.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mousemove', onMouseMove);
 
     animate3D();
   }
 
   function createCosmicStarfield() {
     const starGeo = new THREE.BufferGeometry();
-    const starCount = 300;
+    const starCount = 350;
     const posArray = new Float32Array(starCount * 3);
 
     for (let i = 0; i < starCount * 3; i += 3) {
-      posArray[i] = (Math.random() - 0.5) * 120;
+      posArray[i] = (Math.random() - 0.5) * 140;
       posArray[i + 1] = Math.random() * 40 - 5;
-      posArray[i + 2] = (Math.random() - 0.5) * 100 - 20;
+      posArray[i + 2] = (Math.random() - 0.5) * 120 - 20;
     }
 
     starGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
     const starMat = new THREE.PointsMaterial({
-      size: 0.25,
+      size: 0.28,
       color: 0x06b6d4,
       transparent: true,
-      opacity: 0.8
+      opacity: 0.85
     });
 
     starParticles = new THREE.Points(starGeo, starMat);
@@ -148,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const bodyGeo = new THREE.ConeGeometry(0.8, 3.5, 8);
     bodyGeo.rotateX(Math.PI / 2);
-    const bodyMat = new THREE.MeshPhongMaterial({ color: 0xf59e0b, flatShading: true }); // Sarthak Yellow Airplane color
+    const bodyMat = new THREE.MeshPhongMaterial({ color: 0xf59e0b, flatShading: true }); // Sarthak Yellow Airplane
     const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat);
     planeGroup.add(bodyMesh);
 
@@ -209,15 +181,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function create3DClouds() {
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 18; i++) {
       const cloudGeo = new THREE.DodecahedronGeometry(1.2 + Math.random() * 0.8, 1);
-      const cloudMat = new THREE.MeshPhongMaterial({ color: 0xffffff, transparent: true, opacity: 0.45, flatShading: true });
+      const cloudMat = new THREE.MeshPhongMaterial({ color: 0xffffff, transparent: true, opacity: 0.4, flatShading: true });
       const cloudMesh = new THREE.Mesh(cloudGeo, cloudMat);
 
       cloudMesh.position.set(
-        (Math.random() - 0.5) * 60,
+        (Math.random() - 0.5) * 70,
         Math.random() * 10 + 2,
-        (Math.random() - 0.5) * 50 - 10
+        (Math.random() - 0.5) * 60 - 10
       );
       scene.add(cloudMesh);
       clouds.push(cloudMesh);
@@ -225,16 +197,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function onMouseMove(e) {
-    const rect = container.getBoundingClientRect();
-    mouseX = ((e.clientX - rect.left) / container.clientWidth) * 2 - 1;
-    mouseY = -((e.clientY - rect.top) / container.clientHeight) * 2 + 1;
+    mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+    mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
   }
 
   function onWindowResize() {
-    if (!renderer || !camera || !container) return;
-    camera.aspect = container.clientWidth / container.clientHeight;
+    if (!renderer || !camera) return;
+    camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
   function animate3D() {
@@ -262,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     clouds.forEach(c => {
       c.position.x += 0.02;
-      if (c.position.x > 30) c.position.x = -30;
+      if (c.position.x > 35) c.position.x = -35;
     });
 
     camera.position.x += (targetCamX - camera.position.x) * 0.04;
@@ -280,32 +251,29 @@ document.addEventListener('DOMContentLoaded', () => {
     targetCamX = target.x;
     targetCamZ = target.z + 12;
 
-    document.getElementById('currentIslandDisplay').textContent = target.label;
+    document.getElementById('popupTitle').textContent = target.label;
+    document.getElementById('popupDesc').textContent = target.desc;
     
-    document.querySelectorAll('.hud-btn').forEach(b => {
+    document.querySelectorAll('.hud-chip').forEach(b => {
       if (b.getAttribute('data-island') === islandKey) b.classList.add('active');
       else b.classList.remove('active');
     });
-
-    if (target.tab && target.tab !== 'dashboard') {
-      setTimeout(() => {
-        const navBtn = document.querySelector(`.nav-btn[data-tab="${target.tab}"]`);
-        if (navBtn) navBtn.click();
-      }, 600);
-    }
   }
 
-  document.querySelectorAll('.hud-btn').forEach(btn => {
+  document.querySelectorAll('.hud-chip').forEach(btn => {
     btn.addEventListener('click', () => {
       const island = btn.getAttribute('data-island');
       flyToIsland(island);
     });
   });
 
-  const exploreCurrentIslandBtn = document.getElementById('exploreCurrentIslandBtn');
-  if (exploreCurrentIslandBtn) {
-    exploreCurrentIslandBtn.addEventListener('click', () => {
-      flyToIsland(state.currentIsland || 'firenze');
+  const popupActionBtn = document.getElementById('popupActionBtn');
+  if (popupActionBtn) {
+    popupActionBtn.addEventListener('click', () => {
+      const target = ISLAND_POSITIONS[state.currentIsland || 'roma'];
+      if (target && target.tab) {
+        openPanel(target.tab);
+      }
     });
   }
 
@@ -319,7 +287,44 @@ document.addEventListener('DOMContentLoaded', () => {
   init3DScene();
 
   // --------------------------------------------------------------------------
-  // 3. AUDIO SYNTHESIS ENGINE
+  // 3. OVERLAY PANELS & NAVIGATION CONTROLS
+  // --------------------------------------------------------------------------
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const overlayPanels = document.querySelectorAll('.overlay-panel');
+
+  function openPanel(tabId) {
+    overlayPanels.forEach(panel => panel.classList.add('hidden'));
+    navBtns.forEach(b => b.classList.remove('active'));
+
+    if (tabId === 'world') {
+      // Full screen 3D world view with no open modal
+      return;
+    }
+
+    const targetPanel = document.getElementById(`tab-${tabId}`);
+    if (targetPanel) {
+      targetPanel.classList.remove('hidden');
+      const activeNavBtn = document.querySelector(`.nav-btn[data-tab="${tabId}"]`);
+      if (activeNavBtn) activeNavBtn.classList.add('active');
+    }
+  }
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetTab = btn.getAttribute('data-tab');
+      openPanel(targetTab);
+    });
+  });
+
+  document.querySelectorAll('.btn-close-panel').forEach(btn => {
+    btn.addEventListener('click', () => {
+      overlayPanels.forEach(panel => panel.classList.add('hidden'));
+      openPanel('world');
+    });
+  });
+
+  // --------------------------------------------------------------------------
+  // 4. AUDIO SYNTHESIS ENGINE
   // --------------------------------------------------------------------------
   function speakItalian(text) {
     if (!('speechSynthesis' in window)) {
@@ -346,11 +351,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('quickAudioTest').addEventListener('click', () => {
-    speakItalian("Welcome to neurodiv-study! Storytelling, Science and Language engineered for your brain.");
+    speakItalian("Welcome to neurodiv-study! Clean 3D Airplane World.");
   });
 
   // --------------------------------------------------------------------------
-  // 4. OBSIDIAN MARKDOWN EXPORTER (.md)
+  // 5. OBSIDIAN MARKDOWN EXPORTER (.md)
   // --------------------------------------------------------------------------
   const exportObsidianBtn = document.getElementById('exportObsidianBtn');
   const obsidianModal = document.getElementById('obsidianModal');
@@ -365,8 +370,6 @@ document.addEventListener('DOMContentLoaded', () => {
 #neurodiv #storytelling #astrophysics #italian #exam
 
 ---
-
-## 🌌 Cosmic Telemetry & Storytelling
 - **Target Mission:** [[${state.examTitle}]]
 - **Days Remaining:** ${state.examDays} days
 - **Readiness Estimate:** ${state.readinessPercent}% (OCPD Safeguard: 80% is Exam-Ready)
@@ -374,32 +377,9 @@ document.addEventListener('DOMContentLoaded', () => {
 - **Streak:** ${state.streak} days | **XP:** ${state.userXP}
 
 ---
-
-## 📖 Key Story Vignettes & Notes
 ### [[Story 1: The Orbital Transit of Verbs]]
 *Motion verbs take ESSERE because their energy state is in physical transit.*
 
-### [[Story 2: Quantum Uncertainty & Congiuntivo]]
-*Expressing doubt enters the Congiuntivo parallel universe.*
-
----
-
-## 🧠 Neuro-Adaptive Accommodations Active
-- **ADHD Micro-Sprints:** Enabled (15-min focus sessions)
-- **Bipolar Energy Wave:** Enabled (Flexible pace adaptation)
-- **OCPD Circuit Breaker:** Enabled (80% perfection limit)
-- **BPD Safe Space:** Enabled (Rejection-free peer Q&A & affirmations)
-
----
-
-## 💡 Community & Science Exchange Notes
-${state.posts.map(p => `### [[${p.title}]]
-*Author: ${p.author} | Category: #${p.type}*
-
-> ${p.content}
-`).join('\n---\n')}
-
----
 *Exported from neurodiv-study 🚀 on ${dateStr}*
 `;
   }
@@ -415,7 +395,7 @@ ${state.posts.map(p => `### [[${p.title}]]
     navigator.clipboard.writeText(obsidianTextarea.value);
     copyObsidianBtn.innerHTML = '<i class="fa-solid fa-check text-emerald"></i> Copied!';
     setTimeout(() => {
-      copyObsidianBtn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy Markdown';
+      copyObsidianBtn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
     }, 2000);
   });
 
@@ -430,169 +410,12 @@ ${state.posts.map(p => `### [[${p.title}]]
   });
 
   // --------------------------------------------------------------------------
-  // 5. SUBJECT CUSTOMIZER MODAL
+  // 6. FLASHCARD FLIP LOGIC
   // --------------------------------------------------------------------------
-  const customizeSubjectBtn = document.getElementById('customizeSubjectBtn');
-  const subjectModal = document.getElementById('subjectModal');
-  const closeSubjectModalBtn = document.getElementById('closeSubjectModalBtn');
-  const cancelSubjectBtn = document.getElementById('cancelSubjectBtn');
-  const customSubjectForm = document.getElementById('customSubjectForm');
-  const presetSubjectSelect = document.getElementById('presetSubjectSelect');
-  const subjectTitleInput = document.getElementById('subjectTitleInput');
-  const subjectDaysInput = document.getElementById('subjectDaysInput');
-
-  customizeSubjectBtn.addEventListener('click', () => {
-    subjectTitleInput.value = state.examTitle;
-    subjectDaysInput.value = state.examDays;
-    subjectModal.classList.remove('hidden');
-  });
-
-  closeSubjectModalBtn.addEventListener('click', () => subjectModal.classList.add('hidden'));
-  cancelSubjectBtn.addEventListener('click', () => subjectModal.classList.add('hidden'));
-
-  presetSubjectSelect.addEventListener('change', (e) => {
-    const val = e.target.value;
-    if (val === 'astrophysics-italian') {
-      subjectTitleInput.value = "Astrophysics & Italian CILS B1 Exam";
-    } else if (val === 'italian-cils') {
-      subjectTitleInput.value = "Italian CILS B1/B2 Official Exam";
-    } else if (val === 'astrophysics') {
-      subjectTitleInput.value = "Astrophysics & Physics Board Exam";
-    }
-  });
-
-  customSubjectForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    state.examTitle = subjectTitleInput.value;
-    state.examDays = parseInt(subjectDaysInput.value, 10);
-    saveState();
-    updateDashboardUI();
-    subjectModal.classList.add('hidden');
-  });
-
-  // --------------------------------------------------------------------------
-  // 6. FLASHCARDS, SRS & QUIZ ENGINE
-  // --------------------------------------------------------------------------
-  const FLASHCARDS_DB = {
-    exam: [
-      {
-        it: "Tuttavia",
-        phonetic: "[toot-tah-VEE-ah]",
-        en: "However / Nevertheless",
-        exIt: "Sto studiando molto; tuttavia l'esame è impegnativo.",
-        exEn: "I am studying a lot; however, the exam is challenging.",
-        mnemonic: "Think of 'To the VIA (street)' - however, you turn onto a new path!"
-      },
-      {
-        it: "Affinché",
-        phonetic: "[ahf-feen-KEH]",
-        en: "So that / In order that (+ Subjunctive)",
-        exIt: "Ti spiego la regola affinché tu capisca bene.",
-        exEn: "I explain the rule to you so that you understand well.",
-        mnemonic: "Always triggers Congiuntivo! Imagine a fine key unlocking grammar."
-      }
-    ],
-    astrophysics: [
-      {
-        it: "Meccanica Quantistica",
-        phonetic: "[meh-KAH-nee-kah kwan-TEE-stee-kah]",
-        en: "Quantum Mechanics",
-        exIt: "La meccanica quantistica studia le particelle subatomiche.",
-        exEn: "Quantum mechanics studies subatomic particles.",
-        mnemonic: "Quantum energy leaps!"
-      },
-      {
-        it: "Orbita Kepleriana",
-        phonetic: "[OHR-bee-tah keh-pleh-ree-AH-nah]",
-        en: "Keplerian Orbit",
-        exIt: "L'orbita kepleriana descrive il moto dei pianeti.",
-        exEn: "The Keplerian orbit describes planetary motion.",
-        mnemonic: "Elliptical paths around a gravitational focus."
-      }
-    ]
-  };
-
-  let currentDeck = FLASHCARDS_DB.exam;
-  let currentCardIndex = 0;
-
   const cardElement = document.getElementById('mainFlashcard');
-  const cardItalian = document.getElementById('cardItalian');
-  const cardPhonetic = document.getElementById('cardPhonetic');
-  const cardEnglish = document.getElementById('cardEnglish');
-  const cardExampleIt = document.getElementById('cardExampleIt');
-  const cardExampleEn = document.getElementById('cardExampleEn');
-  const cardSpeakBtn = document.getElementById('cardSpeakBtn');
-
-  function renderCard() {
-    const card = currentDeck[currentCardIndex];
-    cardElement.classList.remove('flipped');
-    
-    setTimeout(() => {
-      cardItalian.textContent = card.it;
-      cardPhonetic.textContent = card.phonetic;
-      cardEnglish.textContent = card.en;
-      cardExampleIt.innerHTML = card.exIt;
-      cardExampleEn.textContent = card.exEn;
-    }, 200);
-  }
-
-  cardElement.addEventListener('click', (e) => {
-    if (e.target.closest('#cardSpeakBtn')) return;
-    cardElement.classList.toggle('flipped');
-  });
-
-  cardSpeakBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const word = currentDeck[currentCardIndex].it;
-    speakItalian(word);
-  });
-
-  const srsBtns = ['srsAgain', 'srsHard', 'srsGood', 'srsEasy'];
-  srsBtns.forEach(id => {
-    document.getElementById(id).addEventListener('click', () => {
-      state.cardsReviewedToday++;
-      state.userXP += 10;
-      saveState();
-      updateDashboardUI();
-
-      currentCardIndex = (currentCardIndex + 1) % currentDeck.length;
-      renderCard();
+  if (cardElement) {
+    cardElement.addEventListener('click', () => {
+      cardElement.classList.toggle('flipped');
     });
-  });
-
-  document.getElementById('deckFilter').addEventListener('change', (e) => {
-    const val = e.target.value;
-    currentDeck = FLASHCARDS_DB[val] || FLASHCARDS_DB.exam;
-    currentCardIndex = 0;
-    renderCard();
-  });
-
-  // --------------------------------------------------------------------------
-  // 7. NAVIGATION & DASHBOARD UI REFRESH
-  // --------------------------------------------------------------------------
-  const navBtns = document.querySelectorAll('.nav-btn');
-  const tabPanes = document.querySelectorAll('.tab-pane');
-
-  navBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetTab = btn.getAttribute('data-tab');
-      navBtns.forEach(b => b.classList.remove('active'));
-      tabPanes.forEach(pane => pane.classList.remove('active'));
-
-      btn.classList.add('active');
-      document.getElementById(`tab-${targetTab}`).classList.add('active');
-    });
-  });
-
-  function updateDashboardUI() {
-    document.getElementById('userXP').textContent = state.userXP;
-    document.getElementById('streakCount').textContent = state.streak;
-    document.getElementById('cardsReviewed').textContent = state.cardsReviewedToday;
-    document.getElementById('readinessPercent').textContent = `${state.readinessPercent}%`;
-    document.getElementById('readinessBar').style.width = `${state.readinessPercent}%`;
-    document.getElementById('examTitleDisplay').textContent = state.examTitle;
-    document.getElementById('cdDays').textContent = state.examDays;
   }
-
-  updateDashboardUI();
 });
