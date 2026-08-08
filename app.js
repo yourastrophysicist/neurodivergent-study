@@ -1,5 +1,5 @@
 /* ==========================================================================
-   NEURODIV STUDY - GAMIFIED INTERACTIVE PLATFORM
+   NEURODIV STUDY - GAMIFIED MASTER PEDAGOGY INTERACTIVE PLATFORM
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     userXP: 420,
     level: 4,
     streak: 5,
+    combo: 1.5,
     readinessPercent: 68,
     examTitle: "Universal Science and Exam Mastery",
     examDays: 24,
@@ -17,6 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     currentIsland: 'roma',
     acTheme: 'isabelle',
     pokepi: 'toro',
+    questTheme: 'deepspace',
+    unlockedNodes: ['node1', 'node2'],
     adaptiveSettings: {
       adhdMode: true,
       bipolarMode: true,
@@ -39,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const userXpText = document.getElementById('userXpText');
   const userLevelBadge = document.getElementById('userLevelBadge');
   const userStreakText = document.getElementById('userStreakText');
+  const comboMultiplierText = document.getElementById('comboMultiplierText');
   const xpFillBar = document.getElementById('xpFillBar');
 
   function updateGamifiedUI() {
@@ -48,17 +52,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (userXpText) userXpText.textContent = `${state.userXP} XP`;
     if (userLevelBadge) userLevelBadge.textContent = `Level ${state.level}`;
     if (userStreakText) userStreakText.textContent = `${state.streak} Day Streak`;
+    if (comboMultiplierText) comboMultiplierText.textContent = `Combo ${state.combo || 1.5}x`;
     if (xpFillBar) xpFillBar.style.width = `${progressPercent}%`;
   }
 
   function addXP(amount, reason = "") {
-    state.userXP += amount;
+    const totalAdded = Math.round(amount * (state.combo || 1.5));
+    state.userXP += totalAdded;
     saveState();
 
     if (reason) {
       const currentPokepi = POKEPI_SPEAKER_DATA[state.pokepi || 'toro'];
       playTypewriterDialogue(
-        `Great job. You earned plus ${amount} XP for ${reason}.`,
+        `Great job. You earned plus ${totalAdded} XP for ${reason}.`,
         currentPokepi.name,
         currentPokepi.avatar
       );
@@ -96,6 +102,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     playTypewriterDialogue(data.phrase, data.name, data.avatar);
   }
+
+  // Quest Theme Selector (Master Pedagogy)
+  const questThemeSelect = document.getElementById('questThemeSelect');
+  if (questThemeSelect) {
+    questThemeSelect.value = state.questTheme || 'deepspace';
+    questThemeSelect.addEventListener('change', (e) => {
+      state.questTheme = e.target.value;
+      saveState();
+      const currentPokepi = POKEPI_SPEAKER_DATA[state.pokepi || 'toro'];
+      playTypewriterDialogue(
+        `Master Pedagogy Quest set to ${e.target.options[e.target.selectedIndex].text}. Let us explore science.`,
+        currentPokepi.name,
+        currentPokepi.avatar
+      );
+    });
+  }
+
+  // Master Pedagogy Skill Tree Node Unlocker
+  window.unlockSkillNode = function(nodeId, costXP) {
+    if (state.userXP >= costXP) {
+      state.userXP -= costXP;
+      if (!state.unlockedNodes.includes(nodeId)) {
+        state.unlockedNodes.push(nodeId);
+      }
+      saveState();
+
+      const el = document.getElementById(nodeId);
+      if (el) {
+        el.className = "skill-node unlocked";
+        el.querySelector('.node-status, .node-unlock-btn').outerHTML = `<span class="node-status">Unlocked</span>`;
+      }
+
+      const currentPokepi = POKEPI_SPEAKER_DATA[state.pokepi || 'toro'];
+      playTypewriterDialogue(
+        `Awesome. You unlocked a new Master Pedagogy Skill Node for ${costXP} XP.`,
+        currentPokepi.name,
+        currentPokepi.avatar
+      );
+    } else {
+      const currentPokepi = POKEPI_SPEAKER_DATA[state.pokepi || 'toro'];
+      playTypewriterDialogue(
+        `You need ${costXP} XP to unlock this skill node. Keep reviewing flashcards and complete tasks.`,
+        currentPokepi.name,
+        currentPokepi.avatar
+      );
+    }
+  };
 
   // Spoon Selector
   const spoonSelect = document.getElementById('spoonSelect');
@@ -140,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   playTypewriterDialogue(
-    "Welcome to Doko Demo Issyo Study World. I am Toro Inoue. Let us learn science and study together so I can become human.",
+    "Welcome to Doko Demo Issyo Master Pedagogy World. I am Toro Inoue. Let us learn science with first principles so I can become human.",
     "Toro Inoue",
     ""
   );
@@ -641,10 +694,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const FLASHCARD_DECK = [
-    { word: "Keplerian Motion", phonetic: "[Elliptical Planetary Orbits]", meaning: "Planetary Elliptical Orbit Law", ex: "Planets move in ellipses with the Sun at one focus.", tag: "Astrophysics" },
-    { word: "Superposition", phonetic: "[Quantum Density States]", meaning: "Quantum State Coexistence", ex: "A system remains in all possible states until observed.", tag: "Quantum Physics" },
-    { word: "Special Relativity", phonetic: "[Mass Energy Equivalence]", meaning: "Mass Energy Equivalence", ex: "Energy equals mass times the speed of light squared.", tag: "Physics" },
-    { word: "Entropy", phonetic: "[Measure of Disorder]", meaning: "Second Law of Thermodynamics", ex: "Total entropy of an isolated system always increases.", tag: "Thermodynamics" }
+    { word: "Keplerian Motion", phonetic: "[Elliptical Planetary Orbits]", meaning: "Planetary Elliptical Orbit Law", ex: "Planets move in ellipses with the Sun at one focus.", socratic: "Gravity drops off with the square of distance, creating stable elliptical orbits where total angular momentum is conserved.", tag: "Astrophysics" },
+    { word: "Superposition", phonetic: "[Quantum Density States]", meaning: "Quantum State Coexistence", ex: "A system remains in all possible states until observed.", socratic: "Wavefunctions obey linear differential equations, allowing linear combinations of states to satisfy physical boundary conditions.", tag: "Quantum Physics" },
+    { word: "Special Relativity", phonetic: "[Mass Energy Equivalence]", meaning: "Mass Energy Equivalence", ex: "Energy equals mass times the speed of light squared.", socratic: "The constancy of light speed across inertial reference frames requires time dilation and length contraction to preserve spacetime interval invariance.", tag: "Physics" },
+    { word: "Entropy", phonetic: "[Measure of Disorder]", meaning: "Second Law of Thermodynamics", ex: "Total entropy of an isolated system always increases.", socratic: "Statistical mechanics proves microstates naturally evolve toward maximum multiplicity and thermodynamic equilibrium.", tag: "Thermodynamics" }
   ];
 
   let cardIdx = 0;
@@ -653,15 +706,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardPhonetic = document.getElementById('cardPhonetic');
   const cardEnglish = document.getElementById('cardEnglish');
   const cardExampleIt = document.getElementById('cardExampleIt');
+  const socraticWhyBtn = document.getElementById('socraticWhyBtn');
+  const socraticWhyText = document.getElementById('socraticWhyText');
 
   function renderCard(idx) {
     if (!mainFlashcard) return;
     const item = FLASHCARD_DECK[idx % FLASHCARD_DECK.length];
     mainFlashcard.classList.remove('flipped');
+    if (socraticWhyText) socraticWhyText.classList.add('hidden');
     cardItalian.textContent = item.word;
     cardPhonetic.textContent = item.phonetic;
     cardEnglish.textContent = item.meaning;
     cardExampleIt.textContent = `"${item.ex}"`;
+    if (socraticWhyText) socraticWhyText.textContent = item.socratic;
+  }
+
+  if (socraticWhyBtn && socraticWhyText) {
+    socraticWhyBtn.addEventListener('click', () => {
+      socraticWhyText.classList.toggle('hidden');
+    });
   }
 
   if (mainFlashcard) {
@@ -705,18 +768,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const dateStr = new Date().toISOString().split('T')[0];
     const currentPokepi = POKEPI_SPEAKER_DATA[state.pokepi || 'toro'];
     return `# Doko Demo Issyo Study Notes ${state.examTitle}
-#dokodemo #toroinoue #hyperfocus #neurodock #audhd #study
+#dokodemo #toroinoue #hyperfocus #neurodock #audhd #study #masterpedagogy
 
 - Companion Pokepi ${currentPokepi.name}
+- Master Pedagogy Quest ${state.questTheme}
 - Target Subject [[${state.examTitle}]]
 - Days Remaining ${state.examDays} days
 - Readiness Estimate ${state.readinessPercent} percent
 - Spoons Available ${state.spoons} Spoons
 - Level ${state.level}
 - Streak ${state.streak} days
+- Combo Multiplier ${state.combo || 1.5}x
 - XP ${state.userXP}
 
-## Executive Function Systems Active
+## Master Pedagogy Systems Active
+- First-Principles Prerequisite Skill Tree
+- Socratic Show Me The Why Deep-Dives
 - HyperFocus Zone Portal 15 min Immersion Timer
 - NeuroDock Task Slicer 2 min Micro Actions
 - AuDHD Spoon Theory Energy Level Adaptor

@@ -118,6 +118,97 @@ body.fullscreen-app {
   border-bottom: 2px dashed rgba(113, 96, 82, 0.25);
 }
 
+/* SKILL TREE PROGRESSION MAP */
+.skill-tree-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.skill-node {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fdfbf7;
+  border: 2px solid #e8e2d5;
+  padding: 14px 18px;
+  border-radius: 18px;
+  transition: var(--transition);
+}
+
+.skill-node.unlocked {
+  background: var(--bg-leaf);
+  border-color: var(--accent-leaf);
+}
+
+.node-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--accent-leaf);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.node-info { flex: 1; }
+.node-info strong { display: block; font-size: 0.95rem; }
+.node-info small { color: var(--text-muted); font-size: 0.8rem; }
+
+.node-status {
+  font-size: 0.78rem;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 99px;
+  background: var(--bg-sun);
+  color: var(--accent-sun);
+}
+
+.node-unlock-btn {
+  background: var(--accent-leaf);
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 99px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* SOCRATIC SHOW ME THE WHY */
+.socratic-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-outline-sm {
+  background: transparent;
+  border: 1px solid var(--accent-sky);
+  color: var(--accent-sky);
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.socratic-text {
+  background: var(--bg-sky);
+  color: var(--text-main);
+  border: 1px solid var(--accent-sky);
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
 /* POKEPI STAMP CARDS */
 .nook-miles-grid {
   display: flex;
@@ -164,7 +255,7 @@ body.fullscreen-app {
   transform: translateX(-50%);
   z-index: 200;
   width: 95%;
-  max-width: 1320px;
+  max-width: 1360px;
 }
 
 .header-inner {
@@ -177,7 +268,7 @@ body.fullscreen-app {
   align-items: center;
   justify-content: space-between;
   box-shadow: var(--box-shadow-cozy);
-  gap: 12px;
+  gap: 10px;
 }
 
 .logo-pill {
@@ -210,10 +301,11 @@ body.fullscreen-app {
 
 .level-badge { background: var(--bg-sun); color: var(--accent-sun); }
 .xp-badge { background: var(--bg-leaf); color: var(--accent-leaf); }
+.combo-badge { background: var(--bg-rose); color: var(--accent-rose); }
 .streak-badge { background: var(--bg-sky); color: var(--accent-sky); }
 
 .xp-progress-bar {
-  width: 70px;
+  width: 60px;
   height: 8px;
   background: #e8e2d5;
   border-radius: 99px;
@@ -236,9 +328,9 @@ body.fullscreen-app {
   background: transparent;
   border: none;
   color: var(--text-muted);
-  padding: 8px 14px;
+  padding: 8px 12px;
   border-radius: var(--border-radius-pill);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 800;
   cursor: pointer;
   transition: var(--transition);
@@ -255,7 +347,7 @@ body.fullscreen-app {
 .floating-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .btn-pill {

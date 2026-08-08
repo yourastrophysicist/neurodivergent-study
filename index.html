@@ -35,11 +35,12 @@
 
       <!-- GAMIFIED PROGRESS BAR & XP STATS -->
       <div class="gamified-stats-pill">
-        <span class="stat-badge level-badge" id="userLevelBadge">Level 4</span>
+        <span class="stat-badge level-badge" id="userLevelBadge">Level 4 Master</span>
         <div class="xp-progress-bar">
           <div class="xp-fill" id="xpFillBar" style="width: 68%;"></div>
         </div>
         <span class="stat-badge xp-badge" id="userXpText">420 XP</span>
+        <span class="stat-badge combo-badge" id="comboMultiplierText">Combo 1.5x</span>
         <span class="stat-badge streak-badge" id="userStreakText">5 Day Streak</span>
       </div>
 
@@ -47,11 +48,11 @@
         <button class="nav-btn active" data-tab="world" id="navWorldBtn"><i class="fa-solid fa-plane-up"></i> 3D World</button>
         <button class="nav-btn" data-tab="hyperfocus" id="navHyperfocusBtn"><i class="fa-solid fa-bolt"></i> HyperFocus</button>
         <button class="nav-btn" data-tab="neurodock" id="navNeurodockBtn"><i class="fa-solid fa-scissors"></i> Task Slicer</button>
+        <button class="nav-btn" data-tab="skilltree" id="navSkillTreeBtn"><i class="fa-solid fa-sitemap"></i> Skill Tree</button>
         <button class="nav-btn" data-tab="nookmiles" id="navQuestsBtn"><i class="fa-solid fa-star"></i> Quests</button>
         <button class="nav-btn" data-tab="studio" id="navStudioBtn"><i class="fa-solid fa-sliders"></i> Studio</button>
         <button class="nav-btn" data-tab="flashcards" id="navCardsBtn"><i class="fa-solid fa-layer-group"></i> Cards</button>
         <button class="nav-btn" data-tab="grammar" id="navMatrixBtn"><i class="fa-solid fa-atom"></i> Matrix</button>
-        <button class="nav-btn" data-tab="community" id="navSafeSpaceBtn"><i class="fa-solid fa-heart"></i> Safe Space</button>
       </nav>
 
       <div class="floating-actions">
@@ -64,6 +65,15 @@
             <option value="pierre">Pierre Dog</option>
             <option value="ricky">Ricky Frog</option>
             <option value="maruta">Maruta Robot</option>
+          </select>
+        </div>
+
+        <!-- Master Pedagogy Narrative Quest Theme Selector -->
+        <div class="quest-theme-selector">
+          <select id="questThemeSelect" class="form-select-pill">
+            <option value="deepspace">Deep Space Astronomy Quest</option>
+            <option value="quantum">Quantum Nanotech Expedition</option>
+            <option value="cyberpunk">Cyberpunk Math Heist</option>
           </select>
         </div>
 
@@ -92,7 +102,7 @@
 
       <!-- Typewriter Speech Content -->
       <div class="ac-speech-content">
-        <p class="typewriter-text" id="acTypewriterText">Welcome to Doko Demo Issyo Study World. I am Toro Inoue. Let us learn science and study together so I can become human.</p>
+        <p class="typewriter-text" id="acTypewriterText">Welcome to Doko Demo Issyo Master Pedagogy World. I am Toro Inoue. Let us learn science with first principles so I can become human.</p>
       </div>
 
       <!-- TEACH TORO A WORD INTERACTIVE INPUT -->
@@ -204,7 +214,62 @@
       </div>
     </section>
 
-    <!-- TAB 3: POKEPI QUESTS -->
+    <!-- TAB 3: VISUAL SKILL TREE MAP (MASTER PEDAGOGY) -->
+    <section id="tab-skilltree" class="overlay-panel hidden">
+      <div class="overlay-card island-card">
+        <div class="panel-header">
+          <h2><i class="fa-solid fa-sitemap text-leaf"></i> Master Pedagogy Skill Tree Progression</h2>
+          <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="panel-body">
+          <p class="panel-desc">First-principles learning map. Unlock prerequisite nodes to master advanced science topics.</p>
+          
+          <div class="animal-divider">
+            <span class="divider-line"></span>
+          </div>
+
+          <div class="skill-tree-grid margin-top-md">
+            <div class="skill-node unlocked" id="node1">
+              <div class="node-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+              <div class="node-info">
+                <strong>Prerequisite Audit</strong>
+                <small>Foundation Check</small>
+              </div>
+              <span class="node-status">Unlocked</span>
+            </div>
+
+            <div class="skill-node unlocked" id="node2">
+              <div class="node-icon"><i class="fa-solid fa-orbit"></i></div>
+              <div class="node-info">
+                <strong>Keplerian Mechanics</strong>
+                <small>Orbital Dynamics</small>
+              </div>
+              <span class="node-status">Mastered</span>
+            </div>
+
+            <div class="skill-node locked" id="node3">
+              <div class="node-icon"><i class="fa-solid fa-atom"></i></div>
+              <div class="node-info">
+                <strong>Quantum Superposition</strong>
+                <small>Density States</small>
+              </div>
+              <button class="node-unlock-btn" onclick="window.unlockSkillNode('node3', 500)">Unlock (500 XP)</button>
+            </div>
+
+            <div class="skill-node locked" id="node4">
+              <div class="node-icon"><i class="fa-solid fa-lightbulb"></i></div>
+              <div class="node-info">
+                <strong>Special Relativity</strong>
+                <small>Spacetime Physics</small>
+              </div>
+              <button class="node-unlock-btn" onclick="window.unlockSkillNode('node4', 800)">Unlock (800 XP)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: POKEPI QUESTS -->
     <section id="tab-nookmiles" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
@@ -245,7 +310,7 @@
       </div>
     </section>
 
-    <!-- TAB 4: DIAGNOSIS ACCOMMODATION STUDIO -->
+    <!-- TAB 5: DIAGNOSIS ACCOMMODATION STUDIO -->
     <section id="tab-studio" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
@@ -277,11 +342,11 @@
       </div>
     </section>
 
-    <!-- TAB 5: SMART FLASHCARDS -->
+    <!-- TAB 6: SMART FLASHCARDS & SOCRATIC WHY MODE -->
     <section id="tab-flashcards" class="overlay-panel hidden">
       <div class="overlay-card island-card modal-sm">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-layer-group text-mint"></i> Active Recall Flashcards</h2>
+          <h2><i class="fa-solid fa-layer-group text-mint"></i> Active Recall & Socratic Mode</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body flex-center">
@@ -306,6 +371,13 @@
               </div>
             </div>
           </div>
+
+          <!-- SOCRATIC SHOW ME THE WHY BUTTON -->
+          <div class="socratic-box margin-top-md" id="socraticBox">
+            <button class="btn btn-outline-sm" id="socraticWhyBtn"><i class="fa-solid fa-circle-question"></i> Socratic Show Me The Why</button>
+            <p class="socratic-text hidden" id="socraticWhyText">Gravity drops off with the square of distance, creating stable elliptical orbits where total angular momentum is conserved.</p>
+          </div>
+
           <div class="srs-actions margin-top-md">
             <button class="btn-srs srs-again" id="srsAgain">Again</button>
             <button class="btn-srs srs-hard" id="srsHard">Hard</button>
@@ -316,7 +388,7 @@
       </div>
     </section>
 
-    <!-- TAB 6: FORMULA & CONCEPT MATRIX -->
+    <!-- TAB 7: FORMULA & CONCEPT MATRIX -->
     <section id="tab-grammar" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
@@ -348,30 +420,6 @@
               <span class="badge badge-berry">SRS Active Recall</span>
               <span>Intervals 1d 3d 7d 14d</span>
               <span class="badge badge-leaf">80% Ready</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 7: PEER SAFE SPACE -->
-    <section id="tab-community" class="overlay-panel hidden">
-      <div class="overlay-card island-card">
-        <div class="panel-header">
-          <h2><i class="fa-solid fa-heart text-rose"></i> Rejection Free Peer Safe Space</h2>
-          <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="panel-body">
-          <div class="community-mini-feed">
-            <div class="comm-item">
-              <div>
-                <strong>Toro Inoue</strong> Teaching concepts to others helps me understand them better.
-              </div>
-            </div>
-            <div class="comm-item">
-              <div>
-                <strong>Cozy Student</strong> HyperFocus Portal and Alpha binaural sound gets me into flow state within minutes.
-              </div>
             </div>
           </div>
         </div>
