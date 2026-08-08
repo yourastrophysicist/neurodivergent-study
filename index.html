@@ -26,18 +26,28 @@
     <canvas id="bg3dCanvas"></canvas>
   </div>
 
-  <!-- FLOATING NAVBAR -->
+  <!-- FLOATING GAMIFIED NAVBAR -->
   <header class="floating-header">
     <div class="header-inner">
       <div class="logo-pill">
         <span class="logo-text">neurodiv study</span>
       </div>
 
+      <!-- GAMIFIED PROGRESS BAR & XP STATS -->
+      <div class="gamified-stats-pill">
+        <span class="stat-badge level-badge" id="userLevelBadge">Level 4</span>
+        <div class="xp-progress-bar">
+          <div class="xp-fill" id="xpFillBar" style="width: 68%;"></div>
+        </div>
+        <span class="stat-badge xp-badge" id="userXpText">420 XP</span>
+        <span class="stat-badge streak-badge" id="userStreakText">5 Day Streak</span>
+      </div>
+
       <nav class="floating-nav">
         <button class="nav-btn active" data-tab="world" id="navWorldBtn"><i class="fa-solid fa-plane-up"></i> 3D World</button>
         <button class="nav-btn" data-tab="hyperfocus" id="navHyperfocusBtn"><i class="fa-solid fa-bolt"></i> HyperFocus</button>
         <button class="nav-btn" data-tab="neurodock" id="navNeurodockBtn"><i class="fa-solid fa-scissors"></i> Task Slicer</button>
-        <button class="nav-btn" data-tab="nookmiles" id="navQuestsBtn"><i class="fa-solid fa-star"></i> Pokepi Quests</button>
+        <button class="nav-btn" data-tab="nookmiles" id="navQuestsBtn"><i class="fa-solid fa-star"></i> Quests</button>
         <button class="nav-btn" data-tab="studio" id="navStudioBtn"><i class="fa-solid fa-sliders"></i> Studio</button>
         <button class="nav-btn" data-tab="flashcards" id="navCardsBtn"><i class="fa-solid fa-layer-group"></i> Cards</button>
         <button class="nav-btn" data-tab="grammar" id="navMatrixBtn"><i class="fa-solid fa-atom"></i> Matrix</button>
@@ -85,9 +95,15 @@
         <p class="typewriter-text" id="acTypewriterText">Welcome to Doko Demo Issyo Study World. I am Toro Inoue. Let us learn science and study together so I can become human.</p>
       </div>
 
+      <!-- TEACH TORO A WORD INTERACTIVE INPUT -->
+      <div class="teach-word-container margin-top-sm" id="teachWordBox">
+        <input type="text" id="teachWordInput" placeholder="Teach Toro a new word or concept" class="form-control-light-sm">
+        <button class="btn btn-primary-sm" id="teachWordSubmitBtn"><i class="fa-solid fa-graduation-cap"></i> Teach Word</button>
+      </div>
+
       <!-- Dialogue Action Prompt Button -->
       <div class="ac-dialogue-prompt" id="acPromptBtn">
-        <button class="btn-ac-next" id="acNextActionBtn"><i class="fa-solid fa-circle-chevron-down"></i> Fly to Island</button>
+        <button class="btn-ac-next" id="acNextActionBtn"><i class="fa-solid fa-circle-chevron-down"></i> Fly to Island Station</button>
       </div>
     </div>
   </div>
@@ -196,33 +212,33 @@
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body">
-          <p class="panel-desc">Teach Toro Inoue new words and concepts to earn Pokepi friendship stamps.</p>
+          <p class="panel-desc">Teach Toro Inoue new words and concepts to earn Pokepi friendship stamps and XP points.</p>
           
           <div class="animal-divider">
             <span class="divider-line"></span>
           </div>
 
           <div class="nook-miles-grid margin-top-md">
-            <div class="nook-stamp-card completed">
+            <div class="nook-stamp-card completed" id="questCard1">
               <div class="stamp-info">
                 <strong>Toro's First Word</strong>
                 <p>Teach Toro 1 new science or exam concept.</p>
               </div>
-              <span class="miles-reward">+100 XP</span>
+              <button class="miles-reward-btn">+100 XP</button>
             </div>
-            <div class="nook-stamp-card completed">
+            <div class="nook-stamp-card completed" id="questCard2">
               <div class="stamp-info">
                 <strong>Task Sliced with Kuro</strong>
                 <p>Break 1 intimidating task into 2 minute steps.</p>
               </div>
-              <span class="miles-reward">+200 XP</span>
+              <button class="miles-reward-btn">+200 XP</button>
             </div>
-            <div class="nook-stamp-card">
+            <div class="nook-stamp-card" id="questCard3">
               <div class="stamp-info">
                 <strong>HyperFocus Sprint</strong>
                 <p>Run 1 15 minute hyperfocus focus sprint.</p>
               </div>
-              <span class="miles-reward">+300 XP</span>
+              <button class="miles-reward-btn">+300 XP</button>
             </div>
           </div>
         </div>

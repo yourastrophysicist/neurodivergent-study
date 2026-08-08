@@ -1,11 +1,12 @@
 /* ==========================================================================
-   NEURODIV STUDY
+   NEURODIV STUDY - GAMIFIED INTERACTIVE PLATFORM
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
   const DEFAULT_STATE = {
     userXP: 420,
+    level: 4,
     streak: 5,
     readinessPercent: 68,
     examTitle: "Universal Science and Exam Mastery",
@@ -31,7 +32,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function saveState() {
     localStorage.setItem('prontoItaliaState', JSON.stringify(state));
+    updateGamifiedUI();
   }
+
+  // Dynamic Gamified XP & Progress Manager
+  const userXpText = document.getElementById('userXpText');
+  const userLevelBadge = document.getElementById('userLevelBadge');
+  const userStreakText = document.getElementById('userStreakText');
+  const xpFillBar = document.getElementById('xpFillBar');
+
+  function updateGamifiedUI() {
+    state.level = Math.floor(state.userXP / 100) + 1;
+    const progressPercent = state.userXP % 100;
+
+    if (userXpText) userXpText.textContent = `${state.userXP} XP`;
+    if (userLevelBadge) userLevelBadge.textContent = `Level ${state.level}`;
+    if (userStreakText) userStreakText.textContent = `${state.streak} Day Streak`;
+    if (xpFillBar) xpFillBar.style.width = `${progressPercent}%`;
+  }
+
+  function addXP(amount, reason = "") {
+    state.userXP += amount;
+    saveState();
+
+    if (reason) {
+      const currentPokepi = POKEPI_SPEAKER_DATA[state.pokepi || 'toro'];
+      playTypewriterDialogue(
+        `Great job. You earned plus ${amount} XP for ${reason}.`,
+        currentPokepi.name,
+        currentPokepi.avatar
+      );
+    }
+  }
+
+  updateGamifiedUI();
 
   const POKEPI_SPEAKER_DATA = {
     toro: { name: "Toro Inoue", avatar: "", phrase: "Let me learn words and science concepts to become human.", themeClass: "pokepi-toro" },
@@ -111,6 +145,27 @@ document.addEventListener('DOMContentLoaded', () => {
     ""
   );
 
+  // Teach Word Interactive Feature
+  const teachWordInput = document.getElementById('teachWordInput');
+  const teachWordSubmitBtn = document.getElementById('teachWordSubmitBtn');
+
+  if (teachWordSubmitBtn && teachWordInput) {
+    teachWordSubmitBtn.addEventListener('click', () => {
+      const newWord = teachWordInput.value.trim();
+      if (!newWord) return;
+
+      const currentPokepi = POKEPI_SPEAKER_DATA[state.pokepi || 'toro'];
+      playTypewriterDialogue(
+        `Thank you for teaching me ${newWord}. I learned something new today and feel closer to becoming human.`,
+        currentPokepi.name,
+        currentPokepi.avatar
+      );
+
+      teachWordInput.value = "";
+      addXP(50);
+    });
+  }
+
   // HyperFocus Timer & Web Audio Sound Generator
   let hfSeconds = 900;
   let hfInterval = null;
@@ -135,6 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
     hfStartBtn.addEventListener('click', () => {
       if (hfInterval) return;
       hfTimerStatus.textContent = "HyperFocus Active";
+      addXP(20, "entering HyperFocus immersion");
       hfInterval = setInterval(() => {
         if (hfSeconds > 0) {
           hfSeconds--;
@@ -142,9 +198,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           clearInterval(hfInterval);
           hfInterval = null;
-          hfTimerStatus.textContent = "Zone Completed Plus 50 XP";
-          state.userXP += 50;
-          saveState();
+          hfTimerStatus.textContent = "Zone Completed Plus 100 XP";
+          addXP(100, "completing 15 minute HyperFocus sprint");
         }
       }, 1000);
     });
@@ -232,29 +287,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
       slicedActionsList.innerHTML = `
         <div class="sliced-item">
-          <input type="checkbox" class="step-checkbox">
+          <input type="checkbox" class="step-checkbox" onchange="window.handleStepCheck(this)">
           <span class="step-badge">Step 1 (2m)</span>
           <span>Open notes for <strong>${goal}</strong> and read just 3 lines</span>
         </div>
         <div class="sliced-item">
-          <input type="checkbox" class="step-checkbox">
+          <input type="checkbox" class="step-checkbox" onchange="window.handleStepCheck(this)">
           <span class="step-badge">Step 2 (2m)</span>
           <span>Write down 1 main formula or key term on a flashcard</span>
         </div>
         <div class="sliced-item">
-          <input type="checkbox" class="step-checkbox">
+          <input type="checkbox" class="step-checkbox" onchange="window.handleStepCheck(this)">
           <span class="step-badge">Step 3 (2m)</span>
           <span>Take a deep breath and celebrate eliminating starting friction</span>
         </div>
       `;
 
-      playTypewriterDialogue(
-        `I have sliced ${goal} into 3 easy 2 minute steps. Starting is now zero stress.`,
-        "Toro Inoue",
-        ""
-      );
+      addXP(30, "slicing an intimidating task");
     });
   }
+
+  window.handleStepCheck = function(checkbox) {
+    if (checkbox.checked) {
+      addXP(25, "completing a 2 minute micro action");
+    }
+  };
+
+  // Quest Reward Claim Buttons
+  document.querySelectorAll('.miles-reward-btn').forEach((btn, idx) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const rewardVal = (idx + 1) * 100;
+      addXP(rewardVal, "claiming a Pokepi Quest reward");
+      btn.textContent = "Claimed";
+      btn.style.opacity = "0.6";
+      btn.disabled = true;
+    });
+  });
 
   // Three.js 3D Sky Canvas Scene
   const canvas = document.getElementById('bg3dCanvas');
@@ -607,22 +676,9 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', () => {
         cardIdx++;
         renderCard(cardIdx);
-        state.userXP += 10;
-        saveState();
+        addXP(15, "reviewing an active recall flashcard");
       });
     }
-  });
-
-  document.querySelectorAll('.nook-stamp-card').forEach(card => {
-    card.addEventListener('click', () => {
-      card.classList.toggle('completed');
-      if (card.classList.contains('completed')) {
-        state.userXP += 100;
-      } else {
-        state.userXP = Math.max(0, state.userXP - 100);
-      }
-      saveState();
-    });
   });
 
   function speakText(text) {
@@ -656,6 +712,7 @@ document.addEventListener('DOMContentLoaded', () => {
 - Days Remaining ${state.examDays} days
 - Readiness Estimate ${state.readinessPercent} percent
 - Spoons Available ${state.spoons} Spoons
+- Level ${state.level}
 - Streak ${state.streak} days
 - XP ${state.userXP}
 
