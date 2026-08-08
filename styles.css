@@ -160,7 +160,7 @@ body.fullscreen-app {
   top: 16px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 50;
+  z-index: 200;
   width: 95%;
   max-width: 1260px;
 }
@@ -243,13 +243,13 @@ body.fullscreen-app {
   font-family: inherit;
 }
 
-/* TYPEWRITER DIALOGUE BOX */
+/* TYPEWRITER DIALOGUE BOX - TOP HIGH Z-INDEX */
 .ac-dialogue-wrapper {
   position: fixed;
   top: 90px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 40;
+  z-index: 300;
   width: 90%;
   max-width: 680px;
   pointer-events: auto;
@@ -264,6 +264,7 @@ body.fullscreen-app {
   padding: 24px 28px 20px 28px;
   box-shadow: 0 16px 40px rgba(56, 43, 34, 0.1);
   animation: acBoxPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: auto;
 }
 
 @keyframes acBoxPop {
@@ -299,16 +300,19 @@ body.fullscreen-app {
 .ac-dialogue-prompt {
   display: flex;
   justify-content: flex-end;
-  margin-top: 8px;
+  margin-top: 12px;
+  position: relative;
+  z-index: 310;
+  pointer-events: auto;
 }
 
 .btn-ac-next {
   background: var(--accent-leaf);
   color: #ffffff;
   border: none;
-  padding: 6px 16px;
+  padding: 8px 20px;
   border-radius: var(--border-radius-pill);
-  font-size: 0.84rem;
+  font-size: 0.88rem;
   font-weight: 800;
   cursor: pointer;
   display: flex;
@@ -316,6 +320,14 @@ body.fullscreen-app {
   gap: 6px;
   box-shadow: 0 4px 12px rgba(66, 184, 131, 0.3);
   animation: bouncePrompt 2s infinite;
+  position: relative;
+  z-index: 320;
+  pointer-events: auto;
+}
+
+.btn-ac-next:hover {
+  transform: scale(1.05);
+  background: #349669;
 }
 
 @keyframes bouncePrompt {
@@ -390,7 +402,7 @@ body.fullscreen-app {
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 40;
+  z-index: 200;
   display: flex;
   gap: 8px;
   background: rgba(255, 255, 255, 0.95);
@@ -427,7 +439,7 @@ body.fullscreen-app {
   transform: translateX(-50%);
   width: 90%;
   max-width: 900px;
-  z-index: 60;
+  z-index: 100;
   pointer-events: none;
 }
 

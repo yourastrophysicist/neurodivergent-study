@@ -455,19 +455,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const acPromptBtn = document.getElementById('acPromptBtn');
-  if (acPromptBtn) {
-    acPromptBtn.addEventListener('click', () => {
-      const target = ISLAND_POSITIONS[state.currentIsland || 'roma'];
-      if (target && target.tab) {
-        if (target.tab === 'world') {
-          openPanel('hyperfocus');
-        } else {
-          openPanel(target.tab);
-        }
-      }
-    });
+  // Action Button Click Handler (Fly to Island)
+  function handleFlyToIslandAction(e) {
+    if (e) e.stopPropagation();
+    const currentKey = state.currentIsland || 'roma';
+    const target = ISLAND_POSITIONS[currentKey] || ISLAND_POSITIONS.roma;
+    
+    if (target.tab && target.tab !== 'world') {
+      openPanel(target.tab);
+    } else {
+      openPanel('hyperfocus');
+    }
+
+    flyToIsland(currentKey);
   }
+
+  ['acPromptBtn', 'acNextActionBtn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('click', handleFlyToIslandAction);
+    }
+  });
 
   window.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') mouseX = Math.max(-1, mouseX - 0.2);
