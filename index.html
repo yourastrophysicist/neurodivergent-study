@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>neurodiv-study 🐱 - Doko Demo Issyo & Toro Inoue UI World</title>
+  <title>neurodiv study</title>
   <!-- Google Fonts: Nunito, Noto Sans SC -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,65 +26,63 @@
     <canvas id="bg3dCanvas"></canvas>
   </div>
 
-  <!-- FLOATING DOKO DEMO ISSYO LIGHT NAVBAR -->
+  <!-- FLOATING NAVBAR -->
   <header class="floating-header">
     <div class="header-inner">
       <div class="logo-pill">
-        <span class="logo-icon">🐱</span>
-        <span class="logo-text">neurodiv-study</span>
+        <span class="logo-text">neurodiv study</span>
       </div>
 
       <nav class="floating-nav">
-        <button class="nav-btn active" data-tab="world" title="3D Flight World"><i class="fa-solid fa-plane-up text-leaf"></i> 3D World</button>
-        <button class="nav-btn" data-tab="hyperfocus" title="HyperFocus Zone Portal"><i class="fa-solid fa-bolt text-sun"></i> HyperFocus</button>
-        <button class="nav-btn" data-tab="neurodock" title="NeuroDock Task Slicer"><i class="fa-solid fa-scissors text-sky"></i> Task Slicer</button>
-        <button class="nav-btn" data-tab="nookmiles" title="Pokepi Quests"><i class="fa-solid fa-cat text-sun"></i> Pokepi Quests</button>
-        <button class="nav-btn" data-tab="studio" title="Accommodation Studio"><i class="fa-solid fa-sliders text-berry"></i> Studio</button>
-        <button class="nav-btn" data-tab="flashcards" title="Smart Flashcards"><i class="fa-solid fa-layer-group text-mint"></i> Cards</button>
-        <button class="nav-btn" data-tab="grammar" title="Formula Matrix"><i class="fa-solid fa-atom text-rose"></i> Matrix</button>
-        <button class="nav-btn" data-tab="community" title="Peer Safe Space"><i class="fa-solid fa-heart text-rose"></i> Safe Space</button>
+        <button class="nav-btn active" data-tab="world" title="3D Flight World"><i class="fa-solid fa-plane-up"></i> 3D World</button>
+        <button class="nav-btn" data-tab="hyperfocus" title="HyperFocus Zone Portal"><i class="fa-solid fa-bolt"></i> HyperFocus</button>
+        <button class="nav-btn" data-tab="neurodock" title="NeuroDock Task Slicer"><i class="fa-solid fa-scissors"></i> Task Slicer</button>
+        <button class="nav-btn" data-tab="nookmiles" title="Pokepi Quests"><i class="fa-solid fa-star"></i> Pokepi Quests</button>
+        <button class="nav-btn" data-tab="studio" title="Accommodation Studio"><i class="fa-solid fa-sliders"></i> Studio</button>
+        <button class="nav-btn" data-tab="flashcards" title="Smart Flashcards"><i class="fa-solid fa-layer-group"></i> Cards</button>
+        <button class="nav-btn" data-tab="grammar" title="Formula Matrix"><i class="fa-solid fa-atom"></i> Matrix</button>
+        <button class="nav-btn" data-tab="community" title="Peer Safe Space"><i class="fa-solid fa-heart"></i> Safe Space</button>
       </nav>
 
       <div class="floating-actions">
-        <!-- Doko Demo Issyo Pokepi Character Selector -->
-        <div class="pokepi-selector" title="Select Doko Demo Issyo Pokepi Companion">
+        <!-- Pokepi Character Selector -->
+        <div class="pokepi-selector">
           <select id="pokepiSelect" class="form-select-pill">
-            <option value="toro">🐱 Toro Inoue (White Cat)</option>
-            <option value="kuro">🐈‍⬛ Kuro (Black Cat)</option>
-            <option value="jun">🐰 Jun (Pink Rabbit)</option>
-            <option value="pierre">🐶 Pierre (Dog)</option>
-            <option value="ricky">🐸 Ricky (Frog)</option>
-            <option value="maruta">🤖 Maruta (Robot)</option>
+            <option value="toro">Toro Inoue White Cat</option>
+            <option value="kuro">Kuro Black Cat</option>
+            <option value="jun">Jun Pink Rabbit</option>
+            <option value="pierre">Pierre Dog</option>
+            <option value="ricky">Ricky Frog</option>
+            <option value="maruta">Maruta Robot</option>
           </select>
         </div>
 
         <!-- Spoon Energy Selector -->
-        <div class="spoon-selector" title="AuDHD Spoon Theory Energy Level">
+        <div class="spoon-selector">
           <select id="spoonSelect" class="form-select-pill">
-            <option value="5">🥄 5 Spoons</option>
-            <option value="3" selected>🥄 3 Spoons</option>
-            <option value="1">🥄 1 Spoon</option>
+            <option value="5">5 Spoons</option>
+            <option value="3" selected>3 Spoons</option>
+            <option value="1">1 Spoon</option>
           </select>
         </div>
 
-        <button class="btn-pill" id="exportObsidianBtn" title="Export to Obsidian Markdown"><i class="fa-solid fa-note-sticky text-berry"></i> Exporter</button>
+        <button class="btn-pill" id="exportObsidianBtn" title="Export to Obsidian Markdown"><i class="fa-solid fa-note-sticky"></i> Exporter</button>
         <button class="btn-pill" id="quickAudioTest" title="Audio Speech Toggle"><i class="fa-solid fa-volume-high"></i></button>
       </div>
     </div>
   </header>
 
-  <!-- DOKO DEMO ISSYO TORO INOUE TYPEWRITER DIALOGUE BOX -->
+  <!-- TYPEWRITER DIALOGUE BOX -->
   <div class="ac-dialogue-wrapper" id="acDialogueWrapper">
     <div class="ac-dialogue-box dokodemo-speech-box">
       <!-- Character Nameplate Badge -->
       <div class="ac-nameplate" id="acNameplate">
-        <span class="nameplate-avatar" id="acAvatar">🐱</span>
         <span class="nameplate-title" id="acSpeaker">Toro Inoue</span>
       </div>
 
       <!-- Typewriter Speech Content -->
       <div class="ac-speech-content">
-        <p class="typewriter-text" id="acTypewriterText">Nya~! Welcome to Doko Demo Issyo Study World! I'm Toro Inoue! Let's learn science and study together so I can become human!</p>
+        <p class="typewriter-text" id="acTypewriterText">Welcome to Doko Demo Issyo Study World. I am Toro Inoue. Let us learn science and study together so I can become human.</p>
       </div>
 
       <!-- Dialogue Action Prompt Arrow -->
@@ -96,11 +94,11 @@
 
   <!-- FLOATING HUD ISLAND QUICK CONTROLS -->
   <div class="bottom-hud-controls">
-    <button class="hud-chip active" data-island="roma"><i class="fa-solid fa-sun"></i> 🏡 Toro's House</button>
-    <button class="hud-chip" data-island="firenze"><i class="fa-solid fa-bolt"></i> ⚡ HyperFocus Portal</button>
-    <button class="hud-chip" data-island="venezia"><i class="fa-solid fa-scissors"></i> ✂️ NeuroDock Slicer</button>
-    <button class="hud-chip" data-island="milano"><i class="fa-solid fa-sliders"></i> 🎛️ Studio Island</button>
-    <button class="hud-chip" data-island="costiera"><i class="fa-solid fa-heart"></i> 🌸 Pokepi Square</button>
+    <button class="hud-chip active" data-island="roma"><i class="fa-solid fa-sun"></i> Toro's House</button>
+    <button class="hud-chip" data-island="firenze"><i class="fa-solid fa-bolt"></i> HyperFocus Portal</button>
+    <button class="hud-chip" data-island="venezia"><i class="fa-solid fa-scissors"></i> NeuroDock Slicer</button>
+    <button class="hud-chip" data-island="milano"><i class="fa-solid fa-sliders"></i> Studio Island</button>
+    <button class="hud-chip" data-island="costiera"><i class="fa-solid fa-heart"></i> Pokepi Square</button>
   </div>
 
   <!-- LIGHT GLASS OVERLAY CONTENT PANELS -->
@@ -110,15 +108,13 @@
     <section id="tab-hyperfocus" class="overlay-panel hidden">
       <div class="overlay-card island-card modal-sm">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-bolt text-sun"></i> HyperFocus Zone Portal</h2>
+          <h2><i class="fa-solid fa-bolt"></i> HyperFocus Zone Portal</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body flex-center">
           <p class="panel-desc">Immersion zone built to eliminate executive starting friction and keep your brain in the flow state.</p>
           
           <div class="animal-divider">
-            <span class="divider-line"></span>
-            <span class="divider-icon">🐱</span>
             <span class="divider-line"></span>
           </div>
 
@@ -135,16 +131,14 @@
 
           <div class="animal-divider margin-top-md">
             <span class="divider-line"></span>
-            <span class="divider-icon">🎧</span>
-            <span class="divider-line"></span>
           </div>
 
           <div class="ambient-sound-box margin-top-md">
-            <span>Focus Audio:</span>
+            <span>Focus Audio</span>
             <select id="hfAmbientSelect" class="form-select-pill">
-              <option value="alpha">Alpha Waves (Deep Flow)</option>
+              <option value="alpha">Alpha Waves Deep Flow</option>
               <option value="rain">Florence Rain Drops</option>
-              <option value="brown">Tuscan Café Brown Noise</option>
+              <option value="brown">Tuscan Cafe Brown Noise</option>
               <option value="none">Silence</option>
             </select>
           </div>
@@ -156,21 +150,19 @@
     <section id="tab-neurodock" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-scissors text-sky"></i> NeuroDock Executive Task Slicer</h2>
+          <h2><i class="fa-solid fa-scissors"></i> NeuroDock Executive Task Slicer</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body">
-          <p class="panel-desc">Slice intimidating goals into 3 gentle 2-minute micro-actions to bypass executive blockages!</p>
+          <p class="panel-desc">Slice intimidating goals into 3 gentle 2 minute micro actions to bypass executive blockages.</p>
 
           <div class="animal-divider">
-            <span class="divider-line"></span>
-            <span class="divider-icon">✂️</span>
             <span class="divider-line"></span>
           </div>
 
           <form id="taskSlicerForm" class="margin-top-md">
             <div class="form-group-flex">
-              <input type="text" id="intimidatingTaskInput" placeholder="Enter intimidating goal (e.g., Study 3 Physics Chapters)..." class="form-control-light" required>
+              <input type="text" id="intimidatingTaskInput" placeholder="Enter intimidating goal such as Study 3 Physics Chapters" class="form-control-light" required>
               <button type="submit" class="btn btn-primary"><i class="fa-solid fa-wand-magic-sparkles"></i> Slice Task</button>
             </div>
           </form>
@@ -179,7 +171,7 @@
             <div class="sliced-item">
               <input type="checkbox" class="step-checkbox">
               <span class="step-badge">Step 1 (2m)</span>
-              <span>Open notes to page 1 & read just 3 lines</span>
+              <span>Open notes to page 1 and read just 3 lines</span>
             </div>
             <div class="sliced-item">
               <input type="checkbox" class="step-checkbox">
@@ -189,7 +181,7 @@
             <div class="sliced-item">
               <input type="checkbox" class="step-checkbox">
               <span class="step-badge">Step 3 (2m)</span>
-              <span>Take a 30-second deep breath & celebrate starting!</span>
+              <span>Take a 30 second deep breath and celebrate starting</span>
             </div>
           </div>
         </div>
@@ -200,21 +192,18 @@
     <section id="tab-nookmiles" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-cat text-sun"></i> Pokepi Word & Science Quests</h2>
+          <h2><i class="fa-solid fa-star"></i> Pokepi Word and Science Quests</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body">
-          <p class="panel-desc">Teach Toro Inoue new words & concepts to earn Pokepi friendship stamps!</p>
+          <p class="panel-desc">Teach Toro Inoue new words and concepts to earn Pokepi friendship stamps.</p>
           
           <div class="animal-divider">
-            <span class="divider-line"></span>
-            <span class="divider-icon">🐱</span>
             <span class="divider-line"></span>
           </div>
 
           <div class="nook-miles-grid margin-top-md">
             <div class="nook-stamp-card completed">
-              <div class="stamp-icon">🐱</div>
               <div class="stamp-info">
                 <strong>Toro's First Word</strong>
                 <p>Teach Toro 1 new science or exam concept.</p>
@@ -222,18 +211,16 @@
               <span class="miles-reward">+100 XP</span>
             </div>
             <div class="nook-stamp-card completed">
-              <div class="stamp-icon">✂️</div>
               <div class="stamp-info">
                 <strong>Task Sliced with Kuro</strong>
-                <p>Break 1 intimidating task into 2-minute steps.</p>
+                <p>Break 1 intimidating task into 2 minute steps.</p>
               </div>
               <span class="miles-reward">+200 XP</span>
             </div>
             <div class="nook-stamp-card">
-              <div class="stamp-icon">⚡</div>
               <div class="stamp-info">
                 <strong>HyperFocus Sprint</strong>
-                <p>Run 1 15-minute hyperfocus focus sprint.</p>
+                <p>Run 1 15 minute hyperfocus focus sprint.</p>
               </div>
               <span class="miles-reward">+300 XP</span>
             </div>
@@ -246,29 +233,29 @@
     <section id="tab-studio" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-sliders text-berry"></i> Universal Accommodation Studio</h2>
+          <h2><i class="fa-solid fa-sliders"></i> Universal Accommodation Studio</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body grid-2">
           <div class="studio-opt">
             <span class="icon-badge bg-sun"><i class="fa-solid fa-bolt"></i></span>
-            <h3>ADHD: Executive Function & Sprints</h3>
-            <p>Chunked 15-minute timers, immediate dopamine XP, task breaking.</p>
+            <h3>ADHD Executive Function and Sprints</h3>
+            <p>Chunked 15 minute timers, immediate dopamine XP, task breaking.</p>
           </div>
           <div class="studio-opt">
             <span class="icon-badge bg-sky"><i class="fa-solid fa-wave-square"></i></span>
-            <h3>Bipolar & Mood Waves: Flexible Pace</h3>
-            <p>High energy = hyperfocus deep dives; Low energy = 2-minute maintenance dose.</p>
+            <h3>Bipolar and Mood Waves Flexible Pace</h3>
+            <p>High energy hyperfocus deep dives or low energy 2 minute maintenance dose.</p>
           </div>
           <div class="studio-opt">
             <span class="icon-badge bg-leaf"><i class="fa-solid fa-shield-halved"></i></span>
-            <h3>OCPD & Anxiety: Perfectionism Breaker</h3>
-            <p>"80% is Exam-Ready" limits to prevent over-studying & analysis paralysis.</p>
+            <h3>OCPD and Anxiety Perfectionism Breaker</h3>
+            <p>80 percent is Exam Ready limits to prevent over studying and analysis paralysis.</p>
           </div>
           <div class="studio-opt">
             <span class="icon-badge bg-rose"><i class="fa-solid fa-heart"></i></span>
-            <h3>Autism & BPD: Sensory & Safe Space</h3>
-            <p>Cozy warm light theme, neutral error framing ("Mistakes are just data!").</p>
+            <h3>Autism and BPD Sensory and Safe Space</h3>
+            <p>Cozy warm light theme and neutral error framing that mistakes are data.</p>
           </div>
         </div>
       </div>
@@ -278,13 +265,13 @@
     <section id="tab-flashcards" class="overlay-panel hidden">
       <div class="overlay-card island-card modal-sm">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-layer-group text-mint"></i> Active Recall Flashcards</h2>
+          <h2><i class="fa-solid fa-layer-group"></i> Active Recall Flashcards</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body flex-center">
           <div class="subject-selector-box margin-bottom-md">
             <select id="deckFilter" class="form-select-pill">
-              <option value="science">Astrophysics & Physics Concepts</option>
+              <option value="science">Astrophysics and Physics Concepts</option>
               <option value="general">Universal Exam Key Terms</option>
             </select>
           </div>
@@ -317,21 +304,21 @@
     <section id="tab-grammar" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-atom text-rose"></i> Logical Formula & Concept Matrix</h2>
+          <h2><i class="fa-solid fa-atom"></i> Logical Formula and Concept Matrix</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body">
           <div class="matrix-table">
             <div class="matrix-row header-row">
-              <span>Subject / Domain</span>
+              <span>Subject Domain</span>
               <span>Core Concept</span>
-              <span>Rule / Formula</span>
+              <span>Rule Formula</span>
               <span>OCPD Readiness Cap</span>
             </div>
             <div class="matrix-row">
               <strong>Astrophysics</strong>
               <span class="badge badge-sky">Kepler's 3rd Law</span>
-              <span>T² ∝ a³ (Period squared equals semi-major axis cubed)</span>
+              <span>T squared proportional to a cubed</span>
               <span class="badge badge-leaf">80% Ready</span>
             </div>
             <div class="matrix-row">
@@ -343,7 +330,7 @@
             <div class="matrix-row">
               <strong>Universal Study</strong>
               <span class="badge badge-berry">SRS Active Recall</span>
-              <span>Intervals: 1d, 3d, 7d, 14d</span>
+              <span>Intervals 1d 3d 7d 14d</span>
               <span class="badge badge-leaf">80% Ready</span>
             </div>
           </div>
@@ -355,21 +342,19 @@
     <section id="tab-community" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-heart text-rose"></i> Rejection-Free Peer Safe Space</h2>
+          <h2><i class="fa-solid fa-heart"></i> Rejection Free Peer Safe Space</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body">
           <div class="community-mini-feed">
             <div class="comm-item">
-              <span class="avatar">🐱</span>
               <div>
-                <strong>Toro_Inoue:</strong> "Teaching concepts to others helps me understand them better Nya~!"
+                <strong>Toro Inoue</strong> Teaching concepts to others helps me understand them better.
               </div>
             </div>
             <div class="comm-item">
-              <span class="avatar">🌱</span>
               <div>
-                <strong>Cozy_Student:</strong> "HyperFocus Portal + Alpha binaural sound gets me into flow state within minutes."
+                <strong>Cozy Student</strong> HyperFocus Portal and Alpha binaural sound gets me into flow state within minutes.
               </div>
             </div>
           </div>
@@ -383,13 +368,13 @@
   <div class="modal-overlay hidden" id="obsidianModal">
     <div class="modal-card island-card">
       <div class="panel-header">
-        <h3><i class="fa-solid fa-note-sticky text-berry"></i> Obsidian Markdown Exporter (.md)</h3>
+        <h3><i class="fa-solid fa-note-sticky"></i> Obsidian Markdown Exporter</h3>
         <button class="btn-close-panel" id="closeObsidianModalBtn"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <textarea id="obsidianTextarea" rows="8" class="form-control-light" readonly></textarea>
       <div class="modal-actions margin-top-md">
         <button class="btn btn-ghost" id="copyObsidianBtn"><i class="fa-solid fa-copy"></i> Copy Markdown</button>
-        <button class="btn btn-primary" id="downloadObsidianBtn"><i class="fa-solid fa-download"></i> Download .md File</button>
+        <button class="btn btn-primary" id="downloadObsidianBtn"><i class="fa-solid fa-download"></i> Download File</button>
       </div>
     </div>
   </div>

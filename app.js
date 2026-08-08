@@ -1,18 +1,14 @@
 /* ==========================================================================
-   NEURODIV-STUDY - DOKO DEMO ISSYO & TORO INOUE UI WORLD
-   Inspired by https://github.com/pumpkinhasapatch/dokodemo-psp-english
+   NEURODIV STUDY
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // --------------------------------------------------------------------------
-  // 1. STATE & DOKO DEMO ISSYO POKEPI INITIALIZATION
-  // --------------------------------------------------------------------------
   const DEFAULT_STATE = {
     userXP: 420,
     streak: 5,
     readinessPercent: 68,
-    examTitle: "Universal Science & Exam Mastery",
+    examTitle: "Universal Science and Exam Mastery",
     examDays: 24,
     cardsReviewedToday: 12,
     energyState: 'balanced',
@@ -38,12 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const POKEPI_SPEAKER_DATA = {
-    toro: { name: "Toro Inoue", avatar: "🐱", phrase: "Nya~! Let me learn words & science concepts to become human!", themeClass: "pokepi-toro" },
-    kuro: { name: "Kuro", avatar: "🐈‍⬛", phrase: "Yo! Kuro here! Let's slice some tasks and play games!", themeClass: "pokepi-kuro" },
-    jun: { name: "Jun", avatar: "🐰", phrase: "Hello beautiful learner! Jun is here to make studying cute & easy!", themeClass: "pokepi-jun" },
-    pierre: { name: "Pierre", avatar: "🐶", phrase: "Bonjour! Pierre will help you fly smoothly into flow state!", themeClass: "pokepi-pierre" },
-    ricky: { name: "Ricky", avatar: "🐸", phrase: "Ribbit! Ricky says: 15-minute hyperfocus punch! Let's go!", themeClass: "pokepi-ricky" },
-    maruta: { name: "Maruta (R-Suzuki)", avatar: "🤖", phrase: "BEEP BOOP. Science formula matrix loaded & ready.", themeClass: "pokepi-maruta" }
+    toro: { name: "Toro Inoue", avatar: "", phrase: "Let me learn words and science concepts to become human.", themeClass: "pokepi-toro" },
+    kuro: { name: "Kuro", avatar: "", phrase: "Kuro here. Let us slice some tasks and play games.", themeClass: "pokepi-kuro" },
+    jun: { name: "Jun", avatar: "", phrase: "Jun is here to make studying simple and easy.", themeClass: "pokepi-jun" },
+    pierre: { name: "Pierre", avatar: "", phrase: "Pierre will help you fly smoothly into flow state.", themeClass: "pokepi-pierre" },
+    ricky: { name: "Ricky", avatar: " ", phrase: "Ricky says 15 minute hyperfocus punch. Let us go.", themeClass: "pokepi-ricky" },
+    maruta: { name: "Maruta", avatar: "", phrase: "Science formula matrix loaded and ready.", themeClass: "pokepi-maruta" }
   };
 
   const pokepiSelect = document.getElementById('pokepiSelect');
@@ -74,22 +70,19 @@ document.addEventListener('DOMContentLoaded', () => {
       saveState();
       const currentPokepi = POKEPI_SPEAKER_DATA[state.pokepi || 'toro'];
       playTypewriterDialogue(
-        `Spoon energy set to ${state.spoons} Spoons. We'll adjust your study tasks accordingly!`,
+        `Spoon energy set to ${state.spoons} Spoons. We will adjust your study tasks accordingly.`,
         currentPokepi.name,
         currentPokepi.avatar
       );
     });
   }
 
-  // --------------------------------------------------------------------------
-  // 2. DOKO DEMO ISSYO TYPEWRITER DIALOGUE ENGINE
-  // --------------------------------------------------------------------------
   const acTypewriterText = document.getElementById('acTypewriterText');
   const acSpeaker = document.getElementById('acSpeaker');
   const acAvatar = document.getElementById('acAvatar');
   let typewriterTimer = null;
 
-  function playTypewriterDialogue(text, speaker = "Toro Inoue", avatar = "🐱") {
+  function playTypewriterDialogue(text, speaker = "Toro Inoue", avatar = "") {
     if (!acTypewriterText) return;
     if (typewriterTimer) clearInterval(typewriterTimer);
 
@@ -110,14 +103,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   playTypewriterDialogue(
-    "Nya~! Welcome to Doko Demo Issyo Study World! I'm Toro Inoue! Let's learn science and study together so I can become human!",
+    "Welcome to Doko Demo Issyo Study World. I am Toro Inoue. Let us learn science and study together so I can become human.",
     "Toro Inoue",
-    "🐱"
+    ""
   );
 
-  // --------------------------------------------------------------------------
-  // 3. HYPERFOCUS ZONE PORTAL ENGINE
-  // --------------------------------------------------------------------------
   let hfSeconds = 900;
   let hfInterval = null;
   const hfTimerTime = document.getElementById('hfTimerTime');
@@ -136,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (hfStartBtn) {
     hfStartBtn.addEventListener('click', () => {
       if (hfInterval) return;
-      hfTimerStatus.textContent = "HyperFocus Active!";
+      hfTimerStatus.textContent = "HyperFocus Active";
       hfInterval = setInterval(() => {
         if (hfSeconds > 0) {
           hfSeconds--;
@@ -144,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           clearInterval(hfInterval);
           hfInterval = null;
-          hfTimerStatus.textContent = "Zone Completed! +50 XP";
+          hfTimerStatus.textContent = "Zone Completed Plus 50 XP";
           state.userXP += 50;
           saveState();
         }
@@ -174,9 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --------------------------------------------------------------------------
-  // 4. NEURODOCK TASK SLICER ENGINE
-  // --------------------------------------------------------------------------
   const taskSlicerForm = document.getElementById('taskSlicerForm');
   const intimidatingTaskInput = document.getElementById('intimidatingTaskInput');
   const slicedActionsList = document.getElementById('slicedActionsList');
@@ -191,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="sliced-item">
           <input type="checkbox" class="step-checkbox">
           <span class="step-badge">Step 1 (2m)</span>
-          <span>Open notes for <strong>${goal}</strong> & read just 3 lines</span>
+          <span>Open notes for <strong>${goal}</strong> and read just 3 lines</span>
         </div>
         <div class="sliced-item">
           <input type="checkbox" class="step-checkbox">
@@ -201,21 +188,18 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="sliced-item">
           <input type="checkbox" class="step-checkbox">
           <span class="step-badge">Step 3 (2m)</span>
-          <span>Take a deep breath & celebrate eliminating starting friction!</span>
+          <span>Take a deep breath and celebrate eliminating starting friction</span>
         </div>
       `;
 
       playTypewriterDialogue(
-        `Nya~! I've sliced "${goal}" into 3 easy 2-minute steps! Starting is now zero stress!`,
+        `I have sliced ${goal} into 3 easy 2 minute steps. Starting is now zero stress.`,
         "Toro Inoue",
-        "🐱"
+        ""
       );
     });
   }
 
-  // --------------------------------------------------------------------------
-  // 5. THREE.JS LIGHT SKY 3D SCENE & RAYCASTER INTERACTIVITY WITH RETRY ENGINE
-  // --------------------------------------------------------------------------
   const canvas = document.getElementById('bg3dCanvas');
   const container = document.getElementById('canvas3dContainer');
   let scene, camera, renderer, planeGroup, propellerMesh;
@@ -230,11 +214,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let initRetries = 0;
 
   const ISLAND_POSITIONS = {
-    roma: { x: 0, y: -2, z: -15, label: "Toro's House", speaker: "Toro Inoue", avatar: "🐱", tab: "world", desc: "Nya~! Welcome to Toro's House! Universal study map for neurodivergent minds." },
-    firenze: { x: -16, y: -1, z: -25, label: "HyperFocus Portal", speaker: "Ricky", avatar: "🐸", tab: "hyperfocus", desc: "HyperFocus Portal: Immersive 15-minute flow state zone." },
-    venezia: { x: -8, y: -1, z: -35, label: "NeuroDock Slicer", speaker: "Kuro", avatar: "🐈‍⬛", tab: "neurodock", desc: "NeuroDock Task Slicer: Slice intimidating tasks into 2-minute steps!" },
-    milano: { x: 8, y: -1, z: -35, label: "Studio Island", speaker: "Jun", avatar: "🐰", tab: "studio", desc: "Studio Island: Custom tools for ADHD, Bipolar, OCPD, and Autism/BPD." },
-    costiera: { x: 16, y: -1, z: -25, label: "Pokepi Square", speaker: "Pierre", avatar: "🐶", tab: "community", desc: "Pokepi Square: Rejection-free community support & word exchanges." }
+    roma: { x: 0, y: -2, z: -15, label: "Toro's House", speaker: "Toro Inoue", avatar: "", tab: "world", desc: "Welcome to Toro's House. Universal study map for neurodivergent minds." },
+    firenze: { x: -16, y: -1, z: -25, label: "HyperFocus Portal", speaker: "Ricky", avatar: "", tab: "hyperfocus", desc: "HyperFocus Portal. Immersive 15 minute flow state zone." },
+    venezia: { x: -8, y: -1, z: -35, label: "NeuroDock Slicer", speaker: "Kuro", avatar: "", tab: "neurodock", desc: "NeuroDock Task Slicer. Slice intimidating tasks into 2 minute steps." },
+    milano: { x: 8, y: -1, z: -35, label: "Studio Island", speaker: "Jun", avatar: "", tab: "studio", desc: "Studio Island. Custom tools for ADHD, Bipolar, OCPD, and Autism or BPD." },
+    costiera: { x: 16, y: -1, z: -25, label: "Pokepi Square", speaker: "Pierre", avatar: "", tab: "community", desc: "Pokepi Square. Rejection free community support and word exchanges." }
   };
 
   function init3DScene() {
@@ -281,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       animate3D();
     } catch (e) {
-      console.warn("Three.js WebGL fallback mode:", e);
+      console.warn("Three.js WebGL fallback mode", e);
     }
   }
 
@@ -494,9 +478,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   init3DScene();
 
-  // --------------------------------------------------------------------------
-  // 6. OVERLAY PANELS & NAVIGATION CONTROLS
-  // --------------------------------------------------------------------------
   const navBtns = document.querySelectorAll('.nav-btn');
   const overlayPanels = document.querySelectorAll('.overlay-panel');
 
@@ -528,14 +509,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --------------------------------------------------------------------------
-  // 7. FLASHCARD DECK REVIEWS & SRS INTERACTIVITY
-  // --------------------------------------------------------------------------
   const FLASHCARD_DECK = [
     { word: "Keplerian Motion", phonetic: "[Elliptical Planetary Orbits]", meaning: "Planetary Elliptical Orbit Law", ex: "Planets move in ellipses with the Sun at one focus.", tag: "Astrophysics" },
     { word: "Superposition", phonetic: "[Quantum Density States]", meaning: "Quantum State Coexistence", ex: "A system remains in all possible states until observed.", tag: "Quantum Physics" },
-    { word: "Special Relativity", phonetic: "[E = mc²]", meaning: "Mass-Energy Equivalence", ex: "Energy equals mass times the speed of light squared.", tag: "Physics" },
-    { word: "Entropy (S)", phonetic: "[Measure of Disorder]", meaning: "Second Law of Thermodynamics", ex: "Total entropy of an isolated system always increases.", tag: "Thermodynamics" }
+    { word: "Special Relativity", phonetic: "[Mass Energy Equivalence]", meaning: "Mass Energy Equivalence", ex: "Energy equals mass times the speed of light squared.", tag: "Physics" },
+    { word: "Entropy", phonetic: "[Measure of Disorder]", meaning: "Second Law of Thermodynamics", ex: "Total entropy of an isolated system always increases.", tag: "Thermodynamics" }
   ];
 
   let cardIdx = 0;
@@ -573,9 +551,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --------------------------------------------------------------------------
-  // 8. NOOK / POKEPI QUEST STAMP INTERACTIVITY
-  // --------------------------------------------------------------------------
   document.querySelectorAll('.nook-stamp-card').forEach(card => {
     card.addEventListener('click', () => {
       card.classList.toggle('completed');
@@ -588,9 +563,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --------------------------------------------------------------------------
-  // 9. UNIVERSAL AUDIO SPEECH ENGINE
-  // --------------------------------------------------------------------------
   function speakText(text) {
     if (!('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();
@@ -601,12 +573,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.getElementById('quickAudioTest').addEventListener('click', () => {
-    speakText("Nya~! Welcome to Doko Demo Issyo Study World with Toro Inoue!");
+    speakText("Welcome to Doko Demo Issyo Study World with Toro Inoue");
   });
 
-  // --------------------------------------------------------------------------
-  // 10. OBSIDIAN MARKDOWN EXPORTER (.md)
-  // --------------------------------------------------------------------------
   const exportObsidianBtn = document.getElementById('exportObsidianBtn');
   const obsidianModal = document.getElementById('obsidianModal');
   const closeObsidianModalBtn = document.getElementById('closeObsidianModalBtn');
@@ -617,24 +586,23 @@ document.addEventListener('DOMContentLoaded', () => {
   function generateObsidianMarkdown() {
     const dateStr = new Date().toISOString().split('T')[0];
     const currentPokepi = POKEPI_SPEAKER_DATA[state.pokepi || 'toro'];
-    return `# 🐱 Doko Demo Issyo Study Notes - ${state.examTitle}
+    return `# Doko Demo Issyo Study Notes ${state.examTitle}
 #dokodemo #toroinoue #hyperfocus #neurodock #audhd #study
 
----
-- **Companion Pokepi:** ${currentPokepi.name} ${currentPokepi.avatar}
-- **Target Subject:** [[${state.examTitle}]]
-- **Days Remaining:** ${state.examDays} days
-- **Readiness Estimate:** ${state.readinessPercent}% (OCPD Safeguard: 80% is Exam-Ready)
-- **Spoons Available:** \`${state.spoons} Spoons\`
-- **Streak:** ${state.streak} days | **XP:** ${state.userXP}
+- Companion Pokepi ${currentPokepi.name}
+- Target Subject [[${state.examTitle}]]
+- Days Remaining ${state.examDays} days
+- Readiness Estimate ${state.readinessPercent} percent
+- Spoons Available ${state.spoons} Spoons
+- Streak ${state.streak} days
+- XP ${state.userXP}
 
----
-## 🧠 Executive Function Systems Active
-- **HyperFocus Zone Portal:** 15-min Immersion Timer (welshDog)
-- **NeuroDock Task Slicer:** 2-min Micro-Actions (tlennon-ie)
-- **AuDHD Spoon Theory:** Energy Level Adaptor (assafkip)
+## Executive Function Systems Active
+- HyperFocus Zone Portal 15 min Immersion Timer
+- NeuroDock Task Slicer 2 min Micro Actions
+- AuDHD Spoon Theory Energy Level Adaptor
 
-*Exported from neurodiv-study 🐱 (Doko Demo Issyo World) on ${dateStr}*
+Exported from neurodiv study on ${dateStr}
 `;
   }
 
@@ -647,7 +615,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   copyObsidianBtn.addEventListener('click', () => {
     navigator.clipboard.writeText(obsidianTextarea.value);
-    copyObsidianBtn.innerHTML = '<i class="fa-solid fa-check text-leaf"></i> Copied!';
+    copyObsidianBtn.innerHTML = 'Copied';
     setTimeout(() => {
       copyObsidianBtn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy Markdown';
     }, 2000);
