@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>neurodiv-study 🍃 - HyperFocus Zone Portal & NeuroDock Executive Function World</title>
-  <!-- Google Fonts: Nunito, Outfit -->
+  <title>neurodiv-study 🍃 - Official Animal-Island-UI Design System</title>
+  <!-- Google Fonts: Nunito, Noto Sans SC -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
   <!-- Three.js Library for 3D Engine -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
-<body class="animal-crossing-theme theme-isabelle fullscreen-app">
+<body class="animal-island-theme theme-isabelle fullscreen-app">
 
   <!-- 3D LIGHT SKY CANVAS ENVIRONMENT -->
   <div class="fullscreen-canvas-container" id="canvas3dContainer">
     <canvas id="bg3dCanvas"></canvas>
   </div>
 
-  <!-- FLOATING ANIMAL CROSSING LIGHT NAVBAR -->
+  <!-- FLOATING ANIMAL-ISLAND-UI LIGHT NAVBAR -->
   <header class="floating-header">
     <div class="header-inner">
       <div class="logo-pill">
@@ -40,12 +40,12 @@
       </nav>
 
       <div class="floating-actions">
-        <!-- Spoon / Energy Level Selector (AuDHD Executive Function) -->
-        <div class="spoon-selector" title="Spoon Theory / Cognitive Energy Level">
+        <!-- Spoon Energy Level Selector -->
+        <div class="spoon-selector" title="AuDHD Spoon Theory Energy Level">
           <select id="spoonSelect" class="form-select-pill">
-            <option value="5">🥄 5 Spoons (Full Focus)</option>
-            <option value="3" selected>🥄 3 Spoons (Moderate)</option>
-            <option value="1">🥄 1 Spoon (Low Energy Dose)</option>
+            <option value="5">🥄 5 Spoons</option>
+            <option value="3" selected>🥄 3 Spoons</option>
+            <option value="1">🥄 1 Spoon</option>
           </select>
         </div>
 
@@ -75,12 +75,12 @@
 
       <!-- Typewriter Speech Content -->
       <div class="ac-speech-content">
-        <p class="typewriter-text" id="acTypewriterText">Welcome to Animal Crossing Study! Integrated with HyperFocus Portal, NeuroDock Task Slicer, and AuDHD Executive Functioning.</p>
+        <p class="typewriter-text" id="acTypewriterText">Welcome to Animal-Island-UI Study! Built with official Animal Crossing components, typewriter dialogues, and executive function systems.</p>
       </div>
 
       <!-- Dialogue Action Prompt Arrow -->
       <div class="ac-dialogue-prompt" id="acPromptBtn">
-        <button class="btn-ac-next"><i class="fa-solid fa-circle-chevron-down"></i> Explore Island</button>
+        <button class="btn-ac-next"><i class="fa-solid fa-circle-chevron-down"></i> Land on Island</button>
       </div>
     </div>
   </div>
@@ -97,7 +97,7 @@
   <!-- LIGHT GLASS OVERLAY CONTENT PANELS -->
   <main class="content-overlay-container">
 
-    <!-- TAB 1: HYPERFOCUS ZONE PORTAL (welshDog/HyperFocus-Zone-Portal) -->
+    <!-- TAB 1: HYPERFOCUS ZONE PORTAL -->
     <section id="tab-hyperfocus" class="overlay-panel hidden">
       <div class="overlay-card island-card modal-sm">
         <div class="panel-header">
@@ -107,6 +107,13 @@
         <div class="panel-body flex-center">
           <p class="panel-desc">Immersion zone built to eliminate executive starting friction and keep your brain in the flow state.</p>
           
+          <!-- ANIMAL-ISLAND-UI DIVIDER COMPONENT -->
+          <div class="animal-divider">
+            <span class="divider-line"></span>
+            <span class="divider-icon">🍃</span>
+            <span class="divider-line"></span>
+          </div>
+
           <div class="hyperfocus-timer-ring margin-top-md">
             <span id="hfTimerTime">15:00</span>
             <small id="hfTimerStatus">Zone Ready</small>
@@ -118,8 +125,15 @@
             <button class="btn btn-ghost" id="hfResetBtn"><i class="fa-solid fa-rotate-right"></i> Reset</button>
           </div>
 
+          <!-- ANIMAL-ISLAND-UI DIVIDER COMPONENT -->
+          <div class="animal-divider margin-top-md">
+            <span class="divider-line"></span>
+            <span class="divider-icon">🎧</span>
+            <span class="divider-line"></span>
+          </div>
+
           <div class="ambient-sound-box margin-top-md">
-            <span><i class="fa-solid fa-headphones"></i> Focus Audio:</span>
+            <span>Focus Audio:</span>
             <select id="hfAmbientSelect" class="form-select-pill">
               <option value="alpha">Alpha Waves (Deep Flow)</option>
               <option value="rain">Florence Rain Drops</option>
@@ -131,7 +145,7 @@
       </div>
     </section>
 
-    <!-- TAB 2: NEURODOCK TASK SLICER (tlennon-ie/neurodock) -->
+    <!-- TAB 2: NEURODOCK TASK SLICER -->
     <section id="tab-neurodock" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
@@ -139,7 +153,14 @@
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body">
-          <p class="panel-desc">Have a big, scary, overwhelming task? Slice it into 3 gentle 2-minute micro-actions to bypass prefrontal blockages!</p>
+          <p class="panel-desc">Slice intimidating goals into 3 gentle 2-minute micro-actions to bypass executive blockages!</p>
+
+          <!-- ANIMAL-ISLAND-UI DIVIDER COMPONENT -->
+          <div class="animal-divider">
+            <span class="divider-line"></span>
+            <span class="divider-icon">✂️</span>
+            <span class="divider-line"></span>
+          </div>
 
           <form id="taskSlicerForm" class="margin-top-md">
             <div class="form-group-flex">
@@ -149,7 +170,6 @@
           </form>
 
           <div class="sliced-actions-list margin-top-md" id="slicedActionsList">
-            <!-- Dynamically generated micro-actions -->
             <div class="sliced-item">
               <span class="step-badge">Step 1 (2m)</span>
               <span>Open notes to page 1 & read just 3 lines</span>
@@ -177,23 +197,23 @@
         <div class="panel-body grid-2">
           <div class="studio-opt">
             <span class="icon-badge bg-sun"><i class="fa-solid fa-bolt"></i></span>
-            <h3>ADHD: Executive Function & Micro-Sprints</h3>
-            <p>Chunked 15-minute timers, immediate dopamine XP, task breaking to eliminate starting friction.</p>
+            <h3>ADHD: Executive Function & Sprints</h3>
+            <p>Chunked 15-minute timers, immediate dopamine XP, task breaking.</p>
           </div>
           <div class="studio-opt">
             <span class="icon-badge bg-sky"><i class="fa-solid fa-wave-square"></i></span>
             <h3>Bipolar & Mood Waves: Flexible Pace</h3>
-            <p>High energy = hyperfocus deep dives; Low energy = zero-guilt 2-minute maintenance dose.</p>
+            <p>High energy = hyperfocus deep dives; Low energy = 2-minute maintenance dose.</p>
           </div>
           <div class="studio-opt">
             <span class="icon-badge bg-leaf"><i class="fa-solid fa-shield-halved"></i></span>
             <h3>OCPD & Anxiety: Perfectionism Breaker</h3>
-            <p>"80% is Exam-Ready" limits to prevent over-studying, analysis paralysis, and infinite organizing.</p>
+            <p>"80% is Exam-Ready" limits to prevent over-studying & analysis paralysis.</p>
           </div>
           <div class="studio-opt">
             <span class="icon-badge bg-rose"><i class="fa-solid fa-heart"></i></span>
             <h3>Autism & BPD: Sensory & Safe Space</h3>
-            <p>Cozy warm light theme, neutral error framing ("Mistakes are just data!"), rejection-free peer exchange.</p>
+            <p>Cozy warm light theme, neutral error framing ("Mistakes are just data!").</p>
           </div>
         </div>
       </div>
