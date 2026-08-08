@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>neurodiv-study 🚀 - Universal 3D Adaptive Exam & Study Platform</title>
+  <!-- Google Fonts: Outfit, Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Three.js Library for 3D Scene -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="theme-dark font-standard">
+  <!-- Top Header -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="logo-group">
+        <div class="flag-badge">🚀🌌</div>
+        <div>
+          <h1 class="logo-title">neurodiv-study</h1>
+          <span class="logo-sub">Universal 3D Adaptive Platform for ADHD, Bipolar, OCPD & BPD</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-btn active" data-tab="dashboard"><i class="fa-solid fa-plane-departure"></i> 3D Study Map</button>
+        <button class="nav-btn" data-tab="studio"><i class="fa-solid fa-sliders"></i> Adaptive Studio</button>
+        <button class="nav-btn" data-tab="flashcards"><i class="fa-solid fa-layer-group"></i> Smart Cards</button>
+        <button class="nav-btn" data-tab="grammar"><i class="fa-solid fa-book-open"></i> Formula Matrix</button>
+        <button class="nav-btn" data-tab="community"><i class="fa-solid fa-users-rays"></i> Community Hub</button>
+        <button class="nav-btn" data-tab="brainstorm"><i class="fa-solid fa-brain"></i> Strategy Guide</button>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Obsidian Export Button -->
+        <button class="btn btn-sm btn-outline" id="exportObsidianBtn" title="Export study notes to Obsidian Markdown format">
+          <i class="fa-solid fa-note-sticky text-purple"></i> Export to Obsidian
+        </button>
+
+        <!-- Energy Wave State Selector -->
+        <div class="energy-selector">
+          <label><i class="fa-solid fa-battery-half text-amber"></i> Energy Wave:</label>
+          <select id="energyStateSelect" class="form-select-sm">
+            <option value="balanced">🌱 Balanced Energy</option>
+            <option value="high">⚡ High Energy (Sprint Mode)</option>
+            <option value="low">🛋️ Low Energy (2-Min Gentle Dose)</option>
+          </select>
+        </div>
+
+        <button class="btn-icon" id="quickAudioTest" title="Test Pronunciation Audio">
+          <i class="fa-solid fa-volume-high"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sticky Exam Readiness Bar -->
+  <div class="exam-sticky-bar">
+    <div class="container exam-bar-flex">
+      <div class="exam-info">
+        <span class="badge badge-accent"><i class="fa-solid fa-graduation-cap"></i> Target Subject</span>
+        <strong id="examTitleDisplay">Astrophysics & Italian CILS B1 Exam</strong>
+      </div>
+      
+      <div class="countdown-widget">
+        <div class="time-unit"><span id="cdDays">24</span><small>Days</small></div>
+        <div class="time-sep">:</div>
+        <div class="time-unit"><span id="cdHours">14</span><small>Hours</small></div>
+        <div class="time-sep">:</div>
+        <div class="time-unit"><span id="cdMins">32</span><small>Mins</small></div>
+      </div>
+
+      <div class="readiness-meter">
+        <div class="readiness-text">
+          <span>Readiness Estimate</span>
+          <strong id="readinessPercent">68%</strong>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="readinessBar" style="width: 68%;"></div>
+        </div>
+      </div>
+
+      <div class="exam-bar-actions">
+        <button class="btn btn-sm btn-outline" id="customizeSubjectBtn"><i class="fa-solid fa-sliders"></i> Customize Subject</button>
+        <span class="badge badge-outline"><i class="fa-solid fa-shield-halved text-emerald"></i> OCPD Cap: 80% is Exam-Ready!</span>
+      </div>
+    </div>
+  </div>
+
+  <main class="main-content container">
+
+    <!-- TAB 1: 3D STUDY MAP & DASHBOARD -->
+    <section id="tab-dashboard" class="tab-pane active">
+      
+      <!-- 3D CANVAS HERO -->
+      <div class="card glass-card canvas3d-card">
+        <div class="canvas3d-header">
+          <div>
+            <h2><i class="fa-solid fa-rocket text-accent"></i> Interactive 3D Cosmic Archipelago</h2>
+            <p class="subtitle">Fly your vessel between study islands! Steer with <strong>Mouse Drag</strong> or <strong>Arrow Keys [←] [↑] [→] [↓]</strong>.</p>
+          </div>
+          <div class="flight-hud">
+            <span class="hud-badge"><i class="fa-solid fa-location-crosshairs text-sky"></i> Island: <strong id="currentIslandDisplay">Isola Roma (Overview)</strong></span>
+            <span class="hud-badge"><i class="fa-solid fa-gauge text-gold"></i> Speed: <strong id="planeSpeedDisplay">120 Knots</strong></span>
+          </div>
+        </div>
+
+        <div class="canvas3d-viewport" id="canvas3dContainer">
+          <canvas id="bg3dCanvas"></canvas>
+
+          <!-- Floating HUD Controls -->
+          <div class="hud-overlay">
+            <div class="hud-buttons">
+              <button class="hud-btn active" data-island="roma"><i class="fa-solid fa-monument"></i> Overview Island</button>
+              <button class="hud-btn" data-island="firenze"><i class="fa-solid fa-sliders"></i> Adaptive Studio</button>
+              <button class="hud-btn" data-island="venezia"><i class="fa-solid fa-layer-group"></i> Smart Cards</button>
+              <button class="hud-btn" data-island="milano"><i class="fa-solid fa-book-open"></i> Formula Matrix</button>
+              <button class="hud-btn" data-island="costiera"><i class="fa-solid fa-users-rays"></i> Community Exchange</button>
+            </div>
+            
+            <div class="hud-instructions">
+              <span><i class="fa-solid fa-hand-pointer"></i> Drag mouse to rotate 3D view | Click any Island to visit</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid margin-top-lg">
+        
+        <!-- Welcome & Micro-Goals -->
+        <div class="card glass-card hero-card">
+          <div class="hero-header">
+            <div>
+              <h2>Welcome to Your Study Space 👋</h2>
+              <p class="subtitle" id="energySubtitle">Current Pace: Balanced & Flexible. Universal for any exam or subject.</p>
+            </div>
+            <div class="xp-pill">
+              <i class="fa-solid fa-fire text-amber"></i> <span id="streakCount">5</span> Day Streak | <span id="userXP">420</span> XP
+            </div>
+          </div>
+
+          <!-- Dynamic Affirmation Banner for BPD / Anxiety -->
+          <div class="affirmation-banner" id="affirmationBanner">
+            <i class="fa-solid fa-sparkles text-gold"></i>
+            <span id="affirmationText">"Progress is not linear. Every single minute you spend today is a victory for your exam!"</span>
+          </div>
+
+          <div class="micro-goals-box">
+            <h3><i class="fa-solid fa-list-check text-accent"></i> Today's Micro-Sprints (3/4 Complete)</h3>
+            <div class="goal-list" id="goalList">
+              <label class="goal-item completed">
+                <input type="checkbox" checked data-id="1">
+                <span class="checkmark"></span>
+                <span class="goal-text">Review 10 High-Yield Exam Formulas & Connectors</span>
+                <span class="goal-tag">+20 XP</span>
+              </label>
+              <label class="goal-item completed">
+                <input type="checkbox" checked data-id="2">
+                <span class="checkmark"></span>
+                <span class="goal-text">Listen to 1 Audio Clip / Practice Pronunciation or Recall</span>
+                <span class="goal-tag">+30 XP</span>
+              </label>
+              <label class="goal-item completed">
+                <input type="checkbox" checked data-id="3">
+                <span class="checkmark"></span>
+                <span class="goal-text">Answer 1 question on Community Exchange (Protégé Effect)</span>
+                <span class="goal-tag">+40 XP</span>
+              </label>
+              <label class="goal-item">
+                <input type="checkbox" data-id="4">
+                <span class="checkmark"></span>
+                <span class="goal-text">15-min Hyperfocus Sprint: Key Exam Topic Review</span>
+                <span class="goal-tag">+50 XP</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Focus Timer & Ambient Sound Player -->
+        <div class="card glass-card timer-card">
+          <h3><i class="fa-solid fa-stopwatch text-accent"></i> Hyperfocus Study Sprint</h3>
+          <p class="card-desc">Chunked study timer designed to minimize executive friction & cognitive fatigue.</p>
+          
+          <div class="timer-display">
+            <div class="timer-ring">
+              <span id="timerTime">15:00</span>
+              <small id="timerStatus">Ready for Sprint</small>
+            </div>
+          </div>
+
+          <div class="timer-controls">
+            <button class="btn btn-primary" id="startTimerBtn"><i class="fa-solid fa-play"></i> Start Sprint</button>
+            <button class="btn btn-outline" id="pauseTimerBtn"><i class="fa-solid fa-pause"></i> Pause</button>
+            <button class="btn btn-ghost" id="resetTimerBtn"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+          </div>
+
+          <div class="timer-presets">
+            <button class="chip" data-time="120">🛋️ 2m Low-Energy Dose</button>
+            <button class="chip active" data-time="900">⚡ 15m ADHD Sprint</button>
+            <button class="chip" data-time="1500">25m Pomodoro</button>
+          </div>
+
+          <div class="ambient-sound-box">
+            <span><i class="fa-solid fa-headphones"></i> Ambient Focus Sound:</span>
+            <select id="ambientSelect" class="form-select-sm">
+              <option value="none">Off (Silence)</option>
+              <option value="cafe">Tuscan Café Brown Noise</option>
+              <option value="rain">Florence Rain Drops</option>
+              <option value="binaural">Alpha Waves (Calm Focus)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Domain Mastery Breakdowns -->
+        <div class="card glass-card col-span-2">
+          <h3><i class="fa-solid fa-chart-pie text-accent"></i> Skill Breakdown & OCPD Mastery Limits</h3>
+          <p class="card-desc">Remember: Aim for 75-80% across domains. Perfection (100%) is NOT required to pass your exam!</p>
+          
+          <div class="skills-grid">
+            <div class="skill-card">
+              <div class="skill-header">
+                <span><i class="fa-solid fa-book text-emerald"></i> Core Concepts / Reading</span>
+                <strong>75% <small class="text-emerald">(Exam Ready)</small></strong>
+              </div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill bg-emerald" style="width: 75%;"></div></div>
+            </div>
+            <div class="skill-card">
+              <div class="skill-header">
+                <span><i class="fa-solid fa-ear-listen text-sky"></i> Listening / Auditory Recall</span>
+                <strong>60%</strong>
+              </div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill bg-sky" style="width: 60%;"></div></div>
+            </div>
+            <div class="skill-card">
+              <div class="skill-header">
+                <span><i class="fa-solid fa-pen-nib text-purple"></i> Writing & Synthesis</span>
+                <strong>55%</strong>
+              </div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill bg-purple" style="width: 55%;"></div></div>
+            </div>
+            <div class="skill-card">
+              <div class="skill-header">
+                <span><i class="fa-solid fa-comments text-amber"></i> Speaking & Verbal Practice</span>
+                <strong>70% <small class="text-emerald">(Exam Ready)</small></strong>
+              </div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill bg-amber" style="width: 70%;"></div></div>
+            </div>
+            <div class="skill-card">
+              <div class="skill-header">
+                <span><i class="fa-solid fa-gears text-rose"></i> Formulas & Grammar Rules</span>
+                <strong>65%</strong>
+              </div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill bg-rose" style="width: 65%;"></div></div>
+            </div>
+            <div class="skill-card">
+              <div class="skill-header">
+                <span><i class="fa-solid fa-spell-check text-indigo"></i> Terms & Vocabulary</span>
+                <strong>80% <small class="text-emerald">(Exam Ready)</small></strong>
+              </div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill bg-indigo" style="width: 80%;"></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 2: ADAPTIVE STUDIO -->
+    <section id="tab-studio" class="tab-pane">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-sliders text-accent"></i> Specialized Diagnosis Accommodation Studio</h2>
+        <p>Custom-engineered tools for ADHD, Bipolar Disorder, OCPD, and BPD.</p>
+      </div>
+
+      <div class="studio-grid">
+        <div class="card glass-card studio-card">
+          <div class="studio-card-icon bg-amber-light"><i class="fa-solid fa-bolt text-amber"></i></div>
+          <h3>ADHD: Executive Function & Micro-Sprints</h3>
+          <p>Gamified micro-goals, immediate dopamine XP, 15-minute hyperfocus timers, and task chunking to eliminate starting friction.</p>
+          <div class="toggle-group">
+            <label class="switch">
+              <input type="checkbox" id="toggleADHD" checked>
+              <span class="slider round"></span>
+            </label>
+            <span>Enable ADHD Micro-Sprint & Dopamine Feedback</span>
+          </div>
+        </div>
+
+        <div class="card glass-card studio-card">
+          <div class="studio-card-icon bg-sky-light"><i class="fa-solid fa-wave-square text-sky"></i></div>
+          <h3>Bipolar Disorder: Energy Wave Adapters</h3>
+          <p>Adapts study load to match your mood cycle. High energy = hyperfocus deep dives; Low energy = zero-guilt 2-minute maintenance doses.</p>
+          <div class="toggle-group">
+            <label class="switch">
+              <input type="checkbox" id="toggleBipolar" checked>
+              <span class="slider round"></span>
+            </label>
+            <span>Enable Energy Wave Auto-Adaptation</span>
+          </div>
+        </div>
+
+        <div class="card glass-card studio-card">
+          <div class="studio-card-icon bg-emerald-light"><i class="fa-solid fa-shield-halved text-emerald"></i></div>
+          <h3>OCPD: Perfectionism Circuit Breakers</h3>
+          <p>Strict logical rule matrices, explicit "Done" limits to prevent over-studying, and clear "80% is Exam-Ready" progress caps.</p>
+          <div class="toggle-group">
+            <label class="switch">
+              <input type="checkbox" id="toggleOCPD" checked>
+              <span class="slider round"></span>
+            </label>
+            <span>Enable OCPD Rulebooks & "Good Enough" Caps</span>
+          </div>
+        </div>
+
+        <div class="card glass-card studio-card">
+          <div class="studio-card-icon bg-purple-light"><i class="fa-solid fa-heart-pulse text-purple"></i></div>
+          <h3>BPD: Safe Space & Emotional Balance</h3>
+          <p>Gentle positive affirmations, low-frustration quiz feedback ("Mistakes are just data!"), and supportive, rejection-free peer community exchange.</p>
+          <div class="toggle-group">
+            <label class="switch">
+              <input type="checkbox" id="toggleBPD" checked>
+              <span class="slider round"></span>
+            </label>
+            <span>Enable Rejection-Free Safe Space & Affirmations</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual Options -->
+      <div class="card glass-card margin-top-lg">
+        <h3><i class="fa-solid fa-wand-magic-sparkles text-accent"></i> Visual & Accessibility Preferences</h3>
+        <div class="customizer-options">
+          <div class="opt-group">
+            <label>Color Theme:</label>
+            <div class="btn-group">
+              <button class="btn btn-sm btn-outline active" id="themeDark">Midnight Glass</button>
+              <button class="btn btn-sm btn-outline" id="themeLight">Warm Paper (High Readability)</button>
+              <button class="btn btn-sm btn-outline" id="themeHighContrast">High Contrast (OLED)</button>
+            </div>
+          </div>
+
+          <div class="opt-group">
+            <label>Text Size & Spacing:</label>
+            <div class="btn-group">
+              <button class="btn btn-sm btn-outline active" id="fontSizeNormal">Standard</button>
+              <button class="btn btn-sm btn-outline" id="fontSizeLarge">Large (120%)</button>
+              <button class="btn btn-sm btn-outline" id="fontSizeXL">Extra Spaced (140%)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: SMART FLASHCARDS & AUDIO -->
+    <section id="tab-flashcards" class="tab-pane">
+      <div class="section-header flex-between">
+        <div>
+          <h2><i class="fa-solid fa-layer-group text-accent"></i> Spaced Repetition (SRS) Flashcards & Audio</h2>
+          <p>Active recall with native Speech audio synthesis.</p>
+        </div>
+        <div class="deck-selector">
+          <select id="deckFilter" class="form-select">
+            <option value="exam">Italian High-Yield Exam Connectors</option>
+            <option value="astrophysics">Astrophysics & Orbital Mechanics Terms</option>
+            <option value="verbs">Essential Irregular Verbs</option>
+            <option value="idioms">Common Expressions</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flashcard-container">
+        <div class="flashcard" id="mainFlashcard">
+          <div class="flashcard-inner">
+            <!-- Front -->
+            <div class="flashcard-front">
+              <span class="card-category-tag" id="cardCategory">High-Yield Concept</span>
+              <div class="card-word" id="cardItalian">Tuttavia</div>
+              <p class="card-phonetic" id="cardPhonetic">[toot-tah-VEE-ah]</p>
+              
+              <button class="btn-audio" id="cardSpeakBtn" title="Listen to pronunciation">
+                <i class="fa-solid fa-volume-high"></i> Ascolta Pronuncia
+              </button>
+
+              <div class="card-hint">
+                <i class="fa-solid fa-lightbulb text-amber"></i> Click card to reveal translation
+              </div>
+            </div>
+
+            <!-- Back -->
+            <div class="flashcard-back">
+              <span class="card-category-tag">Translation / Meaning</span>
+              <div class="card-meaning" id="cardEnglish">However / Nevertheless</div>
+              
+              <div class="example-box">
+                <p class="example-it" id="cardExampleIt">"Sto studiando molto; <strong>tuttavia</strong> l'esame è impegnativo."</p>
+                <p class="example-en" id="cardExampleEn">"I am studying a lot; however, the exam is challenging."</p>
+              </div>
+
+              <div class="mnemonic-box">
+                <i class="fa-solid fa-brain text-accent"></i> <strong>Memory Tip:</strong> Think of "To the VIA (street)" - <em>however</em>, you turn onto a new path!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="srs-controls">
+          <button class="btn btn-srs srs-again" id="srsAgain"><i class="fa-solid fa-rotate-left"></i> Again</button>
+          <button class="btn btn-srs srs-hard" id="srsHard"><i class="fa-solid fa-face-frown"></i> Hard</button>
+          <button class="btn btn-srs srs-good" id="srsGood"><i class="fa-solid fa-face-smile"></i> Good</button>
+          <button class="btn btn-srs srs-easy" id="srsEasy"><i class="fa-solid fa-star"></i> Easy</button>
+        </div>
+
+        <div class="srs-stats">
+          <span>Cards reviewed today: <strong id="cardsReviewed">12</strong></span> | 
+          <span>Remaining in deck: <strong id="cardsRemaining">8 cards left</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: GRAMMAR & FORMULA MATRIX -->
+    <section id="tab-grammar" class="tab-pane">
+      <div class="grammar-layout">
+        
+        <!-- Left: Searchable Matrix -->
+        <div class="card glass-card">
+          <h3><i class="fa-solid fa-book-bookmark text-accent"></i> OCPD Logical Rulebook & Formula Matrix</h3>
+          <p class="card-desc">Clear, predictable rule tables designed for structured pattern clarity.</p>
+          
+          <div class="search-bar-group">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" id="verbSearchInput" placeholder="Search concept or verb (e.g., essere, avere, parlare, Kepler)..." class="form-control">
+          </div>
+
+          <div class="verb-display-box" id="verbDisplayBox">
+            <div class="verb-header">
+              <h4 id="verbTitle">Essere (To Be)</h4>
+              <span class="badge badge-accent">Auxiliary / Irregular</span>
+            </div>
+
+            <div class="tense-grid">
+              <div class="tense-block">
+                <h5>Presente (Present)</h5>
+                <ul class="conjugation-list">
+                  <li><span>io</span> <strong>sono</strong></li>
+                  <li><span>tu</span> <strong>sei</strong></li>
+                  <li><span>lui/lei</span> <strong>è</strong></li>
+                  <li><span>noi</span> <strong>siamo</strong></li>
+                  <li><span>voi</span> <strong>siete</strong></li>
+                  <li><span>loro</span> <strong>sono</strong></li>
+                </ul>
+              </div>
+
+              <div class="tense-block">
+                <h5>Passato Prossimo (Past)</h5>
+                <ul class="conjugation-list">
+                  <li><span>io</span> <strong>sono stato/a</strong></li>
+                  <li><span>tu</span> <strong>sei stato/a</strong></li>
+                  <li><span>lui/lei</span> <strong>è stato/a</strong></li>
+                  <li><span>noi</span> <strong>siamo stati/e</strong></li>
+                  <li><span>voi</span> <strong>siete stati/e</strong></li>
+                  <li><span>loro</span> <strong>sono stati/e</strong></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Exam Simulation Mini-Quiz -->
+        <div class="card glass-card">
+          <h3><i class="fa-solid fa-circle-question text-accent"></i> Low-Frustration Exam Quiz</h3>
+          <p class="card-desc">BPD/Anxiety-friendly: Mistakes are neutral learning data, not failures.</p>
+
+          <div class="quiz-box" id="quizBox">
+            <div class="quiz-meta">
+              <span id="quizQuestionNum">Question 1 of 3</span>
+              <span class="badge badge-outline">B1 Level</span>
+            </div>
+
+            <div class="quiz-prompt" id="quizPrompt">
+              Select the correct verb form to complete the sentence:
+              <br><br>
+              <em>"Penso che Marco _______ già arrivato a Roma."</em>
+            </div>
+
+            <div class="quiz-options" id="quizOptions">
+              <button class="quiz-opt" data-opt="A">A) è</button>
+              <button class="quiz-opt" data-opt="B">B) sia</button>
+              <button class="quiz-opt" data-opt="C">C) sarà</button>
+              <button class="quiz-opt" data-opt="D">D) fosse</button>
+            </div>
+
+            <div class="quiz-feedback hidden" id="quizFeedback"></div>
+
+            <button class="btn btn-primary margin-top-md hidden" id="nextQuizBtn">Next Question <i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 5: COMMUNITY HUB -->
+    <section id="tab-community" class="tab-pane">
+      <div class="section-header flex-between">
+        <div>
+          <h2><i class="fa-solid fa-users-rays text-accent"></i> Rejection-Free Peer Learning Exchange</h2>
+          <p>Get supportive help and solidify your exam mastery by helping fellow neurodivergent learners!</p>
+        </div>
+        <button class="btn btn-primary" id="openPostModalBtn"><i class="fa-solid fa-plus"></i> Post Question or Note</button>
+      </div>
+
+      <!-- Filters & Stats -->
+      <div class="community-bar card glass-card">
+        <div class="comm-filters">
+          <button class="chip active" data-comm-filter="all">All Posts</button>
+          <button class="chip" data-comm-filter="question"><i class="fa-solid fa-circle-question"></i> Questions (Get Help)</button>
+          <button class="chip" data-comm-filter="note"><i class="fa-solid fa-lightbulb"></i> Study Notes & Mnemonics</button>
+          <button class="chip" data-comm-filter="writing"><i class="fa-solid fa-pen-fancy"></i> Writing Feedback</button>
+          <button class="chip" data-comm-filter="exam-tip"><i class="fa-solid fa-graduation-cap"></i> Exam Strategy</button>
+        </div>
+
+        <div class="comm-stats">
+          <span><i class="fa-solid fa-hands-holding-child text-emerald"></i> <strong>28</strong> Peer Solutions Exchanged Today</span>
+        </div>
+      </div>
+
+      <!-- Feed -->
+      <div class="community-feed" id="communityFeed">
+        <!-- Dynamically rendered posts -->
+      </div>
+    </section>
+
+    <!-- TAB 6: BRAINSTORM & STRATEGY GUIDE FOR BIPOLAR, BPD, OCPD & ADHD -->
+    <section id="tab-brainstorm" class="tab-pane">
+      <div class="card glass-card hero-card">
+        <h2><i class="fa-solid fa-brain text-accent"></i> Universal Strategy: Learning with Bipolar, BPD, OCPD & ADHD</h2>
+        <p class="subtitle">A personalized blueprint for navigating cognitive energy, perfectionism, motivation, and emotional regulation across any subject.</p>
+      </div>
+
+      <div class="guide-grid margin-top-lg">
+        
+        <!-- ADHD -->
+        <div class="card glass-card guide-card">
+          <div class="guide-icon bg-amber-light"><i class="fa-solid fa-bolt text-amber"></i></div>
+          <h3>1. ADHD Strategy (Executive Friction & Dopamine)</h3>
+          <ul>
+            <li><strong>The 15-Minute Micro-Sprint:</strong> Starting is 90% of the battle. Tell yourself: "I will only study for 15 minutes."</li>
+            <li><strong>Dopamine Chaining:</strong> Collect XP badges instantly as you study to keep the brain engaged.</li>
+            <li><strong>Novelty Rotation:</strong> Rotate study formats (audio synthesis while walking, formula matrix on laptop).</li>
+          </ul>
+        </div>
+
+        <!-- Bipolar -->
+        <div class="card glass-card guide-card">
+          <div class="guide-icon bg-sky-light"><i class="fa-solid fa-wave-square text-sky"></i></div>
+          <h3>2. Bipolar Energy Wave Strategy</h3>
+          <ul>
+            <li><strong>High-Energy / Hypomanic Waves:</strong> Ride the momentum! Do deep concept dives, write essays, or build new flashcard decks.</li>
+            <li><strong>Low-Energy / Depressive Waves:</strong> Switch to **🛋️ 2-Min Dose**. Listen to 1 audio clip or flip 3 cards. Zero guilt, zero streak loss.</li>
+            <li><strong>Preventing Burnout:</strong> Cap study sprints even when feeling hyper-energetic so mood stays stable.</li>
+          </ul>
+        </div>
+
+        <!-- OCPD -->
+        <div class="card glass-card guide-card">
+          <div class="guide-icon bg-emerald-light"><i class="fa-solid fa-shield-halved text-emerald"></i></div>
+          <h3>3. OCPD Perfectionism & Circuit Breaker</h3>
+          <ul>
+            <li><strong>The "80% is Exam-Ready" Rule:</strong> Exams do NOT require 100% perfection. Perfectionism causes analysis paralysis.</li>
+            <li><strong>Structured Formula Tables:</strong> Use predictable rule tables to satisfy the need for logical order.</li>
+            <li><strong>Strict Scope Boundaries:</strong> Once your daily 4 micro-goals are checked, stop studying! Avoid endless organizing.</li>
+          </ul>
+        </div>
+
+        <!-- BPD -->
+        <div class="card glass-card guide-card">
+          <div class="guide-icon bg-purple-light"><i class="fa-solid fa-heart-pulse text-purple"></i></div>
+          <h3>4. BPD Emotional Balance & Rejection Safety</h3>
+          <ul>
+            <li><strong>Rejection-Free Community:</strong> The Community Exchange is built as a supportive safe space for mutual peer learning (Protégé Effect).</li>
+            <li><strong>Neutral Error Framing:</strong> Quiz mistakes are just data points to guide your memory, never a reflection of your worth.</li>
+            <li><strong>Daily Affirmations:</strong> Use the built-in positive reinforcement banner on hard days.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Action Blueprint -->
+      <div class="card glass-card margin-top-lg">
+        <h3><i class="fa-solid fa-rocket text-accent"></i> The 5-Step Daily Workflow for Your Diagnoses</h3>
+        <div class="blueprint-steps">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div>
+              <h4>Check Your Energy Wave</h4>
+              <p>Select **⚡ High**, **🌱 Balanced**, or **🛋️ Low Energy** in the top bar. The app adjusts goal intensity automatically.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div>
+              <h4>Run a 15m Micro-Sprint (or 2m Dose)</h4>
+              <p>Start the focus timer with Tuscan Café or Florence Rain ambient sounds.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div>
+              <h4>Active Recall with Audio & Cards</h4>
+              <p>Flip flashcards and click audio synthesis to activate memory.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div>
+              <h4>Give Help to 1 Peer (Protégé Effect)</h4>
+              <p>Answer a question on the Community Hub. Teaching others reduces anxiety and locks in your exam concepts!</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">5</div>
+            <div>
+              <h4>Enforce the OCPD Circuit Breaker</h4>
+              <p>When goals are checked, celebrate your victory and rest. You are on track for your exam!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal for Customizing Subject & Exam -->
+  <div class="modal-overlay hidden" id="subjectModal">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-sliders text-accent"></i> Customize Target Exam & Subject</h3>
+        <button class="btn-close" id="closeSubjectModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form id="customSubjectForm">
+        <div class="form-group">
+          <label>Select Preset Example or Custom:</label>
+          <select id="presetSubjectSelect" class="form-select">
+            <option value="astrophysics-italian">🌌 Astrophysics & Italian CILS B1 (Featured Example)</option>
+            <option value="italian-cils">🇮🇹 Italian CILS/CELI B1-B2 Exam</option>
+            <option value="astrophysics">🪐 Astrophysics & Physics Exam</option>
+            <option value="custom">✍️ Custom Subject & Exam</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Exam / Subject Title:</label>
+          <input type="text" id="subjectTitleInput" value="Astrophysics & Italian CILS B1 Exam" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label>Days Until Exam:</label>
+          <input type="number" id="subjectDaysInput" value="24" class="form-control" required>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="cancelSubjectBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> Save Target Subject</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal for Obsidian Export -->
+  <div class="modal-overlay hidden" id="obsidianModal">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-note-sticky text-purple"></i> Obsidian Markdown (.md) Note Exporter</h3>
+        <button class="btn-close" id="closeObsidianModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="form-group">
+        <label>Obsidian Note Preview:</label>
+        <textarea id="obsidianTextarea" rows="10" class="form-control" readonly></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="copyObsidianBtn"><i class="fa-solid fa-copy"></i> Copy Markdown</button>
+        <button type="button" class="btn btn-primary" id="downloadObsidianBtn"><i class="fa-solid fa-download"></i> Download .md File</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Creating New Community Post -->
+  <div class="modal-overlay hidden" id="postModal">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-pen-to-square text-accent"></i> Create Community Post</h3>
+        <button class="btn-close" id="closePostModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form id="newPostForm">
+        <div class="form-group">
+          <label>Post Type:</label>
+          <select id="postCategory" class="form-select">
+            <option value="question">❓ Ask a Question (Get Help)</option>
+            <option value="note">💡 Share Study Note / Mnemonic (Give Help)</option>
+            <option value="writing">✍️ Essay / Concept Review</option>
+            <option value="exam-tip">🎓 Exam Strategy / Advice</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Target Level / Tag:</label>
+          <select id="postLevel" class="form-select">
+            <option value="B1 (Intermediate)">B1 (Intermediate)</option>
+            <option value="Astrophysics">Astrophysics</option>
+            <option value="A1-A2 (Beginner)">A1-A2 (Beginner)</option>
+            <option value="General Study">General Study</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Title:</label>
+          <input type="text" id="postTitle" placeholder="e.g., How do I choose between Passato Prossimo and Imperfetto?" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label>Details / Notes:</label>
+          <textarea id="postContent" rows="4" placeholder="Explain your question or share your study note..." class="form-control" required></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="cancelPostBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Publish to Community</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
