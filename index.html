@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>neurodiv-study 🚀 - Storytelling, Science & Language 3D Platform</title>
+  <title>neurodiv-study ✈️ - 3D Airplane Flight & Adaptive Study Platform</title>
   <!-- Google Fonts: Outfit, Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,34 +11,34 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
-  <!-- Three.js Library for 3D Scene -->
+  <!-- Three.js Library for 3D Airplane Scene -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body class="theme-dark font-standard">
-  <!-- Top Header -->
+  <!-- Top Navigation Header -->
   <header class="main-header">
     <div class="header-container">
       <div class="logo-group">
-        <div class="flag-badge">🚀🌌</div>
+        <div class="flag-badge">✈️🇮🇹</div>
         <div>
           <h1 class="logo-title">neurodiv-study</h1>
-          <span class="logo-sub">Science & Language Storytelling for Neurodivergent Brains</span>
+          <span class="logo-sub">3D Airplane Flight for ADHD, Bipolar, OCPD & BPD</span>
         </div>
       </div>
 
       <nav class="nav-menu">
-        <button class="nav-btn active" data-tab="dashboard"><i class="fa-solid fa-plane-departure"></i> 3D Study Map</button>
-        <button class="nav-btn" data-tab="storytelling"><i class="fa-solid fa-book-journal-whills"></i> Storytelling Engine</button>
+        <button class="nav-btn active" data-tab="dashboard"><i class="fa-solid fa-plane-departure"></i> 3D Flight World</button>
+        <button class="nav-btn" data-tab="storytelling"><i class="fa-solid fa-book-journal-whills"></i> Story Engine</button>
         <button class="nav-btn" data-tab="studio"><i class="fa-solid fa-sliders"></i> Adaptive Studio</button>
-        <button class="nav-btn" data-tab="flashcards"><i class="fa-solid fa-layer-group"></i> Science & Italian Cards</button>
+        <button class="nav-btn" data-tab="flashcards"><i class="fa-solid fa-layer-group"></i> Smart Cards</button>
         <button class="nav-btn" data-tab="grammar"><i class="fa-solid fa-atom"></i> Formula Matrix</button>
         <button class="nav-btn" data-tab="community"><i class="fa-solid fa-users-rays"></i> Peer Safe Space</button>
-        <button class="nav-btn" data-tab="brainstorm"><i class="fa-solid fa-brain"></i> Strategy Blueprint</button>
+        <button class="nav-btn" data-tab="brainstorm"><i class="fa-solid fa-brain"></i> Strategy</button>
       </nav>
 
       <div class="header-actions">
         <!-- Obsidian Export Button -->
-        <button class="btn btn-sm btn-outline" id="exportObsidianBtn" title="Export story & study notes to Obsidian Markdown format">
+        <button class="btn btn-sm btn-outline" id="exportObsidianBtn" title="Export study notes to Obsidian Markdown format">
           <i class="fa-solid fa-note-sticky text-purple"></i> Export to Obsidian
         </button>
 
@@ -94,20 +94,19 @@
 
   <main class="main-content container">
 
-    <!-- TAB 1: 3D STUDY MAP & DASHBOARD -->
+    <!-- TAB 1: 3D AIRPLANE FLIGHT WORLD (MATCHING SARTHAK 3D AIRPLANE PORTFOLIO BANNER LAYOUT) -->
     <section id="tab-dashboard" class="tab-pane active">
       
-      <!-- 3D CANVAS HERO -->
-      <div class="card glass-card canvas3d-card">
-        <div class="canvas3d-header">
-          <div>
-            <h2><i class="fa-solid fa-rocket text-accent"></i> 3D Cosmic Science & Language Archipelago</h2>
-            <p class="subtitle">Pilot your ship between Italian & Astrophysics study islands! Steer with <strong>Mouse Drag</strong> or <strong>Arrow Keys [←] [↑] [→] [↓]</strong>.</p>
+      <!-- 3D AIRPLANE CANVAS HERO CONTAINER -->
+      <div class="card glass-card canvas3d-hero-card">
+        
+        <!-- SARTHAK-STYLE FLOATING POPUP HERO BANNER -->
+        <div class="airplane-hero-banner" id="airplaneHeroBanner">
+          <div class="hero-banner-content">
+            <h3><i class="fa-solid fa-plane-up text-gold"></i> Welcome aboard neurodiv-study ✈️</h3>
+            <p>Fly your 3D airplane around the islands to unlock <strong>Astrophysics</strong> & <strong>Italian Exam Checkpoints</strong>, or click any island below to land!</p>
           </div>
-          <div class="flight-hud">
-            <span class="hud-badge"><i class="fa-solid fa-location-crosshairs text-sky"></i> Station: <strong id="currentIslandDisplay">Isola Roma (Overview)</strong></span>
-            <span class="hud-badge"><i class="fa-solid fa-gauge text-gold"></i> Velocity: <strong id="planeSpeedDisplay">120 Knots</strong></span>
-          </div>
+          <button class="btn btn-sm btn-primary" id="exploreCurrentIslandBtn"><i class="fa-solid fa-arrow-right"></i> Explore Checkpoint</button>
         </div>
 
         <div class="canvas3d-viewport" id="canvas3dContainer">
@@ -116,15 +115,15 @@
           <!-- Floating HUD Controls -->
           <div class="hud-overlay">
             <div class="hud-buttons">
-              <button class="hud-btn active" data-island="roma"><i class="fa-solid fa-monument"></i> Overview Island</button>
-              <button class="hud-btn" data-island="firenze"><i class="fa-solid fa-sliders"></i> Adaptive Studio</button>
-              <button class="hud-btn" data-island="venezia"><i class="fa-solid fa-layer-group"></i> Science & Italian Cards</button>
-              <button class="hud-btn" data-island="milano"><i class="fa-solid fa-atom"></i> Formula Matrix</button>
-              <button class="hud-btn" data-island="costiera"><i class="fa-solid fa-users-rays"></i> Community Exchange</button>
+              <button class="hud-btn active" data-island="roma"><i class="fa-solid fa-monument"></i> 🏛️ Isola Roma (Overview)</button>
+              <button class="hud-btn" data-island="firenze"><i class="fa-solid fa-sliders"></i> 🎛️ Isola Firenze (Adaptive Studio)</button>
+              <button class="hud-btn" data-island="venezia"><i class="fa-solid fa-layer-group"></i> 🎎 Isola Venezia (Smart Cards)</button>
+              <button class="hud-btn" data-island="milano"><i class="fa-solid fa-atom"></i> 📖 Isola Milano (Grammar Matrix)</button>
+              <button class="hud-btn" data-island="costiera"><i class="fa-solid fa-users-rays"></i> 👥 Isola Costiera (Community)</button>
             </div>
             
             <div class="hud-instructions">
-              <span><i class="fa-solid fa-hand-pointer"></i> Drag mouse to rotate 3D view | Click any Island to land</span>
+              <span><i class="fa-solid fa-gamepad"></i> Steer: Drag Mouse or <strong>[←] [↑] [→] [↓] Arrow Keys</strong></span>
             </div>
           </div>
         </div>
@@ -136,7 +135,7 @@
         <div class="card glass-card hero-card">
           <div class="hero-header">
             <div>
-              <h2>Welcome to Your Science & Storytelling Space 👋</h2>
+              <h2>Welcome to Your Flight Study Station 👋</h2>
               <p class="subtitle" id="energySubtitle">Combining Physics & Italian through creative storytelling and neuro-adaptive pacing.</p>
             </div>
             <div class="xp-pill">
@@ -151,7 +150,7 @@
           </div>
 
           <div class="micro-goals-box">
-            <h3><i class="fa-solid fa-list-check text-accent"></i> Today's Micro-Sprints (3/4 Complete)</h3>
+            <h3><i class="fa-solid fa-list-check text-accent"></i> Today's Flight Checkpoints (3/4 Complete)</h3>
             <div class="goal-list" id="goalList">
               <label class="goal-item completed">
                 <input type="checkbox" checked data-id="1">
@@ -270,7 +269,7 @@
       </div>
     </section>
 
-    <!-- NEW TAB: STORYTELLING NARRATIVE ENGINE -->
+    <!-- TAB 2: STORYTELLING NARRATIVE ENGINE -->
     <section id="tab-storytelling" class="tab-pane">
       <div class="card glass-card hero-card">
         <h2><i class="fa-solid fa-book-journal-whills text-accent"></i> Storytelling Engine: Science Meets Italian</h2>
@@ -621,7 +620,7 @@
           <div class="guide-icon bg-emerald-light"><i class="fa-solid fa-shield-halved text-emerald"></i></div>
           <h3>3. OCPD Perfectionism & Circuit Breaker</h3>
           <ul>
-            <li><strong>The "80% is Exam-Ready" Rule:</strong> Exams do NOT require 100% perfection. Perfectionism causes analysis paralysis.</li>
+            <li><strong>The "80% is Exam-Ready" Rule:</strong> Exams do NOT require 100% accuracy. Perfectionism causes analysis paralysis.</li>
             <li><strong>Structured Formula Tables:</strong> Use predictable rule tables to satisfy the need for logical order.</li>
             <li><strong>Strict Scope Boundaries:</strong> Once your daily 4 micro-goals are checked, stop studying! Avoid endless organizing.</li>
           </ul>

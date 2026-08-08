@@ -1,5 +1,5 @@
 /* ==========================================================================
-   NEURODIV-STUDY - UNIVERSAL STORYTELLING, SCIENCE & 3D ENGINE
+   NEURODIV-STUDY - 3D AIRPLANE ENGINE & SARTHAK PORTFOLIO BANNER LAYOUT
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 2. THREE.JS 3D SCENE & COSMIC STARFIELD
+  // 2. THREE.JS 3D SCENE & AIRPLANE (MATCHING SARTHAK 3D AIRPLANE PORTFOLIO)
   // --------------------------------------------------------------------------
   const canvas = document.getElementById('bg3dCanvas');
   const container = document.getElementById('canvas3dContainer');
@@ -76,11 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let targetCamX = 0, targetCamZ = -15;
 
   const ISLAND_POSITIONS = {
-    roma: { x: 0, y: -2, z: -15, label: "Overview Island", tab: "dashboard" },
-    firenze: { x: -16, y: -1, z: -25, label: "Adaptive Studio Island", tab: "studio" },
-    venezia: { x: -8, y: -1, z: -35, label: "Science & Italian Cards Island", tab: "flashcards" },
-    milano: { x: 8, y: -1, z: -35, label: "Formula Matrix Island", tab: "grammar" },
-    costiera: { x: 16, y: -1, z: -25, label: "Community Island", tab: "community" }
+    roma: { x: 0, y: -2, z: -15, label: "🏛️ Isola Roma (Overview)", tab: "dashboard" },
+    firenze: { x: -16, y: -1, z: -25, label: "🎛️ Isola Firenze (Adaptive Studio)", tab: "studio" },
+    venezia: { x: -8, y: -1, z: -35, label: "🎎 Isola Venezia (Smart Cards)", tab: "flashcards" },
+    milano: { x: 8, y: -1, z: -35, label: "📖 Isola Milano (Grammar Matrix)", tab: "grammar" },
+    costiera: { x: 16, y: -1, z: -25, label: "👥 Isola Costiera (Community)", tab: "community" }
   };
 
   function init3DScene() {
@@ -148,18 +148,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const bodyGeo = new THREE.ConeGeometry(0.8, 3.5, 8);
     bodyGeo.rotateX(Math.PI / 2);
-    const bodyMat = new THREE.MeshPhongMaterial({ color: 0x10b981, flatShading: true });
+    const bodyMat = new THREE.MeshPhongMaterial({ color: 0xf59e0b, flatShading: true }); // Sarthak Yellow Airplane color
     const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat);
     planeGroup.add(bodyMesh);
 
     const wingGeo = new THREE.BoxGeometry(4.5, 0.1, 0.8);
-    const wingMat = new THREE.MeshPhongMaterial({ color: 0x06b6d4, flatShading: true });
+    const wingMat = new THREE.MeshPhongMaterial({ color: 0x10b981, flatShading: true });
     const wingMesh = new THREE.Mesh(wingGeo, wingMat);
     wingMesh.position.set(0, 0.1, 0.2);
     planeGroup.add(wingMesh);
 
     const tailGeo = new THREE.BoxGeometry(0.1, 0.9, 0.6);
-    const tailMat = new THREE.MeshPhongMaterial({ color: 0xf59e0b, flatShading: true });
+    const tailMat = new THREE.MeshPhongMaterial({ color: 0xef4444, flatShading: true });
     const tailMesh = new THREE.Mesh(tailGeo, tailMat);
     tailMesh.position.set(0, 0.5, 1.4);
     planeGroup.add(tailMesh);
@@ -275,6 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function flyToIsland(islandKey) {
     if (!ISLAND_POSITIONS[islandKey]) return;
     const target = ISLAND_POSITIONS[islandKey];
+    state.currentIsland = islandKey;
 
     targetCamX = target.x;
     targetCamZ = target.z + 12;
@@ -300,6 +301,13 @@ document.addEventListener('DOMContentLoaded', () => {
       flyToIsland(island);
     });
   });
+
+  const exploreCurrentIslandBtn = document.getElementById('exploreCurrentIslandBtn');
+  if (exploreCurrentIslandBtn) {
+    exploreCurrentIslandBtn.addEventListener('click', () => {
+      flyToIsland(state.currentIsland || 'firenze');
+    });
+  }
 
   window.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') mouseX = Math.max(-1, mouseX - 0.2);

@@ -1,12 +1,12 @@
 /* ==========================================================================
-   NEURODIV-STUDY 3D AIRPLANE & ADAPTIVE DESIGN SYSTEM
+   NEURODIV-STUDY 3D AIRPLANE & SARTHAK PORTFOLIO BANNER DESIGN SYSTEM
    ========================================================================== */
 
 :root {
-  /* Color Palette - Midnight Glass */
+  /* Color Palette - Midnight Glass & Sky Blue accents */
   --bg-main: #0b0f19;
-  --bg-card: rgba(22, 28, 45, 0.7);
-  --bg-card-border: rgba(255, 255, 255, 0.08);
+  --bg-card: rgba(22, 28, 45, 0.75);
+  --bg-card-border: rgba(255, 255, 255, 0.1);
   --bg-card-hover: rgba(30, 38, 60, 0.85);
 
   --text-main: #f1f5f9;
@@ -214,21 +214,45 @@ h1, h2, h3, h4 {
   border: 1px solid var(--bg-card-border);
 }
 
-/* 3D CANVAS STYLES */
-.canvas3d-card {
+/* 3D AIRPLANE CANVAS HERO - MATCHING SARTHAK PORTFOLIO BANNER LAYOUT */
+.canvas3d-hero-card {
   position: relative;
   padding: 20px;
   margin-top: 20px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.canvas3d-header {
+/* SARTHAK-STYLE FLOATING POPUP HERO BANNER */
+.airplane-hero-banner {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%), rgba(11, 15, 25, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(6, 182, 212, 0.35);
+  padding: 16px 24px;
+  border-radius: 16px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 16px;
   gap: 16px;
-  flex-wrap: wrap;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  animation: floatBanner 4s ease-in-out infinite alternate;
+}
+
+@keyframes floatBanner {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-4px); }
+}
+
+.hero-banner-content h3 {
+  font-size: 1.15rem;
+  margin-bottom: 4px;
+}
+
+.hero-banner-content p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
 }
 
 .flight-hud {
@@ -248,11 +272,11 @@ h1, h2, h3, h4 {
 .canvas3d-viewport {
   position: relative;
   width: 100%;
-  height: 440px;
+  height: 480px;
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid var(--bg-card-border);
-  background: #050811;
+  background: radial-gradient(circle at 50% 50%, #0c1427 0%, #050811 100%);
 }
 
 #bg3dCanvas {
