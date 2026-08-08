@@ -1,29 +1,30 @@
 /* ==========================================================================
-   NEURODIV-STUDY - CLEAN 100VH 3D AIRPLANE ENGINE
-   Matching https://3d-airplane-portfolio.vercel.app/
+   NEURODIV-STUDY - ANIMAL CROSSING PRESET THEMES & 3D LIGHT ENGINE
+   Inspired by https://github.com/guokaigdg/animal-island-ui & https://github.com/sazardev/animal_crossing_ui
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
   // --------------------------------------------------------------------------
-  // 1. STATE INITIALIZATION
+  // 1. STATE & ANIMAL CROSSING THEMES INITIALIZATION
   // --------------------------------------------------------------------------
   const DEFAULT_STATE = {
     userXP: 420,
     streak: 5,
     readinessPercent: 68,
-    examTitle: "Astrophysics & Italian CILS B1 Exam",
+    examTitle: "Universal Science & Exam Mastery",
     examDays: 24,
     cardsReviewedToday: 12,
     energyState: 'balanced',
     currentIsland: 'roma',
+    acTheme: 'isabelle',
     adaptiveSettings: {
       adhdMode: true,
       bipolarMode: true,
       ocpdMode: true,
       bpdMode: true,
       dyslexiaMode: false,
-      theme: 'dark',
+      theme: 'light',
       fontSize: 'normal'
     }
   };
@@ -34,12 +35,29 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('prontoItaliaState', JSON.stringify(state));
   }
 
+  const acThemeSelect = document.getElementById('acThemeSelect');
+  if (acThemeSelect) {
+    acThemeSelect.value = state.acTheme || 'isabelle';
+    applyAcTheme(state.acTheme || 'isabelle');
+
+    acThemeSelect.addEventListener('change', (e) => {
+      state.acTheme = e.target.value;
+      saveState();
+      applyAcTheme(state.acTheme);
+    });
+  }
+
+  function applyAcTheme(themeKey) {
+    document.body.classList.remove('theme-isabelle', 'theme-celeste', 'theme-nook', 'theme-kk');
+    document.body.classList.add(`theme-${themeKey}`);
+  }
+
   // --------------------------------------------------------------------------
-  // 2. THREE.JS 100VH FULL-SCREEN 3D AIRPLANE WORLD
+  // 2. THREE.JS LIGHT SKY 3D SCENE (WARM ANIMAL ISLAND PALETTE)
   // --------------------------------------------------------------------------
   const canvas = document.getElementById('bg3dCanvas');
   const container = document.getElementById('canvas3dContainer');
-  let scene, camera, renderer, planeGroup, propellerMesh, starParticles;
+  let scene, camera, renderer, planeGroup, propellerMesh, cloudGroup;
   let islands = {};
   let clouds = [];
 
@@ -48,18 +66,19 @@ document.addEventListener('DOMContentLoaded', () => {
   let targetCamX = 0, targetCamZ = -15;
 
   const ISLAND_POSITIONS = {
-    roma: { x: 0, y: -2, z: -15, label: "🏛️ Isola Roma (Overview)", tab: "storytelling", desc: "Welcome to Isola Roma! Unlock Science & Italian Stories." },
-    firenze: { x: -16, y: -1, z: -25, label: "🎛️ Isola Firenze (Studio)", tab: "studio", desc: "Isola Firenze: Diagnosis Accommodation Studio." },
-    venezia: { x: -8, y: -1, z: -35, label: "🎎 Isola Venezia (Cards)", tab: "flashcards", desc: "Isola Venezia: SRS Active Recall Flashcards." },
-    milano: { x: 8, y: -1, z: -35, label: "📖 Isola Milano (Grammar)", tab: "grammar", desc: "Isola Milano: Logical Grammar & Science Matrix." },
-    costiera: { x: 16, y: -1, z: -25, label: "👥 Isola Costiera (Community)", tab: "community", desc: "Isola Costiera: Rejection-Free Peer Safe Space." }
+    roma: { x: 0, y: -2, z: -15, label: "🏡 Sunny Sanctuary", tab: "world", desc: "Welcome to Sunny Sanctuary! Universal study map for neurodivergent brains." },
+    firenze: { x: -16, y: -1, z: -25, label: "🎛️ Studio Island", tab: "studio", desc: "Studio Island: Custom tools for ADHD, Bipolar, OCPD, and Autism/BPD." },
+    venezia: { x: -8, y: -1, z: -35, label: "🃏 Smart Cards", tab: "flashcards", desc: "Smart Cards: Active recall with audio speech." },
+    milano: { x: 8, y: -1, z: -35, label: "⚛️ Formula Matrix", tab: "grammar", desc: "Formula Matrix: Predictable rule tables and OCPD progress limits." },
+    costiera: { x: 16, y: -1, z: -25, label: "🌸 Peer Safe Space", tab: "community", desc: "Peer Safe Space: Rejection-free community support & affirmations." }
   };
 
   function init3DScene() {
     if (!THREE || !canvas || !container) return;
 
     scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x060913, 0.012);
+    scene.background = new THREE.Color(0xfbf8ef); // Warm parchment light sky
+    scene.fog = new THREE.FogExp2(0xfbf8ef, 0.012);
 
     const aspect = window.innerWidth / window.innerHeight;
     camera = new THREE.PerspectiveCamera(55, aspect, 0.1, 1000);
@@ -70,18 +89,13 @@ document.addEventListener('DOMContentLoaded', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    const ambientLight = new THREE.AmbientLight(0xfffaed, 1.1);
     scene.add(ambientLight);
 
-    const sunLight = new THREE.DirectionalLight(0x10b981, 1.2);
-    sunLight.position.set(10, 20, 10);
+    const sunLight = new THREE.DirectionalLight(0xfef3c7, 1.3);
+    sunLight.position.set(10, 25, 10);
     scene.add(sunLight);
 
-    const cosmicLight = new THREE.PointLight(0x8b5cf6, 1.5, 60);
-    cosmicLight.position.set(0, 8, -20);
-    scene.add(cosmicLight);
-
-    createCosmicStarfield();
     create3DAirplane();
     create3DIslands();
     create3DClouds();
@@ -92,46 +106,23 @@ document.addEventListener('DOMContentLoaded', () => {
     animate3D();
   }
 
-  function createCosmicStarfield() {
-    const starGeo = new THREE.BufferGeometry();
-    const starCount = 350;
-    const posArray = new Float32Array(starCount * 3);
-
-    for (let i = 0; i < starCount * 3; i += 3) {
-      posArray[i] = (Math.random() - 0.5) * 140;
-      posArray[i + 1] = Math.random() * 40 - 5;
-      posArray[i + 2] = (Math.random() - 0.5) * 120 - 20;
-    }
-
-    starGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    const starMat = new THREE.PointsMaterial({
-      size: 0.28,
-      color: 0x06b6d4,
-      transparent: true,
-      opacity: 0.85
-    });
-
-    starParticles = new THREE.Points(starGeo, starMat);
-    scene.add(starParticles);
-  }
-
   function create3DAirplane() {
     planeGroup = new THREE.Group();
 
     const bodyGeo = new THREE.ConeGeometry(0.8, 3.5, 8);
     bodyGeo.rotateX(Math.PI / 2);
-    const bodyMat = new THREE.MeshPhongMaterial({ color: 0xf59e0b, flatShading: true }); // Sarthak Yellow Airplane
+    const bodyMat = new THREE.MeshPhongMaterial({ color: 0xd69e2e, flatShading: true }); // Cozy Sun Yellow
     const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat);
     planeGroup.add(bodyMesh);
 
     const wingGeo = new THREE.BoxGeometry(4.5, 0.1, 0.8);
-    const wingMat = new THREE.MeshPhongMaterial({ color: 0x10b981, flatShading: true });
+    const wingMat = new THREE.MeshPhongMaterial({ color: 0x38a169, flatShading: true }); // Cozy Leaf Green
     const wingMesh = new THREE.Mesh(wingGeo, wingMat);
     wingMesh.position.set(0, 0.1, 0.2);
     planeGroup.add(wingMesh);
 
     const tailGeo = new THREE.BoxGeometry(0.1, 0.9, 0.6);
-    const tailMat = new THREE.MeshPhongMaterial({ color: 0xef4444, flatShading: true });
+    const tailMat = new THREE.MeshPhongMaterial({ color: 0xe53e3e, flatShading: true });
     const tailMesh = new THREE.Mesh(tailGeo, tailMat);
     tailMesh.position.set(0, 0.5, 1.4);
     planeGroup.add(tailMesh);
@@ -153,14 +144,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const terrainGeo = new THREE.CylinderGeometry(3.5, 1.5, 1.8, 7);
       const terrainMat = new THREE.MeshPhongMaterial({ 
-        color: key === 'roma' ? 0x10b981 : key === 'firenze' ? 0x06b6d4 : 0x8b5cf6, 
+        color: key === 'roma' ? 0x68d391 : key === 'firenze' ? 0x63b3ed : 0xb794f4, 
         flatShading: true 
       });
       const terrainMesh = new THREE.Mesh(terrainGeo, terrainMat);
       islandGroup.add(terrainMesh);
 
       const ringGeo = new THREE.TorusGeometry(3.8, 0.08, 8, 24);
-      const ringMat = new THREE.MeshBasicMaterial({ color: 0xfacc15, wireframe: true });
+      const ringMat = new THREE.MeshBasicMaterial({ color: 0xf6e05e, wireframe: true });
       const ringMesh = new THREE.Mesh(ringGeo, ringMat);
       ringMesh.rotation.x = Math.PI / 2;
       ringMesh.position.y = 0.9;
@@ -168,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       for (let i = 0; i < 3; i++) {
         const treeGeo = new THREE.ConeGeometry(0.5, 1.2, 5);
-        const treeMat = new THREE.MeshPhongMaterial({ color: 0x059669, flatShading: true });
+        const treeMat = new THREE.MeshPhongMaterial({ color: 0x2f855a, flatShading: true });
         const treeMesh = new THREE.Mesh(treeGeo, treeMat);
         treeMesh.position.set((Math.random() - 0.5) * 3, 1.2, (Math.random() - 0.5) * 3);
         islandGroup.add(treeMesh);
@@ -181,9 +172,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function create3DClouds() {
-    for (let i = 0; i < 18; i++) {
-      const cloudGeo = new THREE.DodecahedronGeometry(1.2 + Math.random() * 0.8, 1);
-      const cloudMat = new THREE.MeshPhongMaterial({ color: 0xffffff, transparent: true, opacity: 0.4, flatShading: true });
+    for (let i = 0; i < 20; i++) {
+      const cloudGeo = new THREE.DodecahedronGeometry(1.4 + Math.random() * 0.8, 1);
+      const cloudMat = new THREE.MeshPhongMaterial({ color: 0xffffff, transparent: true, opacity: 0.85, flatShading: true });
       const cloudMesh = new THREE.Mesh(cloudGeo, cloudMat);
 
       cloudMesh.position.set(
@@ -212,7 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(animate3D);
 
     if (propellerMesh) propellerMesh.rotation.z += 0.4;
-    if (starParticles) starParticles.rotation.y += 0.0005;
 
     targetPlaneX = mouseX * 6;
     targetPlaneY = mouseY * 3 + 1;
@@ -271,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (popupActionBtn) {
     popupActionBtn.addEventListener('click', () => {
       const target = ISLAND_POSITIONS[state.currentIsland || 'roma'];
-      if (target && target.tab) {
+      if (target && target.tab && target.tab !== 'world') {
         openPanel(target.tab);
       }
     });
@@ -296,10 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
     overlayPanels.forEach(panel => panel.classList.add('hidden'));
     navBtns.forEach(b => b.classList.remove('active'));
 
-    if (tabId === 'world') {
-      // Full screen 3D world view with no open modal
-      return;
-    }
+    if (tabId === 'world') return;
 
     const targetPanel = document.getElementById(`tab-${tabId}`);
     if (targetPanel) {
@@ -324,34 +311,19 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // 4. AUDIO SYNTHESIS ENGINE
+  // 4. UNIVERSAL AUDIO SPEECH ENGINE
   // --------------------------------------------------------------------------
-  function speakItalian(text) {
-    if (!('speechSynthesis' in window)) {
-      alert("Audio synthesis is not supported on this browser.");
-      return;
-    }
+  function speakText(text) {
+    if (!('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'it-IT';
-    utterance.rate = 0.88;
-
-    const voices = window.speechSynthesis.getVoices();
-    const itVoice = voices.find(v => v.lang.includes('it'));
-    if (itVoice) utterance.voice = itVoice;
-
+    utterance.lang = 'en-US';
+    utterance.rate = 0.9;
     window.speechSynthesis.speak(utterance);
   }
 
-  document.querySelectorAll('.speak-story-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const text = btn.getAttribute('data-text');
-      speakItalian(text);
-    });
-  });
-
   document.getElementById('quickAudioTest').addEventListener('click', () => {
-    speakItalian("Welcome to neurodiv-study! Clean 3D Airplane World.");
+    speakText("Welcome to neurodiv-study! A cozy Animal Crossing style study system for all neurodivergent minds.");
   });
 
   // --------------------------------------------------------------------------
@@ -366,21 +338,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function generateObsidianMarkdown() {
     const dateStr = new Date().toISOString().split('T')[0];
-    return `# 🚀 Science & Language Notes - ${state.examTitle}
-#neurodiv #storytelling #astrophysics #italian #exam
+    return `# 🍃 Universal Study Notes - ${state.examTitle}
+#neurodivergent #study #science #exam #adhd
 
 ---
-- **Target Mission:** [[${state.examTitle}]]
+- **Target Subject:** [[${state.examTitle}]]
 - **Days Remaining:** ${state.examDays} days
 - **Readiness Estimate:** ${state.readinessPercent}% (OCPD Safeguard: 80% is Exam-Ready)
 - **Current Energy Wave:** \`${state.energyState.toUpperCase()}\`
+- **Theme Preset:** \`${(state.acTheme || 'isabelle').toUpperCase()}\`
 - **Streak:** ${state.streak} days | **XP:** ${state.userXP}
 
 ---
-### [[Story 1: The Orbital Transit of Verbs]]
-*Motion verbs take ESSERE because their energy state is in physical transit.*
+## 🧠 Active Accommodations
+- **ADHD Micro-Sprints:** Enabled (15-min focus sessions)
+- **Bipolar Energy Waves:** Flexible Pace
+- **OCPD Circuit Breaker:** 80% Perfection Limits
+- **Autism & BPD:** Rejection-Free Safe Space
 
-*Exported from neurodiv-study 🚀 on ${dateStr}*
+*Exported from neurodiv-study 🍃 on ${dateStr}*
 `;
   }
 
@@ -393,9 +369,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   copyObsidianBtn.addEventListener('click', () => {
     navigator.clipboard.writeText(obsidianTextarea.value);
-    copyObsidianBtn.innerHTML = '<i class="fa-solid fa-check text-emerald"></i> Copied!';
+    copyObsidianBtn.innerHTML = '<i class="fa-solid fa-check text-leaf"></i> Copied!';
     setTimeout(() => {
-      copyObsidianBtn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
+      copyObsidianBtn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy Markdown';
     }, 2000);
   });
 
@@ -404,7 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Obsidian_Science_Notes_${state.examTitle.replace(/[^a-zA-Z0-9]/g, '_')}.md`;
+    a.download = `Obsidian_Study_Notes_${dateStr}.md`;
     a.click();
     URL.revokeObjectURL(url);
   });

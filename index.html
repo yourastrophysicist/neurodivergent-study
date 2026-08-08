@@ -3,154 +3,146 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>neurodiv-study ✈️ - 3D Airplane World</title>
-  <!-- Google Fonts: Outfit, Plus Jakarta Sans -->
+  <title>neurodiv-study 🍃 - Cozy Animal Crossing Light Theme for Neurodivergent Learners</title>
+  <!-- Google Fonts: Nunito, Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
-  <!-- Three.js Library for Full-Screen 3D Engine -->
+  <!-- Three.js Library for 3D Engine -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
-<body class="theme-dark font-standard fullscreen-app">
+<body class="animal-crossing-theme theme-isabelle fullscreen-app">
 
-  <!-- FULL-SCREEN 100VH 3D CANVAS WORLD -->
+  <!-- 3D LIGHT SKY CANVAS ENVIRONMENT -->
   <div class="fullscreen-canvas-container" id="canvas3dContainer">
     <canvas id="bg3dCanvas"></canvas>
   </div>
 
-  <!-- FLOATING MINIMALIST TOP NAVBAR -->
+  <!-- FLOATING ANIMAL CROSSING LIGHT NAVBAR -->
   <header class="floating-header">
     <div class="header-inner">
       <div class="logo-pill">
-        <span class="logo-icon">✈️</span>
+        <span class="logo-icon">🍃</span>
         <span class="logo-text">neurodiv-study</span>
       </div>
 
       <nav class="floating-nav">
-        <button class="nav-btn active" data-tab="world" title="3D Flight World"><i class="fa-solid fa-plane-up"></i> 3D World</button>
-        <button class="nav-btn" data-tab="storytelling" title="Storytelling Engine"><i class="fa-solid fa-book-open text-amber"></i> Stories</button>
-        <button class="nav-btn" data-tab="studio" title="Accommodation Studio"><i class="fa-solid fa-sliders text-sky"></i> Studio</button>
-        <button class="nav-btn" data-tab="flashcards" title="Flashcards"><i class="fa-solid fa-layer-group text-emerald"></i> Cards</button>
-        <button class="nav-btn" data-tab="grammar" title="Formula Matrix"><i class="fa-solid fa-atom text-purple"></i> Formulas</button>
-        <button class="nav-btn" data-tab="community" title="Peer Safe Space"><i class="fa-solid fa-users text-rose"></i> Safe Space</button>
+        <button class="nav-btn active" data-tab="world" title="3D Flight World"><i class="fa-solid fa-plane-up text-leaf"></i> 3D World</button>
+        <button class="nav-btn" data-tab="studio" title="Accommodation Studio"><i class="fa-solid fa-sliders text-sun"></i> Studio</button>
+        <button class="nav-btn" data-tab="flashcards" title="Smart Flashcards"><i class="fa-solid fa-layer-group text-sky"></i> Cards</button>
+        <button class="nav-btn" data-tab="grammar" title="Formula Matrix"><i class="fa-solid fa-atom text-berry"></i> Matrix</button>
+        <button class="nav-btn" data-tab="community" title="Peer Safe Space"><i class="fa-solid fa-heart text-rose"></i> Safe Space</button>
+        <button class="nav-btn" data-tab="strategy" title="Strategy Guide"><i class="fa-solid fa-compass text-mint"></i> Strategy</button>
       </nav>
 
       <div class="floating-actions">
-        <button class="btn-pill" id="exportObsidianBtn" title="Export to Obsidian Markdown"><i class="fa-solid fa-note-sticky text-purple"></i></button>
-        <button class="btn-pill" id="quickAudioTest" title="Audio Sound Toggle"><i class="fa-solid fa-volume-high"></i></button>
+        <!-- Animal Crossing Palette Selector -->
+        <div class="palette-selector">
+          <select id="acThemeSelect" class="form-select-pill">
+            <option value="isabelle">🔔 Isabelle (Yellow & Mint)</option>
+            <option value="celeste">🌌 Celeste (Berry & Gold)</option>
+            <option value="nook">🦝 Tom Nook (Teal & Leaf)</option>
+            <option value="kk">🎸 K.K. Slider (Warm Parchment)</option>
+          </select>
+        </div>
+
+        <button class="btn-pill" id="exportObsidianBtn" title="Export to Obsidian Markdown"><i class="fa-solid fa-note-sticky text-berry"></i> Exporter</button>
+        <button class="btn-pill" id="quickAudioTest" title="Audio Speech Toggle"><i class="fa-solid fa-volume-high"></i></button>
+        
         <div class="energy-pill">
           <select id="energyStateSelect" class="form-select-pill">
-            <option value="balanced">🌱 Balanced</option>
-            <option value="high">⚡ High</option>
-            <option value="low">🛋️ Low</option>
+            <option value="balanced">🌱 Balanced Energy</option>
+            <option value="high">⚡ High Energy Sprint</option>
+            <option value="low">🛋️ 2-Min Low Dose</option>
           </select>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- SARTHAK-STYLE FLOATING TOP CENTER HERO ALERT BANNER -->
-  <div class="sarthak-hero-popup" id="sarthakHeroPopup">
-    <div class="popup-icon">✈️</div>
+  <!-- ANIMAL CROSSING STYLE FLOATING HERO BANNER -->
+  <div class="island-hero-popup" id="islandHeroPopup">
+    <div class="popup-avatar">🍃</div>
     <div class="popup-text">
-      <strong id="popupTitle">Welcome aboard neurodiv-study ✈️</strong>
-      <p id="popupDesc">Drag mouse or use <strong>[←] [↑] [→] [↓] arrow keys</strong> to fly your airplane! Click any 3D Island to land.</p>
+      <strong id="popupTitle">Welcome to Animal Crossing Study 🏝️</strong>
+      <p id="popupDesc">Drag mouse or use <strong>[←] [↑] [→] [↓] arrow keys</strong> to fly your plane between warm study sanctuaries!</p>
     </div>
-    <button class="btn-popup" id="popupActionBtn"><i class="fa-solid fa-compass"></i> Land on Island</button>
+    <button class="btn-popup" id="popupActionBtn"><i class="fa-solid fa-plane-landing"></i> Land on Island</button>
   </div>
 
   <!-- FLOATING HUD ISLAND QUICK CONTROLS -->
   <div class="bottom-hud-controls">
-    <button class="hud-chip active" data-island="roma"><i class="fa-solid fa-monument"></i> 🏛️ Isola Roma</button>
-    <button class="hud-chip" data-island="firenze"><i class="fa-solid fa-sliders"></i> 🎛️ Isola Firenze</button>
-    <button class="hud-chip" data-island="venezia"><i class="fa-solid fa-layer-group"></i> 🎎 Isola Venezia</button>
-    <button class="hud-chip" data-island="milano"><i class="fa-solid fa-atom"></i> 📖 Isola Milano</button>
-    <button class="hud-chip" data-island="costiera"><i class="fa-solid fa-users-rays"></i> 👥 Isola Costiera</button>
+    <button class="hud-chip active" data-island="roma"><i class="fa-solid fa-sun"></i> 🏡 Sunny Sanctuary</button>
+    <button class="hud-chip" data-island="firenze"><i class="fa-solid fa-sliders"></i> 🎛️ Studio Island</button>
+    <button class="hud-chip" data-island="venezia"><i class="fa-solid fa-layer-group"></i> 🃏 Smart Cards</button>
+    <button class="hud-chip" data-island="milano"><i class="fa-solid fa-atom"></i> ⚛️ Formula Matrix</button>
+    <button class="hud-chip" data-island="costiera"><i class="fa-solid fa-heart"></i> 🌸 Peer Safe Space</button>
   </div>
 
-  <!-- CLEAN FLOATING OVERLAY CONTENT PANELS (SHOWN ON TAB SELECTION) -->
+  <!-- LIGHT GLASS OVERLAY CONTENT PANELS -->
   <main class="content-overlay-container">
 
-    <!-- TAB 1: STORYTELLING NARRATIVE ENGINE -->
-    <section id="tab-storytelling" class="overlay-panel hidden">
-      <div class="overlay-card glass-modal">
-        <div class="panel-header">
-          <h2><i class="fa-solid fa-book-journal-whills text-amber"></i> Storytelling Engine: Science Meets Italian</h2>
-          <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="panel-body grid-3">
-          <div class="story-box">
-            <span class="badge badge-amber">Story 1</span>
-            <h3>The Orbital Transit of Verbs (Essere vs Avere)</h3>
-            <p>"Verbs of movement (andare, venire, uscire) change position across orbital space, requiring the auxiliary <strong>ESSERE</strong>..."</p>
-            <button class="btn btn-sm btn-outline speak-story-btn" data-text="La navicella è andata verso la Luna. I verbi di movimento utilizzano essere."><i class="fa-solid fa-volume-high"></i> Italian Audio</button>
-          </div>
-          <div class="story-box">
-            <span class="badge badge-sky">Story 2</span>
-            <h3>Quantum Uncertainty & Congiuntivo</h3>
-            <p>"Expressing doubt or hope enters the <strong>Congiuntivo Parallel Universe</strong>..."</p>
-            <button class="btn btn-sm btn-outline speak-story-btn" data-text="Penso che la stella sia a cento anni luce. Il congiuntivo esprime dubbio."><i class="fa-solid fa-volume-high"></i> Italian Audio</button>
-          </div>
-          <div class="story-box">
-            <span class="badge badge-purple">Story 3</span>
-            <h3>Thermodynamic Vocabulary Orbits</h3>
-            <p>"Active recall with SRS converts short-term energy into permanent long-term memory orbits!"</p>
-            <button class="btn btn-sm btn-outline speak-story-btn" data-text="Ripassando ogni giorno, tuttavia la memoria diventa forte."><i class="fa-solid fa-volume-high"></i> Italian Audio</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 2: ADAPTIVE STUDIO -->
+    <!-- TAB 1: DIAGNOSIS ACCOMMODATION STUDIO -->
     <section id="tab-studio" class="overlay-panel hidden">
-      <div class="overlay-card glass-modal">
+      <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-sliders text-sky"></i> Diagnosis Accommodation Studio</h2>
+          <h2><i class="fa-solid fa-sliders text-sun"></i> Universal Neurodivergent Accommodation Studio</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body grid-2">
           <div class="studio-opt">
-            <h3>⚡ ADHD: 15-Min Micro-Sprints & XP</h3>
-            <p>Chunked timers, instant XP feedback, starting friction removal.</p>
+            <span class="icon-badge bg-sun"><i class="fa-solid fa-bolt"></i></span>
+            <h3>ADHD: Executive Function & Micro-Sprints</h3>
+            <p>Chunked 15-minute timers, immediate dopamine XP, task breaking to eliminate starting friction.</p>
           </div>
           <div class="studio-opt">
-            <h3>🌊 Bipolar: Energy Wave Adapter</h3>
-            <p>High energy = sprint deep dives; Low energy = 2-min gentle dose.</p>
+            <span class="icon-badge bg-sky"><i class="fa-solid fa-wave-square"></i></span>
+            <h3>Bipolar & Mood Waves: Flexible Pace</h3>
+            <p>High energy = hyperfocus deep dives; Low energy = zero-guilt 2-minute maintenance dose.</p>
           </div>
           <div class="studio-opt">
-            <h3>🛡️ OCPD: Perfectionism Breaker</h3>
-            <p>"80% is Exam-Ready" progress limits & logical formula matrices.</p>
+            <span class="icon-badge bg-leaf"><i class="fa-solid fa-shield-halved"></i></span>
+            <h3>OCPD & Anxiety: Perfectionism Breaker</h3>
+            <p>"80% is Exam-Ready" limits to prevent over-studying, analysis paralysis, and infinite organizing.</p>
           </div>
           <div class="studio-opt">
-            <h3>💖 BPD: Rejection-Free Safe Space</h3>
-            <p>Positive affirmations, low-frustration quiz feedback, peer support.</p>
+            <span class="icon-badge bg-rose"><i class="fa-solid fa-heart"></i></span>
+            <h3>Autism & BPD: Sensory & Safe Space</h3>
+            <p>Cozy warm light theme, neutral error framing ("Mistakes are just data!"), rejection-free peer exchange.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 3: SMART FLASHCARDS -->
+    <!-- TAB 2: SMART FLASHCARDS -->
     <section id="tab-flashcards" class="overlay-panel hidden">
-      <div class="overlay-card glass-modal modal-sm">
+      <div class="overlay-card island-card modal-sm">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-layer-group text-emerald"></i> Active Recall Flashcards</h2>
+          <h2><i class="fa-solid fa-layer-group text-sky"></i> Active Recall Flashcards</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body flex-center">
+          <div class="subject-selector-box margin-bottom-md">
+            <select id="deckFilter" class="form-select-pill">
+              <option value="science">Astrophysics & Physics Concepts</option>
+              <option value="general">Universal Exam Key Terms</option>
+            </select>
+          </div>
+
           <div class="flashcard" id="mainFlashcard">
             <div class="flashcard-inner">
               <div class="flashcard-front">
-                <span class="card-tag">High-Yield Concept</span>
-                <div class="card-word" id="cardItalian">Tuttavia</div>
-                <p class="card-phonetic" id="cardPhonetic">[toot-tah-VEE-ah]</p>
-                <button class="btn-audio" id="cardSpeakBtn"><i class="fa-solid fa-volume-high"></i> Pronuncia</button>
+                <span class="card-tag">Science Concept</span>
+                <div class="card-word" id="cardItalian">Keplerian Motion</div>
+                <p class="card-phonetic" id="cardPhonetic">[Elliptical Planetary Orbits]</p>
+                <button class="btn-audio" id="cardSpeakBtn"><i class="fa-solid fa-volume-high"></i> Audio Speech</button>
               </div>
               <div class="flashcard-back">
-                <div class="card-meaning" id="cardEnglish">However / Nevertheless</div>
-                <p class="card-ex" id="cardExampleIt">"Sto studiando molto; tuttavia l'esame è impegnativo."</p>
+                <div class="card-meaning" id="cardEnglish">Planetary Elliptical Orbit Law</div>
+                <p class="card-ex" id="cardExampleIt">"Planets move in ellipses with the Sun at one focus."</p>
               </div>
             </div>
           </div>
@@ -164,59 +156,93 @@
       </div>
     </section>
 
-    <!-- TAB 4: GRAMMAR FORMULA MATRIX -->
+    <!-- TAB 3: FORMULA & CONCEPT MATRIX -->
     <section id="tab-grammar" class="overlay-panel hidden">
-      <div class="overlay-card glass-modal">
+      <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-atom text-purple"></i> Grammar & Physics Matrix</h2>
+          <h2><i class="fa-solid fa-atom text-berry"></i> Logical Formula & Concept Matrix</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body">
           <div class="matrix-table">
             <div class="matrix-row header-row">
-              <span>Concept / Verb</span>
-              <span>Type</span>
-              <span>Presente</span>
-              <span>Passato Prossimo</span>
+              <span>Subject / Domain</span>
+              <span>Core Concept</span>
+              <span>Rule / Formula</span>
+              <span>OCPD Readiness Cap</span>
             </div>
             <div class="matrix-row">
-              <strong>Essere</strong>
-              <span class="badge badge-accent">Auxiliary</span>
-              <span>sono, sei, è, siamo, siete, sono</span>
-              <span>sono stato/a</span>
+              <strong>Astrophysics</strong>
+              <span class="badge badge-sky">Kepler's 3rd Law</span>
+              <span>T² ∝ a³ (Period squared equals semi-major axis cubed)</span>
+              <span class="badge badge-leaf">80% Ready</span>
             </div>
             <div class="matrix-row">
-              <strong>Avere</strong>
-              <span class="badge badge-accent">Auxiliary</span>
-              <span>ho, hai, ha, abbiamo, avete, hanno</span>
-              <span>ho avuto</span>
+              <strong>Quantum Physics</strong>
+              <span class="badge badge-sun">Superposition</span>
+              <span>Particles exist in probability density states</span>
+              <span class="badge badge-leaf">80% Ready</span>
             </div>
             <div class="matrix-row">
-              <strong>Meccanica Quantistica</strong>
-              <span class="badge badge-sky">Physics</span>
-              <span>Superposizione di stati</span>
-              <span>Particelle subatomiche</span>
+              <strong>Universal Study</strong>
+              <span class="badge badge-berry">SRS Active Recall</span>
+              <span>Intervals: 1d, 3d, 7d, 14d</span>
+              <span class="badge badge-leaf">80% Ready</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 5: PEER SAFE SPACE -->
+    <!-- TAB 4: PEER SAFE SPACE -->
     <section id="tab-community" class="overlay-panel hidden">
-      <div class="overlay-card glass-modal">
+      <div class="overlay-card island-card">
         <div class="panel-header">
-          <h2><i class="fa-solid fa-users-rays text-rose"></i> Rejection-Free Community Exchange</h2>
+          <h2><i class="fa-solid fa-heart text-rose"></i> Rejection-Free Peer Safe Space</h2>
           <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="panel-body">
           <div class="community-mini-feed">
             <div class="comm-item">
-              <strong>🌌 Astrophysicist_Student:</strong> "Viewing Italian Verbs Like Orbital Mechanics makes past tenses instant!"
+              <span class="avatar">🌸</span>
+              <div>
+                <strong>Astro_Learner:</strong> "Viewing physics laws as visual stories reduced my executive dysfunction immensely!"
+              </div>
             </div>
             <div class="comm-item">
-              <strong>💡 Giulia_Learn:</strong> "ADHD trick: Use the 'House of Essere' for movement verbs!"
+              <span class="avatar">🌱</span>
+              <div>
+                <strong>Cozy_Student:</strong> "ADHD tip: The 15-minute micro-sprint timer works like magic when starting feels hard."
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: STRATEGY GUIDE -->
+    <section id="tab-strategy" class="overlay-panel hidden">
+      <div class="overlay-card island-card">
+        <div class="panel-header">
+          <h2><i class="fa-solid fa-compass text-mint"></i> Universal Neurodivergent Study Strategy</h2>
+          <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="panel-body grid-2">
+          <div class="strategy-box">
+            <h3>1. The 15-Minute Micro-Sprint</h3>
+            <p>Tell yourself you will only study for 15 minutes. Starting is 90% of executive friction!</p>
+          </div>
+          <div class="strategy-box">
+            <h3>2. Energy Wave Match</h3>
+            <p>High energy = deep dives. Low energy = 2-minute maintenance dose without guilt.</p>
+          </div>
+          <div class="strategy-box">
+            <h3>3. "80% is Exam-Ready" Rule</h3>
+            <p>Exams never require 100% perfection. Stop when daily micro-goals are complete!</p>
+          </div>
+          <div class="strategy-box">
+            <h3>4. Teach a Peer (Protégé Effect)</h3>
+            <p>Explaining a concept to others cements it into your own long-term memory.</p>
           </div>
         </div>
       </div>
@@ -226,15 +252,15 @@
 
   <!-- MODAL FOR OBSIDIAN EXPORT -->
   <div class="modal-overlay hidden" id="obsidianModal">
-    <div class="modal-card glass-modal">
+    <div class="modal-card island-card">
       <div class="panel-header">
-        <h3><i class="fa-solid fa-note-sticky text-purple"></i> Obsidian Markdown Exporter</h3>
+        <h3><i class="fa-solid fa-note-sticky text-berry"></i> Obsidian Markdown Exporter (.md)</h3>
         <button class="btn-close-panel" id="closeObsidianModalBtn"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <textarea id="obsidianTextarea" rows="8" class="form-control-dark" readonly></textarea>
+      <textarea id="obsidianTextarea" rows="8" class="form-control-light" readonly></textarea>
       <div class="modal-actions margin-top-md">
-        <button class="btn btn-ghost" id="copyObsidianBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-        <button class="btn btn-primary" id="downloadObsidianBtn"><i class="fa-solid fa-download"></i> Download .md</button>
+        <button class="btn btn-ghost" id="copyObsidianBtn"><i class="fa-solid fa-copy"></i> Copy Markdown</button>
+        <button class="btn btn-primary" id="downloadObsidianBtn"><i class="fa-solid fa-download"></i> Download .md File</button>
       </div>
     </div>
   </div>
