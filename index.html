@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>neurodiv-study 🍃 - Official Animal-Island-UI Design System</title>
+  <title>neurodiv-study 🍃 - Official Animal-Island-UI & Nook Miles Study World</title>
   <!-- Google Fonts: Nunito, Noto Sans SC -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,6 +33,7 @@
         <button class="nav-btn active" data-tab="world" title="3D Flight World"><i class="fa-solid fa-plane-up text-leaf"></i> 3D World</button>
         <button class="nav-btn" data-tab="hyperfocus" title="HyperFocus Zone Portal"><i class="fa-solid fa-bolt text-sun"></i> HyperFocus</button>
         <button class="nav-btn" data-tab="neurodock" title="NeuroDock Task Slicer"><i class="fa-solid fa-scissors text-sky"></i> Task Slicer</button>
+        <button class="nav-btn" data-tab="nookmiles" title="Nook Miles Quests"><i class="fa-solid fa-stamp text-sun"></i> Nook Quests</button>
         <button class="nav-btn" data-tab="studio" title="Accommodation Studio"><i class="fa-solid fa-sliders text-berry"></i> Studio</button>
         <button class="nav-btn" data-tab="flashcards" title="Smart Flashcards"><i class="fa-solid fa-layer-group text-mint"></i> Cards</button>
         <button class="nav-btn" data-tab="grammar" title="Formula Matrix"><i class="fa-solid fa-atom text-rose"></i> Matrix</button>
@@ -107,7 +108,6 @@
         <div class="panel-body flex-center">
           <p class="panel-desc">Immersion zone built to eliminate executive starting friction and keep your brain in the flow state.</p>
           
-          <!-- ANIMAL-ISLAND-UI DIVIDER COMPONENT -->
           <div class="animal-divider">
             <span class="divider-line"></span>
             <span class="divider-icon">🍃</span>
@@ -125,7 +125,6 @@
             <button class="btn btn-ghost" id="hfResetBtn"><i class="fa-solid fa-rotate-right"></i> Reset</button>
           </div>
 
-          <!-- ANIMAL-ISLAND-UI DIVIDER COMPONENT -->
           <div class="animal-divider margin-top-md">
             <span class="divider-line"></span>
             <span class="divider-icon">🎧</span>
@@ -155,7 +154,6 @@
         <div class="panel-body">
           <p class="panel-desc">Slice intimidating goals into 3 gentle 2-minute micro-actions to bypass executive blockages!</p>
 
-          <!-- ANIMAL-ISLAND-UI DIVIDER COMPONENT -->
           <div class="animal-divider">
             <span class="divider-line"></span>
             <span class="divider-icon">✂️</span>
@@ -187,7 +185,53 @@
       </div>
     </section>
 
-    <!-- TAB 3: DIAGNOSIS ACCOMMODATION STUDIO -->
+    <!-- TAB 3: NOOK MILES QUESTS -->
+    <section id="tab-nookmiles" class="overlay-panel hidden">
+      <div class="overlay-card island-card">
+        <div class="panel-header">
+          <h2><i class="fa-solid fa-stamp text-sun"></i> Nook Miles Micro-Quests</h2>
+          <button class="btn-close-panel"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="panel-body">
+          <p class="panel-desc">Complete gentle micro-achievements for instant dopamine Miles badges!</p>
+          
+          <div class="animal-divider">
+            <span class="divider-line"></span>
+            <span class="divider-icon">🌟</span>
+            <span class="divider-line"></span>
+          </div>
+
+          <div class="nook-miles-grid margin-top-md">
+            <div class="nook-stamp-card completed">
+              <div class="stamp-icon">🍃</div>
+              <div class="stamp-info">
+                <strong>First Step Fly-In</strong>
+                <p>Open neurodiv-study & explore 1 island station.</p>
+              </div>
+              <span class="miles-reward">+100 Miles</span>
+            </div>
+            <div class="nook-stamp-card completed">
+              <div class="stamp-icon">✂️</div>
+              <div class="stamp-info">
+                <strong>Executive Task Sliced</strong>
+                <p>Break 1 intimidating task into 2-minute steps.</p>
+              </div>
+              <span class="miles-reward">+200 Miles</span>
+            </div>
+            <div class="nook-stamp-card">
+              <div class="stamp-icon">⚡</div>
+              <div class="stamp-info">
+                <strong>HyperFocus Immersion</strong>
+                <p>Run 1 15-minute hyperfocus focus sprint.</p>
+              </div>
+              <span class="miles-reward">+300 Miles</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: DIAGNOSIS ACCOMMODATION STUDIO -->
     <section id="tab-studio" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
@@ -219,7 +263,7 @@
       </div>
     </section>
 
-    <!-- TAB 4: SMART FLASHCARDS -->
+    <!-- TAB 5: SMART FLASHCARDS -->
     <section id="tab-flashcards" class="overlay-panel hidden">
       <div class="overlay-card island-card modal-sm">
         <div class="panel-header">
@@ -258,7 +302,7 @@
       </div>
     </section>
 
-    <!-- TAB 5: FORMULA & CONCEPT MATRIX -->
+    <!-- TAB 6: FORMULA & CONCEPT MATRIX -->
     <section id="tab-grammar" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">
@@ -296,7 +340,7 @@
       </div>
     </section>
 
-    <!-- TAB 6: PEER SAFE SPACE -->
+    <!-- TAB 7: PEER SAFE SPACE -->
     <section id="tab-community" class="overlay-panel hidden">
       <div class="overlay-card island-card">
         <div class="panel-header">

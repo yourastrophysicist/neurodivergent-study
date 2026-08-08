@@ -1,6 +1,5 @@
 /* ==========================================================================
-   NEURODIV-STUDY - OFFICIAL ANIMAL-ISLAND-UI DIVIDER & DESIGN SYSTEM
-   Matching https://guokaigdg.github.io/animal-island-ui/#/divider-comp
+   NEURODIV-STUDY - NOOK MILES QUESTS & ANIMAL-ISLAND-UI SYSTEM
    ========================================================================== */
 
 :root {
@@ -8,18 +7,18 @@
   --bg-card-light: #ffffff;
   --bg-card-border: #e2e8f0;
   
-  --text-main: #382b22; /* Warm earth-brown text matching Animal-Island-UI */
+  --text-main: #382b22;
   --text-muted: #716052;
   --text-dim: #a09082;
 
   /* Isabelle Preset (Default) */
-  --accent-leaf: #42b883; /* Mint Teal */
+  --accent-leaf: #42b883;
   --bg-leaf: #e6fffa;
-  --accent-sun: #e6a23c; /* Sunflower Warm Yellow */
+  --accent-sun: #e6a23c;
   --bg-sun: #fefcbf;
-  --accent-sky: #409eff; /* Sky Blue */
+  --accent-sky: #409eff;
   --bg-sky: #ebf8ff;
-  --accent-berry: #909399; /* Berry Purple */
+  --accent-berry: #909399;
   --bg-berry: #faf5ff;
   --accent-rose: #f56c6c;
   --bg-rose: #fff5f5;
@@ -95,7 +94,7 @@ body.fullscreen-app {
   display: block;
 }
 
-/* OFFICIAL ANIMAL-ISLAND-UI DIVIDER COMPONENT (guokaigdg.github.io/animal-island-ui/#/divider-comp) */
+/* OFFICIAL ANIMAL-ISLAND-UI DIVIDER COMPONENT */
 .animal-divider {
   display: flex;
   align-items: center;
@@ -123,6 +122,42 @@ body.fullscreen-app {
   border: 1px solid rgba(66, 184, 131, 0.3);
 }
 
+/* NOOK MILES STAMP CARDS */
+.nook-miles-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nook-stamp-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fdfbf7;
+  border: 2px solid #e8e2d5;
+  padding: 14px 18px;
+  border-radius: 18px;
+}
+
+.nook-stamp-card.completed {
+  background: var(--bg-leaf);
+  border-color: var(--accent-leaf);
+}
+
+.stamp-icon { font-size: 1.6rem; }
+.stamp-info strong { display: block; font-size: 0.95rem; }
+.stamp-info p { font-size: 0.82rem; color: var(--text-muted); }
+
+.miles-reward {
+  background: var(--bg-sun);
+  color: var(--accent-sun);
+  font-size: 0.78rem;
+  font-weight: 900;
+  padding: 4px 12px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+
 /* FLOATING LIGHT HEADER NAVBAR */
 .floating-header {
   position: fixed;
@@ -131,7 +166,7 @@ body.fullscreen-app {
   transform: translateX(-50%);
   z-index: 50;
   width: 95%;
-  max-width: 1220px;
+  max-width: 1240px;
 }
 
 .header-inner {
