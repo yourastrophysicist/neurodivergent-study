@@ -1,0 +1,20 @@
+{
+  "name": "neurodivergent-study",
+  "version": "1.0.0",
+  "description": "Neuro-Spices Planner - Free 654-Page Digital Planner & Web App for ADHD & Neurodivergent Brains",
+  "main": "public/index.html",
+  "scripts": {
+    "start": "npx serve public",
+    "build": "echo 'Static build ready in public/'"
+  },
+  "keywords": [
+    "neurodivergent",
+    "adhd-planner",
+    "digital-planner",
+    "goodnotes",
+    "spoon-theory",
+    "free-planner"
+  ],
+  "author": "yourastrophysicist",
+  "license": "CC-BY-NC-4.0"
+}

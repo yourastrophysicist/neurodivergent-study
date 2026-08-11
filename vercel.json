@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "name": "neurodivergent-study",
+  "public": true,
+  "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/Neuro-Spices_Planner.pdf",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/pdf"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "attachment; filename=\"Neuro-Spices_Planner.pdf\""
+        }
+      ]
+    }
+  ]
+}
