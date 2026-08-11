@@ -1,38 +1,38 @@
 /* ==========================================================================
-   Neurodivergent Study & Neuro-Spices Planner
-   Portfolio & Web Application (Inspired by rbhatia46/React-Portfolio)
-   Theme: Luxury Dark Leather & Academic Portfolio
+   Neuro-Spices Planner - SDTQ Design Theme
+   Background: Custom Mossy Pixel Landscape (sdtq_bg.jpg)
+   Sections: ONLY Product & FAQ
    ========================================================================== */
 
 /* --- CSS Variables & Design Tokens --- */
 :root {
-  --bg-dark: #120C08;
-  --bg-surface: #1C140E;
-  --bg-surface-elevated: #261B13;
-  --bg-card: rgba(38, 27, 19, 0.75);
-  --bg-card-hover: rgba(52, 38, 27, 0.9);
+  --bg-dark: #121810;
+  --bg-surface: rgba(22, 30, 22, 0.82);
+  --bg-surface-elevated: rgba(30, 42, 30, 0.88);
+  --bg-card: rgba(26, 36, 26, 0.78);
+  --bg-card-hover: rgba(38, 52, 38, 0.9);
 
-  /* Colors */
-  --color-cream: #FAF6F0;
-  --color-amber: #E0A96D;
-  --color-amber-glow: rgba(224, 169, 109, 0.25);
-  --color-sage: #93A893;
-  --color-lavender: #9E97B0;
-  --color-terracotta: #D97762;
+  /* Colors inspired by SDTQ Moss & Sky Blue Pixel Water */
+  --color-cream: #F5F7F2;
+  --color-amber: #6BA4B8; /* SDTQ Pixel Sky Blue Accent */
+  --color-amber-glow: rgba(107, 164, 184, 0.3);
+  --color-moss: #8FA876;
+  --color-sage: #9AB388;
+  --color-lavender: #A8A3B8;
 
   /* Typography Colors */
-  --text-primary: #FAF6F0;
-  --text-secondary: #C4B9AD;
-  --text-muted: #8E8276;
-  --text-dark: #20150D;
+  --text-primary: #F5F7F2;
+  --text-secondary: #C2CBBA;
+  --text-muted: #8E9886;
+  --text-dark: #101610;
 
   /* Borders & Glassmorphism */
-  --border-subtle: rgba(224, 169, 109, 0.15);
-  --border-strong: rgba(224, 169, 109, 0.35);
-  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.65);
-  --shadow-glow: 0 0 35px rgba(224, 169, 109, 0.2);
-  --glass-bg: rgba(18, 12, 8, 0.88);
-  --glass-blur: blur(18px);
+  --border-subtle: rgba(107, 164, 184, 0.2);
+  --border-strong: rgba(107, 164, 184, 0.45);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.75);
+  --shadow-glow: 0 0 30px rgba(107, 164, 184, 0.22);
+  --glass-bg: rgba(16, 22, 16, 0.85);
+  --glass-blur: blur(16px);
 
   /* Fonts */
   --font-serif: 'Playfair Display', Georgia, serif;
@@ -60,8 +60,24 @@ html {
 body {
   line-height: 1.6;
   overflow-x: hidden;
-  background: radial-gradient(circle at 50% 0%, #2A1D15 0%, var(--bg-dark) 75%);
   min-height: 100vh;
+  /* Fixed Full-Page SDTQ Background Image */
+  background: url('assets/sdtq_bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+}
+
+/* Dark overlay gradient to ensure readability over landscape background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 30%, rgba(16, 22, 16, 0.65) 0%, rgba(10, 14, 10, 0.88) 100%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 ::-webkit-scrollbar {
@@ -105,11 +121,14 @@ a:hover {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .section {
   padding: 6rem 0;
   position: relative;
+  z-index: 1;
 }
 
 .section-header {
@@ -122,7 +141,7 @@ a:hover {
   display: inline-block;
   padding: 0.35rem 1.1rem;
   border-radius: 9999px;
-  background: rgba(224, 169, 109, 0.1);
+  background: rgba(107, 164, 184, 0.15);
   border: 1px solid var(--border-subtle);
   color: var(--color-amber);
   font-family: var(--font-mono);
@@ -160,30 +179,31 @@ a:hover {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-amber) 0%, #C99052 100%);
-  color: var(--text-dark);
+  background: linear-gradient(135deg, var(--color-amber) 0%, #4A8398 100%);
+  color: #FFFFFF;
   box-shadow: 0 8px 24px var(--color-amber-glow);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(224, 169, 109, 0.35);
-  color: var(--text-dark);
+  box-shadow: 0 12px 32px rgba(107, 164, 184, 0.45);
+  color: #FFFFFF;
 }
 
 .btn-secondary {
   background: var(--bg-surface-elevated);
   color: var(--text-primary);
   border: 1px solid var(--border-subtle);
+  backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
-  background: rgba(224, 169, 109, 0.15);
+  background: rgba(107, 164, 184, 0.2);
   border-color: var(--color-amber);
   transform: translateY(-2px);
 }
 
-/* Header & Header Nav (React Portfolio Banner style) */
+/* Navigation Bar */
 .navbar {
   position: fixed;
   top: 0;
@@ -217,55 +237,52 @@ a:hover {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 2.5rem;
   list-style: none;
 }
 
 .nav-link {
   color: var(--text-secondary);
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 
 .nav-link:hover {
   color: var(--color-amber);
 }
 
-/* Portfolio Hero / Banner Section */
+/* Hero Section */
 .hero {
   padding-top: 11rem;
-  padding-bottom: 6rem;
+  padding-bottom: 5rem;
   text-align: center;
   position: relative;
 }
 
 .hero-content {
-  max-width: 900px;
+  max-width: 860px;
   margin: 0 auto;
 }
 
-.hero-avatar-box {
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 1.5rem auto;
-  border-radius: 50%;
-  border: 3px solid var(--color-amber);
-  box-shadow: var(--shadow-glow);
-  background: var(--bg-surface-elevated);
-  display: flex;
+.hero-pill {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-family: var(--font-serif);
-  font-size: 2.2rem;
-  font-weight: 700;
+  gap: 0.5rem;
+  padding: 0.4rem 1.2rem;
+  border-radius: 9999px;
+  background: rgba(107, 164, 184, 0.15);
+  border: 1px solid var(--border-strong);
   color: var(--color-amber);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
 }
 
 .hero-title {
-  font-size: 3.5rem;
+  font-size: 3.75rem;
   letter-spacing: -0.03em;
-  margin-bottom: 1.25rem;
-  background: linear-gradient(180deg, #FFFFFF 0%, #DFD5C6 100%);
+  margin-bottom: 1.5rem;
+  background: linear-gradient(180deg, #FFFFFF 0%, #D4DEC9 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -274,10 +291,9 @@ a:hover {
   font-size: 1.25rem;
   color: var(--text-secondary);
   margin-bottom: 2.5rem;
-  max-width: 750px;
+  max-width: 720px;
   margin-left: auto;
   margin-right: auto;
-  line-height: 1.7;
 }
 
 .hero-buttons {
@@ -285,68 +301,60 @@ a:hover {
   align-items: center;
   justify-content: center;
   gap: 1.25rem;
-  margin-bottom: 3.5rem;
+  margin-bottom: 4rem;
   flex-wrap: wrap;
 }
 
-/* Portfolio Projects Grid (React-Portfolio layout) */
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-}
-
-.portfolio-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 20px;
-  overflow: hidden;
-  transition: all 0.35s var(--ease-out);
-  display: flex;
-  flex-direction: column;
-}
-
-.portfolio-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--border-strong);
+/* Mockup Frame */
+.hero-mockup-container {
+  max-width: 780px;
+  margin: 0 auto;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 24px;
+  padding: 1.5rem;
   box-shadow: var(--shadow-lg), var(--shadow-glow);
+  position: relative;
+  backdrop-filter: blur(12px);
+  transition: transform 0.4s var(--ease-out);
 }
 
-.portfolio-card-img {
+.hero-mockup-container:hover {
+  transform: translateY(-6px);
+}
+
+.hero-mockup-img {
   width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
+  height: auto;
+  border-radius: 16px;
   display: block;
 }
 
-.portfolio-card-body {
-  padding: 1.75rem;
-  flex: 1;
+.mockup-badge {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-strong);
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  color: var(--color-cream);
+  font-size: 0.85rem;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
 }
 
-.portfolio-card-tag {
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  color: var(--color-amber);
-  margin-bottom: 0.5rem;
+.mockup-badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-amber);
+  box-shadow: 0 0 10px var(--color-amber);
 }
 
-.portfolio-card-title {
-  font-size: 1.5rem;
-  margin-bottom: 0.75rem;
-}
-
-.portfolio-card-desc {
-  font-size: 0.96rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-}
-
-/* Feature Scaffolding Grid */
+/* Features Grid */
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -358,19 +366,21 @@ a:hover {
   border: 1px solid var(--border-subtle);
   border-radius: 20px;
   padding: 2rem;
+  backdrop-filter: blur(12px);
   transition: all 0.3s ease;
 }
 
 .feature-card:hover {
   border-color: var(--color-amber);
   transform: translateY(-4px);
+  background: var(--bg-card-hover);
 }
 
 .feature-icon-box {
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: rgba(224, 169, 109, 0.12);
+  background: rgba(107, 164, 184, 0.15);
   border: 1px solid var(--border-subtle);
   color: var(--color-amber);
   display: flex;
@@ -381,13 +391,14 @@ a:hover {
 
 /* Spoon Widget Card */
 .spoon-widget-card {
-  background: linear-gradient(145deg, var(--bg-surface) 0%, var(--bg-surface-elevated) 100%);
+  background: var(--bg-surface-elevated);
   border: 1px solid var(--border-strong);
   border-radius: 24px;
   padding: 2.75rem;
   box-shadow: var(--shadow-lg);
   max-width: 900px;
   margin: 0 auto;
+  backdrop-filter: blur(16px);
 }
 
 .spoon-calculator-grid {
@@ -462,7 +473,7 @@ a:hover {
   font-size: 0.85rem;
   padding: 0.2rem 0.6rem;
   border-radius: 6px;
-  background: rgba(224, 169, 109, 0.15);
+  background: rgba(107, 164, 184, 0.2);
   color: var(--color-amber);
   font-weight: 600;
 }
@@ -523,8 +534,8 @@ a:hover {
 }
 
 .recommendation-box {
-  background: rgba(147, 168, 147, 0.1);
-  border-left: 3px solid var(--color-sage);
+  background: rgba(107, 164, 184, 0.12);
+  border-left: 3px solid var(--color-amber);
   padding: 1rem;
   border-radius: 0 8px 8px 0;
   font-size: 0.92rem;
@@ -549,12 +560,13 @@ a:hover {
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
+  backdrop-filter: blur(10px);
   transition: all 0.2s ease;
 }
 
 .tab-btn:hover, .tab-btn.active {
   background: var(--color-amber);
-  color: var(--text-dark);
+  color: #FFFFFF;
   border-color: var(--color-amber);
   font-weight: 600;
 }
@@ -571,6 +583,7 @@ a:hover {
   border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
+  backdrop-filter: blur(10px);
   transition: all 0.3s var(--ease-out);
 }
 
@@ -609,8 +622,8 @@ a:hover {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(10, 7, 5, 0.92);
-  backdrop-filter: blur(12px);
+  background: rgba(8, 12, 8, 0.94);
+  backdrop-filter: blur(16px);
   z-index: 2000;
   display: flex;
   align-items: center;
@@ -673,7 +686,7 @@ a:hover {
 
 /* FAQ Accordion */
 .faq-list {
-  max-width: 800px;
+  max-width: 850px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -685,6 +698,7 @@ a:hover {
   border: 1px solid var(--border-subtle);
   border-radius: 14px;
   overflow: hidden;
+  backdrop-filter: blur(12px);
   transition: border-color 0.2s ease;
 }
 
@@ -731,9 +745,12 @@ a:hover {
 
 /* Footer */
 .footer {
-  background: var(--bg-surface);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
   border-top: 1px solid var(--border-subtle);
   padding: 4rem 0 2rem 0;
+  position: relative;
+  z-index: 1;
 }
 
 .footer-grid {
