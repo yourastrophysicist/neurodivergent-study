@@ -3,11 +3,34 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initMobileNav();
   initSpoonCalculator();
-  initGalleryFilter();
-  initModalLightbox();
   initFaqAccordion();
 });
+
+/* --------------------------------------------------------------------------
+   0. Mobile Navigation Bar Toggle
+   -------------------------------------------------------------------------- */
+function initMobileNav() {
+  const toggleBtn = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  const links = document.querySelectorAll('.nav-link');
+
+  if (!toggleBtn || !navLinks) return;
+
+  toggleBtn.addEventListener('click', () => {
+    toggleBtn.classList.toggle('active');
+    navLinks.classList.toggle('active');
+  });
+
+  // Close nav menu on link tap
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      toggleBtn.classList.remove('active');
+      navLinks.classList.remove('active');
+    });
+  });
+}
 
 /* --------------------------------------------------------------------------
    1. Interactive Spoon Budget Calculator Widget
@@ -72,66 +95,7 @@ function initSpoonCalculator() {
 }
 
 /* --------------------------------------------------------------------------
-   2. Page Gallery Filtering
-   -------------------------------------------------------------------------- */
-function initGalleryFilter() {
-  const tabBtns = document.querySelectorAll('.tab-btn');
-  const galleryCards = document.querySelectorAll('.gallery-card');
-
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const filter = btn.dataset.filter;
-
-      galleryCards.forEach(card => {
-        if (filter === 'all' || card.dataset.category === filter) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
-  });
-}
-
-/* --------------------------------------------------------------------------
-   3. Lightbox Modal Preview
-   -------------------------------------------------------------------------- */
-function initModalLightbox() {
-  const modal = document.getElementById('previewModal');
-  const modalImg = document.getElementById('modalImagePreview');
-  const modalTitle = document.getElementById('modalTitle');
-  const closeBtn = document.getElementById('modalCloseBtn');
-  const galleryCards = document.querySelectorAll('.gallery-card');
-
-  if (!modal) return;
-
-  galleryCards.forEach(card => {
-    card.addEventListener('click', () => {
-      const imgSrc = card.dataset.img;
-      const title = card.querySelector('.gallery-card-title').textContent;
-
-      modalImg.src = imgSrc;
-      modalTitle.textContent = title;
-      modal.classList.add('active');
-    });
-  });
-
-  closeBtn.addEventListener('click', () => {
-    modal.classList.remove('active');
-  });
-
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.classList.remove('active');
-    }
-  });
-}
-
-/* --------------------------------------------------------------------------
-   4. FAQ Accordion Toggles
+   2. FAQ Accordion Toggles
    -------------------------------------------------------------------------- */
 function initFaqAccordion() {
   const faqItems = document.querySelectorAll('.faq-item');

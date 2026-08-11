@@ -23,18 +23,31 @@
 </head>
 <body>
 
-  <!-- Navigation Bar (Product & FAQ only) -->
+  <!-- Navigation Bar (Mobile Responsive with Hamburger) -->
   <nav class="navbar">
     <div class="container">
       <a href="#" class="nav-brand">
         Neuro-Spices <span>Planner</span>
       </a>
-      <ul class="nav-links">
+      
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
         <li><a href="#product" class="nav-link">Product</a></li>
         <li><a href="#spoon-calculator" class="nav-link">Spoon Calculator</a></li>
         <li><a href="#faq" class="nav-link">FAQ</a></li>
+        <li class="mobile-only-action">
+          <a href="Neuro-Spices_Planner.pdf" download="Neuro-Spices_Planner.pdf" class="btn btn-primary" style="width: 100%; text-align: center;">
+            Download PDF (Free)
+          </a>
+        </li>
       </ul>
-      <div class="nav-actions">
+
+      <div class="nav-actions desktop-only">
         <a href="Neuro-Spices_Planner.pdf" download="Neuro-Spices_Planner.pdf" class="btn btn-primary" style="padding: 0.65rem 1.4rem; font-size: 0.9rem;">
           Download PDF (Free)
         </a>
@@ -51,7 +64,7 @@
       </p>
       
       <div class="hero-buttons">
-        <a href="Neuro-Spices_Planner.pdf" download="Neuro-Spices_Planner.pdf" class="btn btn-primary" style="font-size: 1.1rem; padding: 1.1rem 2.5rem;">
+        <a href="Neuro-Spices_Planner.pdf" download="Neuro-Spices_Planner.pdf" class="btn btn-primary hero-btn">
           Download Free Planner (.pdf)
         </a>
       </div>
@@ -263,13 +276,13 @@
   </section>
 
   <!-- Final Callout Section -->
-  <section class="section" style="text-align: center;">
-    <div class="container" style="max-width: 760px;">
-      <h2 style="font-size: 3rem; margin-bottom: 1.25rem;">Download the Planner Today</h2>
-      <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2.5rem;">
+  <section class="section final-cta-section">
+    <div class="container" style="max-width: 760px; text-align: center;">
+      <h2 class="final-cta-title">Download the Planner Today</h2>
+      <p class="final-cta-subtitle">
         Get your copy of the 654-page Neuro-Spices Digital Planner and start planning with real energy awareness.
       </p>
-      <a href="Neuro-Spices_Planner.pdf" download="Neuro-Spices_Planner.pdf" class="btn btn-primary" style="font-size: 1.2rem; padding: 1.2rem 3rem;">
+      <a href="Neuro-Spices_Planner.pdf" download="Neuro-Spices_Planner.pdf" class="btn btn-primary cta-btn">
         Download Free PDF Planner (60 MB)
       </a>
     </div>
